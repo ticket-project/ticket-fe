@@ -5,43 +5,62 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 640,
+      md: 1024,
+      lg: 1280,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: {
-      main: '#FF6B35', // 오렌지
-      light: '#FF8C5A',
-      dark: '#E55A2B',
-      contrastText: '#FFFFFF',
+      main: '#ff5500',
+      light: '#ff836c',
+      dark: '#e24a00',
+      contrastText: '#ffffff',
     },
-    secondary: {
-      main: '#1E3A8A', // 네이비
-      light: '#3B5BA5',
-      dark: '#152A6B',
-      contrastText: '#FFFFFF',
-    },
+    // secondary: {
+    //   main: '#ff5500',
+    //   light: '#ff836c',
+    //   dark: '#e24a00',
+    //   contrastText: '#ffffff',
+    // },
+    // background: {
+    //   // default: '#FFFFFF', // 메인 배경
+    //   // paper: '#FAFAFA', // 카드/서피스 배경
+    // },
+    // text: {
+    //   // primary: '#212529', // 주요 텍스트
+    //   // secondary: '#757575', // 보조 텍스트
+    //   // disabled: '#BDBDBD',
+    // },
     success: {
-      main: '#10B981', // 초록
+      main: '#34c759',
     },
     warning: {
-      main: '#F59E0B', // 노랑
+      main: '#ff9500',
     },
     error: {
-      main: '#EF4444', // 빨강
+      main: '#d6341e',
     },
     grey: {
-      50: '#F9FAFB',
-      100: '#F3F4F6',
-      200: '#E5E7EB',
-      300: '#D1D5DB',
-      400: '#9CA3AF',
-      500: '#6B7280',
-      600: '#4B5563',
-      700: '#374151',
-      800: '#1F2937',
-      900: '#111827',
+      50: '#f1f1f1',
+      100: '#dddddd',
+      200: '#c0c0c0',
+      300: '#a7a7a7',
+      400: '#909090',
+      500: '#7a7a7a',
+      600: '#666666',
+      700: '#4f4f4f',
+      800: '#313131',
+      900: '#111111',
     },
   },
   typography: {
     fontFamily: [
+      'CustomFont',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
@@ -50,43 +69,54 @@ const theme = createTheme({
       'Arial',
       'sans-serif',
     ].join(','),
-    h1: {
-      fontSize: '2.5rem',
-      fontWeight: 700,
-      lineHeight: 1.2,
+    allVariants: {
+      color: '#212529',
     },
-    h2: {
-      fontSize: '2rem',
-      fontWeight: 600,
-      lineHeight: 1.3,
-    },
-    h3: {
-      fontSize: '1.5rem',
-      fontWeight: 600,
-      lineHeight: 1.4,
-    },
-    body1: {
-      fontSize: '1rem',
-      lineHeight: 1.5,
-    },
-    body2: {
-      fontSize: '0.875rem',
-      lineHeight: 1.57,
-    },
+    // h1: {
+    //   fontSize: '2.5rem',
+    //   fontWeight: 700,
+    //   lineHeight: 1.2,
+    // },
+    // h2: {
+    //   fontSize: '2rem',
+    //   fontWeight: 600,
+    //   lineHeight: 1.3,
+    // },
+    // h3: {
+    //   fontSize: '1.5rem',
+    //   fontWeight: 600,
+    //   lineHeight: 1.4,
+    // },
+    // body1: {
+    //   fontSize: '1rem',
+    //   lineHeight: 1.5,
+    // },
+    // body2: {
+    //   fontSize: '0.875rem',
+    //   lineHeight: 1.57,
+    // },
   },
-  spacing: 8, // 기본 spacing unit (8px)
-  shape: {
-    borderRadius: 8,
-  },
+  // spacing: 8, // 기본 spacing unit (8px)
+  // shape: {
+  //   borderRadius: 8,
+  // },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
+          color: '#212529',
           textTransform: 'none',
-          borderRadius: '8px',
-          padding: '10px 20px',
-          fontWeight: 600,
+          // borderRadius: '8px',
+          // padding: '10px 20px',
+          // fontWeight: 600,
         },
+        text: {
+          '&:hover': {
+            color: '#ff5500',
+            backgroundColor: 'transparent',
+          },
+        },
+
         contained: {
           boxShadow: 'none',
           '&:hover': {
@@ -98,13 +128,13 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: '12px',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-          transition: 'all 0.3s ease',
-          '&:hover': {
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-            transform: 'translateY(-4px)',
-          },
+          // borderRadius: '12px',
+          // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          // transition: 'all 0.3s ease',
+          // '&:hover': {
+          //   boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+          //   transform: 'translateY(-4px)',
+          // },
         },
       },
     },
