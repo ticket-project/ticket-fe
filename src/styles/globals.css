@@ -1,7 +1,8 @@
 @font-face {
   /* 수정하기 */
   font-family: 'CustomFont';
-  src: url('/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBHMdazQ.woff2') format('woff2');
+  src: url('/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBHMdazQ.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -20,8 +21,9 @@ body {
 }
 
 body {
-  font-family: 'CustomFont', '-apple-system', 'BlinkMacSystemFont',
-    'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif';
+  font-family:
+    'CustomFont', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
+    'Helvetica Neue', 'Arial', 'sans-serif';
   color: #212529;
   background: #ffffff;
 }
@@ -29,4 +31,8 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #ff5500;
 }

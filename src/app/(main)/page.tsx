@@ -3,9 +3,9 @@ import { Suspense } from 'react';
 
 const Homepage = () => {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Suspense fallback={<Skeleton height={400} />}>Banner!</Suspense>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="lg" sx={{ mb: 4, mt: 4 }}>
         <Suspense fallback={<Skeleton height={300} />}>
           {/* <Upcomingshows /> */}
           UpcomingShows!

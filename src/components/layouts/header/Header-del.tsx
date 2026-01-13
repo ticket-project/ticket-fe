@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import {
   AppBar,
   Box,
@@ -21,15 +22,11 @@ import Link from 'next/link';
 
 // Emotion styled components 예시
 const StyledAppBar = styled(AppBar)`
-  background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-`;
-
-const LogoText = styled(Typography)`
-  font-weight: 700;
+  background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);EmotionstyledcomponentsconstStyledAppBarstyledbackground
+  box-shadow: 0 4px 20px rgb(0 0 0 / 25%);LogoTextstyledfont-weight
   letter-spacing: 0.1rem;
   background: linear-gradient(45deg, #ff6b6b, #feca57);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: transform 0.3s ease;
@@ -40,13 +37,12 @@ const LogoText = styled(Typography)`
 `;
 
 const NavButton = styled(Button)`
-  color: white;
+  color: white;NavButtonstyledcolor
   margin: 0 8px;
   position: relative;
   overflow: hidden;
 
   &::after {
-    content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -54,6 +50,7 @@ const NavButton = styled(Button)`
     height: 2px;
     background: linear-gradient(45deg, #ff6b6b, #feca57);
     transition: all 0.3s ease;
+    content: '';
     transform: translateX(-50%);
   }
 
@@ -62,16 +59,20 @@ const NavButton = styled(Button)`
   }
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(255 255 255 / 10%);
   }
+`;
+
+const LogoText = styled(Typography)`
+  color: white;
 `;
 
 // 네비게이션 메뉴 아이템
 const pages = [
-  { name: '공연', href: '/performances' },
-  { name: '뮤지컬', href: '/musicals' },
-  { name: '콘서트', href: '/concerts' },
-  { name: '스포츠', href: '/sports' },
+  { href: '/performances', name: '공연' },
+  { href: '/musicals', name: '뮤지컬' },
+  { href: '/concerts', name: '콘서트' },
+  { href: '/sports', name: '스포츠' },
 ];
 
 const settings = ['마이페이지', '예매내역', '로그아웃'];
@@ -79,20 +80,19 @@ const settings = ['마이페이지', '예매내역', '로그아웃'];
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleopennavmenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleopenusermenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleclosenavmenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handlecloseusermenu = () => {
     setAnchorElUser(null);
   };
 
@@ -107,8 +107,8 @@ const Header = () => {
               variant="h6"
               noWrap
               sx={{
+                display: { md: 'flex', xs: 'none' },
                 mr: 2,
-                display: { xs: 'none', md: 'flex' },
               }}
             >
               TICKET
@@ -116,14 +116,14 @@ const Header = () => {
           </Link>
 
           {/* 데스크탑 네비게이션 */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, ml: 4 }}>
+          <Box sx={{ display: { md: 'flex', xs: 'none' }, flexGrow: 1, ml: 4 }}>
             {pages.map((page) => (
               <Link
                 key={page.name}
                 href={page.href}
                 style={{ textDecoration: 'none' }}
               >
-                <NavButton onClick={handleCloseNavMenu}>{page.name}</NavButton>
+                <NavButton>{page.name}</NavButton>
               </Link>
             ))}
           </Box>
@@ -131,12 +131,12 @@ const Header = () => {
           {/* 유저 메뉴 */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="설정 열기">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton sx={{ p: 0 }}>
                 <Avatar
                   alt="User"
                   sx={{
-                    bgcolor: 'primary.main',
                     border: '2px solid #feca57',
+                    bgcolor: 'primary.main',
                   }}
                 />
               </IconButton>
@@ -146,19 +146,19 @@ const Header = () => {
               id="menu-appbar-user"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
                 horizontal: 'right',
+                vertical: 'top',
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
                 horizontal: 'right',
+                vertical: 'top',
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              //   onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
