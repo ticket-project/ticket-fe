@@ -27,7 +27,7 @@ const theme = createTheme({
             backgroundColor: 'transparent',
             boxShadow: 'none',
             backgroundImage: 'none',
-            outline: '2px solid #ff5500',
+            outline: '2px solid blue',
           },
         },
         text: {
@@ -42,6 +42,51 @@ const theme = createTheme({
       defaultProps: {
         disableRipple: true,
         disableTouchRipple: true,
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          // borderRadius: '12px',
+          // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          // transition: 'all 0.3s ease',
+          // '&:hover': {
+          //   boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+          //   transform: 'translateY(-4px)',
+          // },
+        },
+      },
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        '*, *::before, *::after': {
+          boxSizing: 'border-box',
+        },
+        '.sr-only': {
+          position: 'absolute',
+          height: '1px',
+          margin: '-1px',
+          padding: 0,
+          width: '1px',
+          border: 0,
+          clip: 'rect(0, 0, 0, 0)',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+        },
+        'ul, ol': {
+          margin: 0,
+          padding: 0,
+          listStyle: 'none',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          '&:focus-visible': {
+            outline: '2px solid blue',
+          },
+        },
       },
     },
     // MuiButton: {
@@ -65,34 +110,16 @@ const theme = createTheme({
 
     //       textTransform: 'none',
     //     },
-
-    //     text: {
-    //       '&:hover': {
-    //         color: '#ff5500',
-    //         backgroundColor: 'transparent',
-    //       },
-    //     },
-    //   },
-    // },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          // borderRadius: '12px',
-          // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-          // transition: 'all 0.3s ease',
-          // '&:hover': {
-          //   boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-          //   transform: 'translateY(-4px)',
-          // },
-        },
-      },
-    },
   },
   palette: {
+    common: {
+      white: '#ffffff',
+    },
     error: {
       main: '#d6341e',
     },
     grey: {
+      ////////// 필요한가...
       50: '#f1f1f1',
       100: '#dddddd',
       200: '#c0c0c0',
@@ -136,6 +163,7 @@ const theme = createTheme({
     allVariants: {
       color: '#212529',
     },
+
     fontFamily: [
       'CustomFont',
       '-apple-system',
@@ -146,6 +174,7 @@ const theme = createTheme({
       'Arial',
       'sans-serif',
     ].join(','),
+    htmlFontSize: 10, // 1rem = 10px
     // h1: {
     //   fontSize: '2.5rem',
     //   fontWeight: 700,
