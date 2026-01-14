@@ -29,20 +29,24 @@ const MainHeader = ({}) => {
       <Box sx={{ borderBottom: 1, borderColor: 'grey.100' }}>
         <Container>
           <Toolbar disableGutters>
-            <Box sx={{ mr: '1.6rem' }}>
-              <Link href="/">
-                <LogoText variant="h1">TICKET</LogoText>
-              </Link>
+            <Box
+              component={Link}
+              href="/"
+              aria-label="홈으로 이동"
+              sx={{ mr: 2 }}
+            >
+              <LogoText variant="h1">TICKET</LogoText>
             </Box>
-            <Search role="search">
+            <Search role="search" onSubmit={(e) => e.preventDefault()}>
               <label htmlFor="header-search" className="sr-only">
                 검색
               </label>
               <StyledInputBase
                 id="header-search"
+                type="search"
                 placeholder="Highlight 왔다, 에블바디 뛰어 !"
               />
-              <SearchButton aria-label="검색">
+              <SearchButton type="submit" aria-label="검색">
                 <SearchIcon />
               </SearchButton>
             </Search>
@@ -68,10 +72,10 @@ const MainHeader = ({}) => {
       </Box>
       <Container>
         <Toolbar disableGutters variant="dense">
-          <nav aria-label="메인 메뉴">
-            <ul style={{ display: 'flex' }}>
+          <Box component="nav" aria-label="메인 메뉴">
+            <Box component="ul" sx={{ display: 'flex' }}>
               {NAV_ITEMS.map((item) => (
-                <li key={item.name}>
+                <Box component="li" key={item.name}>
                   <NavButton
                     component={Link}
                     href={item.href}
@@ -79,10 +83,10 @@ const MainHeader = ({}) => {
                   >
                     {item.name}
                   </NavButton>
-                </li>
+                </Box>
               ))}
-            </ul>
-          </nav>
+            </Box>
+          </Box>
         </Toolbar>
       </Container>
     </StyledAppBar>

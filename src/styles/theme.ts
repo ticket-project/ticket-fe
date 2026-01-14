@@ -62,17 +62,18 @@ const theme = createTheme({
         '*, *::before, *::after': {
           boxSizing: 'border-box',
         },
-        '.sr-only': {
-          position: 'absolute',
-          height: '1px',
-          margin: '-1px',
-          padding: 0,
-          width: '1px',
-          border: 0,
-          clip: 'rect(0, 0, 0, 0)',
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-        },
+
+        // '.sr-only': {
+        //   position: 'absolute',
+        //   height: '1px',
+        //   margin: '-1px',
+        //   padding: 0,
+        //   width: '1px',
+        //   border: 0,
+        //   clip: 'rect(0, 0, 0, 0)',
+        //   overflow: 'hidden',
+        //   whiteSpace: 'nowrap',
+        // },
         'ul, ol': {
           margin: 0,
           padding: 0,
