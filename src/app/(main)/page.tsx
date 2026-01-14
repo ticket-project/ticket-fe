@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 
 const Homepage = () => {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <div>
       <Suspense fallback={<Skeleton height={400} />}>Banner!</Suspense>
       <Container maxWidth="lg" sx={{ mb: 4, mt: 4 }}>
         <Suspense fallback={<Skeleton height={300} />}>
@@ -15,7 +15,7 @@ const Homepage = () => {
           Concerts Section!
         </Suspense>
       </Container>
-    </main>
+    </div>
   );
 };
 

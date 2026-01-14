@@ -44,6 +44,7 @@ const MainHeader = ({}) => {
               <StyledInputBase
                 id="header-search"
                 type="search"
+                aria-label="검색어 입력"
                 placeholder="Highlight 왔다, 에블바디 뛰어 !"
               />
               <SearchButton type="submit" aria-label="검색">
@@ -72,10 +73,10 @@ const MainHeader = ({}) => {
       </Box>
       <Container>
         <Toolbar disableGutters variant="dense">
-          <Box component="nav" aria-label="메인 메뉴">
+          <nav aria-label="메뉴" id="gnb-menu" tabIndex={-1}>
             <Box component="ul" sx={{ display: 'flex' }}>
               {NAV_ITEMS.map((item) => (
-                <Box component="li" key={item.name}>
+                <li key={item.name}>
                   <NavButton
                     component={Link}
                     href={item.href}
@@ -83,10 +84,10 @@ const MainHeader = ({}) => {
                   >
                     {item.name}
                   </NavButton>
-                </Box>
+                </li>
               ))}
             </Box>
-          </Box>
+          </nav>
         </Toolbar>
       </Container>
     </StyledAppBar>
