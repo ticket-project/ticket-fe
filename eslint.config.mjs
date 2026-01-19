@@ -7,7 +7,9 @@ import perfectionist from 'eslint-plugin-perfectionist';
 
 export default tseslint.config(
   ...tseslint.configs.recommended,
+  // perfectionist - CSS 스타일 파일에만 객체 정렬 적용
   {
+    files: ['**/*.styles.ts', '**/*.styles.tsx', '**/*.tsx'],
     plugins: { perfectionist },
     rules: {
       'perfectionist/sort-objects': [
