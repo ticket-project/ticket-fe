@@ -7,18 +7,81 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   breakpoints: {
     values: {
-      lg: 1280,
-      md: 1024,
-      sm: 640,
-      xl: 1536,
-      xs: 0,
+      xs: 0, // 모바일
+      sm: 600,
+      md: 768, // 태블릿
+      lg: 1280, // 데스크탑
+      xl: 1920,
     },
   },
   // spacing: 8, // 기본 spacing unit (8px)
   // shape: {
   //   borderRadius: 8,
   // },
+  palette: {
+    common: {
+      white: '#ffffff',
+    },
+    primary: {
+      contrastText: '#ffffff',
+      dark: '#e24a00',
+      light: '#ff836c',
+      main: '#ff5500',
+    },
+    // secondary: {
+    //   main: '#ff5500',
+    //   light: '#ff836c',
+    //   dark: '#e24a00',
+    //   contrastText: '#ffffff',
+    // },
+    // background: {
+    //   // default: '#FFFFFF', // 메인 배경
+    //   // paper: '#FAFAFA', // 카드/서피스 배경
+    // },
+    // text: {
+    //   // primary: '#212529', // 주요 텍스트
+    //   // secondary: '#757575', // 보조 텍스트
+    //   // disabled: '#BDBDBD',
+    // },
+    success: {
+      main: '#34c759',
+    },
+    warning: {
+      main: '#ff9500',
+    },
+    error: {
+      main: '#d6341e',
+    },
+    grey: {
+      ////////// 필요한가...
+      50: '#f1f1f1',
+      100: '#dddddd',
+      200: '#c0c0c0',
+      300: '#a7a7a7',
+      400: '#909090',
+      500: '#7a7a7a',
+      600: '#666666',
+      700: '#4f4f4f',
+      800: '#313131',
+      900: '#111111',
+    },
+  },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        '*, *::before, *::after': {
+          boxSizing: 'border-box',
+        },
+        'ul, ol': {
+          margin: 0,
+          padding: 0,
+          listStyle: 'none',
+        },
+        '.MuiButtonBase-root.Mui-focusVisible': {
+          outline: '2px solid blue',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -27,7 +90,6 @@ const theme = createTheme({
             backgroundColor: 'transparent',
             boxShadow: 'none',
             backgroundImage: 'none',
-            outline: '2px solid blue',
           },
         },
         text: {
@@ -47,40 +109,13 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          // borderRadius: '12px',
-          // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-          // transition: 'all 0.3s ease',
-          // '&:hover': {
-          //   boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-          //   transform: 'translateY(-4px)',
-          // },
+          '&:focus-within': {
+            outline: '2px solid blue',
+          },
         },
       },
     },
-    MuiCssBaseline: {
-      styleOverrides: {
-        '*, *::before, *::after': {
-          boxSizing: 'border-box',
-        },
 
-        // '.sr-only': {
-        //   position: 'absolute',
-        //   height: '1px',
-        //   margin: '-1px',
-        //   padding: 0,
-        //   width: '1px',
-        //   border: 0,
-        //   clip: 'rect(0, 0, 0, 0)',
-        //   overflow: 'hidden',
-        //   whiteSpace: 'nowrap',
-        // },
-        'ul, ol': {
-          margin: 0,
-          padding: 0,
-          listStyle: 'none',
-        },
-      },
-    },
     MuiInputBase: {
       styleOverrides: {
         input: {
@@ -112,54 +147,7 @@ const theme = createTheme({
     //       textTransform: 'none',
     //     },
   },
-  palette: {
-    common: {
-      white: '#ffffff',
-    },
-    error: {
-      main: '#d6341e',
-    },
-    grey: {
-      ////////// 필요한가...
-      50: '#f1f1f1',
-      100: '#dddddd',
-      200: '#c0c0c0',
-      300: '#a7a7a7',
-      400: '#909090',
-      500: '#7a7a7a',
-      600: '#666666',
-      700: '#4f4f4f',
-      800: '#313131',
-      900: '#111111',
-    },
-    primary: {
-      contrastText: '#ffffff',
-      dark: '#e24a00',
-      light: '#ff836c',
-      main: '#ff5500',
-    },
-    // secondary: {
-    //   main: '#ff5500',
-    //   light: '#ff836c',
-    //   dark: '#e24a00',
-    //   contrastText: '#ffffff',
-    // },
-    // background: {
-    //   // default: '#FFFFFF', // 메인 배경
-    //   // paper: '#FAFAFA', // 카드/서피스 배경
-    // },
-    // text: {
-    //   // primary: '#212529', // 주요 텍스트
-    //   // secondary: '#757575', // 보조 텍스트
-    //   // disabled: '#BDBDBD',
-    // },
-    success: {
-      main: '#34c759',
-    },
-    warning: {
-      main: '#ff9500',
-    },
-  },
+
   typography: {
     allVariants: {
       color: '#212529',

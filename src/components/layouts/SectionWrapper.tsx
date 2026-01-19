@@ -1,4 +1,4 @@
-import { Container, ContainerProps, SxProps, Theme } from '@mui/material';
+import { Box, Container, ContainerProps, SxProps, Theme } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface SectionWrapperProps {
@@ -6,6 +6,7 @@ interface SectionWrapperProps {
   maxWidth?: ContainerProps['maxWidth'];
   fullWidth?: boolean;
   spacing?: number;
+  mt?: number;
   sx?: SxProps<Theme>;
 }
 
@@ -13,19 +14,24 @@ const SectionWrapper = ({
   maxWidth = 'lg',
   children,
   fullWidth = false,
+  mt = 0,
   spacing = 0,
   sx,
 }: SectionWrapperProps) => {
   if (fullWidth) {
-    return <section style={{ padding: 0 }}>{children}</section>;
+    return (
+      <Box component="section" sx={{ mt, p: 0 }}>
+        {children}
+      </Box>
+    );
   }
 
   return (
-    <section>
-      <Container maxWidth={maxWidth} sx={{ mb: spacing, mt: spacing, ...sx }}>
+    <Box component="section" sx={{ mt }}>
+      <Container maxWidth={maxWidth} sx={{ mb: spacing, ...sx }}>
         {children}
       </Container>
-    </section>
+    </Box>
   );
 };
 
