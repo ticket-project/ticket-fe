@@ -1,12 +1,14 @@
 'use client';
+// 캐러셀하고 내용 거의 같음
+/////////////////////////////
 
 import { Box, CircularProgress } from '@mui/material';
-import { useConcertCarousel } from '@/features/concert/hooks/useConcertQueries';
-import ConcertCarousel from '../components/carousel/ConcertCarousel';
+import { useUpcomingTop5 } from '@/features/concert/hooks/useConcertQueries';
 import { EmptyState } from '@/components/common/EmptyState';
+import UpcomingConcerts from '../components/upcoming/UpcomingConcerts';
 
-const ConcertCarouselSection = () => {
-  const { data, isError, isLoading, refetch } = useConcertCarousel();
+const UpcomingConcertSection = () => {
+  const { data, isError, isLoading, refetch } = useUpcomingTop5();
 
   // 로딩 상태 처리
   if (isLoading) {
@@ -38,7 +40,7 @@ const ConcertCarouselSection = () => {
     );
   }
 
-  return <ConcertCarousel items={data} />;
+  return <UpcomingConcerts items={data} />;
 };
 
-export default ConcertCarouselSection;
+export default UpcomingConcertSection;

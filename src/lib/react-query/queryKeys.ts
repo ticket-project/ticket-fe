@@ -8,6 +8,8 @@ export const queryKeys = {
   concert: {
     all: ['concert'] as const,
     carousel: () => [...queryKeys.concert.all, 'carousel'] as const,
+    upcoming: (limit?: number, sortBy?: 'date') =>
+      [...queryKeys.concert.all, 'upcoming', { limit, sortBy }] as const,
   },
   booking: {
     all: ['booking'] as const,

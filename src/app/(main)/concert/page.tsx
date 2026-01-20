@@ -1,5 +1,6 @@
 import Section from '@/components/layouts/Section';
 import ConcertCarouselSection from '@/features/concert/sections/ConcertCarouselSection';
+import UpcomingConcertSection from '@/features/concert/sections/UpcomingConcertSection';
 import { Box } from '@mui/material';
 import { Metadata } from 'next';
 
@@ -15,7 +16,9 @@ const ConcertPage = () => {
         <ConcertCarouselSection />
       </Section>
 
-      <Section title="오픈예정">cont</Section>
+      <Section title="오픈예정">
+        <UpcomingConcertSection />
+      </Section>
 
       <Section title="전체리스트">cont</Section>
     </Box>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Typography } from '@mui/material';
-import { ConcertCarouselItem } from '../../types/carousel.types';
+import { ConcertCarouselItem } from '../../types/concert.types';
 import {
   StyledCard,
   StyledCardActionArea,

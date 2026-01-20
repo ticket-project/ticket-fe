@@ -10,7 +10,7 @@ import {
 import useEmblaCarousel from 'embla-carousel-react';
 import { Box } from '@mui/material';
 import Autoplay from 'embla-carousel-autoplay';
-import { ConcertCarouselItem } from '../../types/carousel.types';
+import { ConcertCarouselItem } from '../../types/concert.types';
 import CarouselNavButton from './CarouselNavButton';
 import ConcertCarouselSlide from './ConcertCarouselSlide';
 const AUTOPLAY_DELAY = 5000;
