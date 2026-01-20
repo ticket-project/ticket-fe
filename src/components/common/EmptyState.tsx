@@ -1,16 +1,19 @@
-import { Box, Typography, SxProps, Theme } from '@mui/material';
+import { Box, Typography, SxProps, Theme, IconButton } from '@mui/material';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export interface EmptyStateProps {
   icon?: boolean;
   title: string;
   description?: string;
   sx?: SxProps<Theme>;
+  onRetry?: () => void;
 }
 
 export const EmptyState = ({
   description,
   icon = true,
+  onRetry,
   sx,
   title,
 }: EmptyStateProps) => {
@@ -33,6 +36,9 @@ export const EmptyState = ({
             marginBottom: 2,
             color: 'text.secondary',
             fontSize: '4rem',
+            '& svg': {
+              fontSize: 'inherit',
+            },
             opacity: 0.6,
           }}
         >
@@ -55,12 +61,23 @@ export const EmptyState = ({
           variant="body2"
           color="text.secondary"
           sx={{
-            marginBottom: 3,
+            marginBottom: onRetry ? 3 : 0,
             maxWidth: '400px',
           }}
         >
           {description}
         </Typography>
+      )}
+
+      {onRetry && (
+        <IconButton
+          onClick={onRetry}
+          sx={{
+            mt: description ? 0 : 2,
+          }}
+        >
+          <RefreshIcon />
+        </IconButton>
       )}
     </Box>
   );

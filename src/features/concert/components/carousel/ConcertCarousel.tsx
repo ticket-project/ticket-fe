@@ -13,7 +13,6 @@ import Autoplay from 'embla-carousel-autoplay';
 import { ConcertCarouselItem } from '../../types/carousel.types';
 import CarouselNavButton from './CarouselNavButton';
 import ConcertCarouselSlide from './ConcertCarouselSlide';
-import { EmptyState } from '@/components/common/EmptyState';
 const AUTOPLAY_DELAY = 5000;
 
 interface ConcertCarouselProps {
@@ -85,15 +84,6 @@ const ConcertCarousel = ({ items }: ConcertCarouselProps) => {
 
     return idx === prevIndex || idx === selectedIndex || idx === nextIndex;
   };
-
-  if (items.length === 0) {
-    return (
-      <EmptyState
-        title="등록된 콘서트가 없습니다"
-        description="새로운 콘서트가 등록되면 여기에 표시됩니다"
-      />
-    );
-  }
 
   return (
     <Box sx={{ position: 'relative' }}>

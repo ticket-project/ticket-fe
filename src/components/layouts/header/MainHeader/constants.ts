@@ -1,4 +1,4 @@
-import type { NavItem } from './MainHeader.types';
+import { NavItem } from './MainHeader.types';
 
 export const NAV_ITEMS: readonly NavItem[] = [
   { href: '/concert', name: '콘서트' },

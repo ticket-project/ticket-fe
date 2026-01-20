@@ -15,8 +15,6 @@ import {
   Tooltip,
   MenuItem,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 

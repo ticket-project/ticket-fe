@@ -38,3 +38,7 @@
 // };
 
 // export default AuthHeader;
+const AuthHeader = () => {
+  return <></>;
+};
+export default AuthHeader;

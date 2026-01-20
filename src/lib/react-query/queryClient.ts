@@ -1,4 +1,16 @@
-/**
- * React Query 설정
- */
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientConfig } from '@tanstack/react-query';
+
+export const DEFAULT_STALE_TIME = 60 * 1000; // 1분
+
+export const defaultQueryClientOptions: QueryClientConfig = {
+  defaultOptions: {
+    queries: {
+      staleTime: DEFAULT_STALE_TIME,
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+};
+
+export const createQueryClient = () =>
+  new QueryClient(defaultQueryClientOptions);
