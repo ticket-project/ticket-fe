@@ -54,15 +54,19 @@ const MainHeader = ({}) => {
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: 'flex', gap: '0.8rem' }}>
               <AuthButton
-                component={Link}
-                href="/login"
+                {...{
+                  component: Link,
+                  href: '/login',
+                }}
                 startIcon={<LoginIcon />}
               >
                 로그인
               </AuthButton>
               <AuthButton
-                component={Link}
-                href="/signup"
+                {...{
+                  component: Link,
+                  href: '/signup',
+                }}
                 startIcon={<PersonOutlineIcon />}
               >
                 회원가입
@@ -78,8 +82,10 @@ const MainHeader = ({}) => {
               {NAV_ITEMS.map((item) => (
                 <li key={item.name}>
                   <NavButton
-                    component={Link}
-                    href={item.href}
+                    {...{
+                      component: Link,
+                      href: item.href,
+                    }}
                     aria-current={pathname === item.href ? 'page' : undefined}
                   >
                     {item.name}

@@ -1,39 +1,46 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Typography } from '@mui/material';
 import { ConcertCarouselItem } from '../../types/carousel.types';
-import { Box, Card, CardActionArea, Typography } from '@mui/material';
+import {
+  StyledCard,
+  StyledCardActionArea,
+  ImageBox,
+  ContentBox,
+} from './ConcertCarouselSlide.styles';
 
 interface ConcertCarouselSlideProps {
   idx: number;
   item: ConcertCarouselItem;
   total: number;
+  isActive: boolean;
+  isSelected: boolean;
 }
 
 const ConcertCarouselSlide = ({
   idx,
+  isActive,
+  isSelected,
   item,
   total,
 }: ConcertCarouselSlideProps) => {
   return (
-    <Card
+    <StyledCard
       role="group"
       aria-label={`슬라이드 ${idx + 1} / ${total}`}
       elevation={0}
-      sx={{
-        position: 'relative',
-        flex: { lg: '0 0 25%', md: '0 0 33.333%', xs: '0 0 100%' },
-        minWidth: 0,
-        borderRadius: '1.8rem',
-        overflow: 'hidden',
-      }}
+      isSelected={isSelected}
     >
-      <CardActionArea
-        component={Link}
-        href={`/concert/${item.id}`}
+      <StyledCardActionArea
+        {...{
+          component: Link,
+          href: `/concert/${item.id}`,
+        }}
         aria-label={`${item.title} 상세로 이동`}
-        sx={{ height: '100%' }}
+        isActive={isActive}
+        isSelected={isSelected}
       >
-        <Box sx={{ position: 'relative', aspectRatio: '3/3.5' }}>
+        <ImageBox>
           <Image
             src={item.image.src}
             alt={item.image.alt}
@@ -42,36 +49,29 @@ const ConcertCarouselSlide = ({
             style={{ objectFit: 'cover' }}
             priority={idx === 0}
           />
-        </Box>
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: '0',
-            width: '100%',
-            p: '2rem',
-          }}
-        >
-          <Typography variant="overline" sx={{ fontSize: '1.5rem' }}>
+        </ImageBox>
+        <ContentBox>
+          <Typography variant="overline" sx={{ fontSize: '1.6rem' }}>
             {item.subtitle}
           </Typography>
-          <Typography variant="h6" sx={{ fontSize: '2.5rem', fontWeight: 700 }}>
+          <Typography variant="h6" sx={{ fontSize: '2.6rem', fontWeight: 900 }}>
             {item.title}
           </Typography>
           <Typography
             variant="body2"
-            sx={{ fontSize: '1.4rem', fontWeight: 500 }}
+            sx={{ fontSize: '1.5rem', fontWeight: 600 }}
           >
             {item.venue}
           </Typography>
           <Typography
             variant="caption"
-            sx={{ fontSize: '1.4rem', fontWeight: 500 }}
+            sx={{ fontSize: '1.5rem', fontWeight: 600 }}
           >
             {item.concertStartDate} ~ {item.concertEndDate}
           </Typography>
-        </Box>
-      </CardActionArea>
-    </Card>
+        </ContentBox>
+      </StyledCardActionArea>
+    </StyledCard>
   );
 };
 

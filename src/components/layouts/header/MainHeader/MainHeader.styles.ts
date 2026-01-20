@@ -1,6 +1,5 @@
 import { AppBar, Button, InputBase, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Link from 'next/link';
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   position: 'static',
@@ -30,7 +29,7 @@ export const NavButton = styled(Button)(({ theme }) => ({
       content: '""',
     },
   },
-})) as typeof Button<typeof Link>;
+}));
 
 export const AuthButton = styled(Button)(({ theme }) => ({
   fontWeight: '600',
@@ -40,7 +39,7 @@ export const AuthButton = styled(Button)(({ theme }) => ({
   // '&:hover': {
   //   backgroundColor: 'rgba(226, 74, 0, 0.08)',
   // },
-})) as typeof Button<typeof Link>;
+}));
 
 export const Search = styled('form')(({ theme }) => ({
   position: 'relative',
@@ -69,6 +68,7 @@ export const SearchButton = styled(Button)(({ theme }) => ({
 
   transform: 'translateY(-50%)',
 }));
+
 export const StyledInputBase = styled(InputBase)({
   height: '100%',
   width: '100%',

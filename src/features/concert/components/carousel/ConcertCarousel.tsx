@@ -14,7 +14,7 @@ import { ConcertCarouselItem } from '../../types/carousel.types';
 import CarouselNavButton from './CarouselNavButton';
 import ConcertCarouselSlide from './ConcertCarouselSlide';
 
-const AUTOPLAY_DELAY = 4000;
+const AUTOPLAY_DELAY = 5000;
 
 interface ConcertCarouselProps {
   items: ConcertCarouselItem[];
@@ -28,6 +28,7 @@ const ConcertCarousel = ({ items }: ConcertCarouselProps) => {
 
   const [carouselRef, carouselApi] = useEmblaCarousel(
     {
+      align: 'center',
       dragFree: false,
       loop: true,
     },
@@ -75,25 +76,36 @@ const ConcertCarousel = ({ items }: ConcertCarouselProps) => {
     [isCarouselEnabled, scrollPrev, scrollNext]
   );
 
+  const getIsActive = (idx: number) => {
+    if (!isCarouselEnabled) return false;
+    const prevIndex =
+      selectedIndex === 0 ? items.length - 1 : selectedIndex - 1;
+    const nextIndex =
+      selectedIndex === items.length - 1 ? 0 : selectedIndex + 1;
+
+    return idx === prevIndex || idx === selectedIndex || idx === nextIndex;
+  };
+
   if (items.length === 0) return null;
 
   return (
     <Box sx={{ position: 'relative' }}>
       <Box
         ref={carouselRef}
-        sx={{ overflow: 'hidden' }}
         role="region"
         aria-label="최신 콘서트 배너"
         onKeyDown={handleKeyDown}
         tabIndex={0}
       >
-        <Box sx={{ display: 'flex', gap: 2, pl: 2 }}>
+        <Box sx={{ display: 'flex', gap: 2.6, px: 2.6 }}>
           {items.map((item, idx) => (
             <ConcertCarouselSlide
               key={item.id}
               item={item}
               idx={idx}
               total={items.length}
+              isActive={getIsActive(idx)}
+              isSelected={selectedIndex === idx}
             />
           ))}
         </Box>

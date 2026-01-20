@@ -7,7 +7,6 @@ interface SectionProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   maxWidth?: ContainerProps['maxWidth'];
-  mt?: number;
   sx?: SxProps<Theme>;
 }
 
@@ -15,12 +14,11 @@ const Section = ({
   maxWidth,
   children,
   fullWidth,
-  mt,
   sx,
   title,
 }: SectionProps) => {
   return (
-    <SectionWrapper fullWidth={fullWidth} maxWidth={maxWidth} sx={sx} mt={mt}>
+    <SectionWrapper fullWidth={fullWidth} maxWidth={maxWidth} sx={sx}>
       {title && (
         <Box sx={{ mb: 3 }}>
           <Typography

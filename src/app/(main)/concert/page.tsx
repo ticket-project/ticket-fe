@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 const ConcertPage = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <Section fullWidth mt={40}>
+      <Section fullWidth sx={{ marginTop: 8 }}>
         <ConcertCarousel items={concertCarouselData} />
       </Section>
 

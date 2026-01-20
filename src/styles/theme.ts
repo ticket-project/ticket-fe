@@ -14,6 +14,7 @@ const theme = createTheme({
       xl: 1920,
     },
   },
+
   // spacing: 8, // 기본 spacing unit (8px)
   // shape: {
   //   borderRadius: 8,
@@ -79,6 +80,16 @@ const theme = createTheme({
         },
         '.MuiButtonBase-root.Mui-focusVisible': {
           outline: '2px solid blue',
+        },
+      },
+    },
+
+    MuiContainer: {
+      defaultProps: { disableGutters: true },
+      styleOverrides: {
+        root: {
+          paddingLeft: 20,
+          paddingRight: 20,
         },
       },
     },

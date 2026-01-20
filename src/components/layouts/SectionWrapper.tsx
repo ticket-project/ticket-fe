@@ -6,7 +6,6 @@ interface SectionWrapperProps {
   maxWidth?: ContainerProps['maxWidth'];
   fullWidth?: boolean;
   spacing?: number;
-  mt?: number;
   sx?: SxProps<Theme>;
 }
 
@@ -14,23 +13,20 @@ const SectionWrapper = ({
   maxWidth = 'lg',
   children,
   fullWidth = false,
-  mt = 0,
   spacing = 0,
   sx,
 }: SectionWrapperProps) => {
   if (fullWidth) {
     return (
-      <Box component="section" sx={{ mt, p: 0 }}>
+      <Box component="section" sx={{ p: 0, ...sx }}>
         {children}
       </Box>
     );
   }
 
   return (
-    <Box component="section" sx={{ mt }}>
-      <Container maxWidth={maxWidth} sx={{ mb: spacing, ...sx }}>
-        {children}
-      </Container>
+    <Box component="section" sx={{ mb: spacing, ...sx }}>
+      <Container maxWidth={maxWidth}>{children}</Container>
     </Box>
   );
 };
