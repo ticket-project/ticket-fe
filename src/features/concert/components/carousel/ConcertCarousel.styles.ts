@@ -1,4 +1,4 @@
-import { styled, Card, CardActionArea, Box } from '@mui/material';
+import { styled, Card, CardActionArea, CardContent } from '@mui/material';
 
 interface StyledCardProps {
   isSelected: boolean;
@@ -17,46 +17,47 @@ export const StyledCard = styled(Card, {
   marginRight: isSelected ? theme.spacing(2.6) : 0,
   minWidth: 0,
   overflow: 'visible',
-  [theme.breakpoints.between('md', 'lg')]: {
-    flex: '0 0 33.333%',
-  },
+  transition: 'margin 0.3s ease',
+
   [theme.breakpoints.down('md')]: {
     flex: '0 0 100%',
+  },
+  [theme.breakpoints.between('md', 'lg')]: {
+    flex: '0 0 33.333%',
   },
   [theme.breakpoints.up('lg')]: {
     flex: '0 0 22%',
   },
-  transition: 'margin 0.3s ease',
+  aspectRatio: '3/3.5',
 }));
 
 export const StyledCardActionArea = styled(CardActionArea, {
   shouldForwardProp: (prop) => prop !== 'isActive' && prop !== 'isSelected',
-})<StyledCardActionAreaProps>(({ isActive, isSelected }) => ({
+})<StyledCardActionAreaProps>(({ isActive, isSelected, theme }) => ({
   height: '100%',
   borderRadius: '1.8rem',
-  '&:after': {
-    position: 'absolute',
-    zIndex: 1,
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    backdropFilter: 'blur(3px)',
-    content: '""',
-    inset: 0,
-    opacity: isActive ? 0 : 1,
-    transition: 'opacity 0.2s ease, backdrop-filter 0.2s ease',
-  },
   overflow: 'hidden',
   transform: isSelected ? 'scale(1.1)' : 'scale(1)',
   transition: 'transform 0.3s ease',
+  '&:after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    zIndex: 1,
+    height: '100%',
+    width: '100%',
+    backdropFilter: 'blur(3px)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    opacity: isActive ? 0 : 1,
+    transition: 'opacity 0.2s ease, backdrop-filter 0.2s ease',
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    transform: 'none',
+  },
 }));
 
-export const ImageBox = styled(Box)({
-  position: 'relative',
-  aspectRatio: '3/3.5',
-});
-
-export const ContentBox = styled(Box)(({ theme }) => ({
+export const ContentBox = styled(CardContent)(({ theme }) => ({
   position: 'absolute',
   bottom: 0,
   padding: theme.spacing(3, 3),

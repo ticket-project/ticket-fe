@@ -5,9 +5,8 @@ import { ConcertCarouselItem } from '../../types/concert.types';
 import {
   StyledCard,
   StyledCardActionArea,
-  ImageBox,
   ContentBox,
-} from './ConcertCarouselSlide.styles';
+} from './ConcertCarousel.styles';
 
 interface ConcertCarouselSlideProps {
   idx: number;
@@ -26,6 +25,7 @@ const ConcertCarouselSlide = ({
 }: ConcertCarouselSlideProps) => {
   return (
     <StyledCard
+      as="li"
       role="group"
       aria-label={`슬라이드 ${idx + 1} / ${total}`}
       elevation={0}
@@ -40,16 +40,14 @@ const ConcertCarouselSlide = ({
         isActive={isActive}
         isSelected={isSelected}
       >
-        <ImageBox>
-          <Image
-            src={item.image.src}
-            alt={item.image.alt}
-            fill
-            sizes="(max-width: 767px) 100vw, (max-width: 1279px) 33.333vw, 25vw"
-            style={{ objectFit: 'cover' }}
-            priority={idx === 0}
-          />
-        </ImageBox>
+        <Image
+          src={item.image.src}
+          alt={item.image.alt}
+          fill
+          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 33.333vw, 25vw"
+          style={{ objectFit: 'cover' }}
+          priority={idx === 0}
+        />
         <ContentBox>
           <Typography variant="overline" sx={{ fontSize: '1.6rem' }}>
             {item.subtitle}

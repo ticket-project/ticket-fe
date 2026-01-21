@@ -27,7 +27,7 @@ const MainHeader = ({}) => {
       // className={className}
     >
       <Box sx={{ borderBottom: 1, borderColor: 'grey.100' }}>
-        <Container>
+        <Container sx={{ px: 2 }}>
           <Toolbar disableGutters>
             <Box
               component={Link}
@@ -75,7 +75,7 @@ const MainHeader = ({}) => {
           </Toolbar>
         </Container>
       </Box>
-      <Container>
+      <Container sx={{ px: 2 }}>
         <Toolbar disableGutters variant="dense">
           <nav aria-label="메뉴" id="gnb-menu" tabIndex={-1}>
             <Box component="ul" sx={{ display: 'flex' }}>

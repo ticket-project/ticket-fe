@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const ConcertPage = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <Section fullWidth sx={{ marginTop: 8 }}>
         <ConcertCarouselSection />
       </Section>

@@ -5,7 +5,7 @@
 import { Box, CircularProgress } from '@mui/material';
 import { useUpcomingTop5 } from '@/features/concert/hooks/useConcertQueries';
 import { EmptyState } from '@/components/common/EmptyState';
-import UpcomingConcerts from '../components/upcoming/UpcomingConcerts';
+import { UpcomingConcerts } from '../components/upcoming';
 
 const UpcomingConcertSection = () => {
   const { data, isError, isLoading, refetch } = useUpcomingTop5();

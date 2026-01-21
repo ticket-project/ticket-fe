@@ -25,7 +25,7 @@ const SectionWrapper = ({
   }
 
   return (
-    <Box component="section" sx={{ mb: spacing, ...sx }}>
+    <Box component="section" sx={{ mb: spacing, px: 2, ...sx }}>
       <Container maxWidth={maxWidth}>{children}</Container>
     </Box>
   );

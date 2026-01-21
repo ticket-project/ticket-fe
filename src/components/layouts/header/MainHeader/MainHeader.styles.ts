@@ -20,13 +20,13 @@ export const NavButton = styled(Button)(({ theme }) => ({
   '&[aria-current="page"]': {
     color: theme.palette.primary.main,
     '&::after': {
+      content: '""',
       position: 'absolute',
       bottom: '-0.6rem',
       left: 0,
       right: 0,
       height: '2px',
       backgroundColor: theme.palette.primary.main,
-      content: '""',
     },
   },
 }));
@@ -62,11 +62,11 @@ export const SearchButton = styled(Button)(({ theme }) => ({
   minWidth: 'auto',
   padding: '1rem 1.2rem',
   color: theme.palette.primary.main,
+  transform: 'translateY(-50%)',
+
   '&:hover': {
     color: theme.palette.primary.dark,
   },
-
-  transform: 'translateY(-50%)',
 }));
 
 export const StyledInputBase = styled(InputBase)({

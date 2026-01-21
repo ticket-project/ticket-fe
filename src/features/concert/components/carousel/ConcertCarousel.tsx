@@ -94,7 +94,7 @@ const ConcertCarousel = ({ items }: ConcertCarouselProps) => {
         onKeyDown={handleKeyDown}
         tabIndex={0}
       >
-        <Box sx={{ display: 'flex', gap: 2.6, px: 2.6 }}>
+        <Box component="ul" sx={{ display: 'flex', gap: 2.6, px: 2.6 }}>
           {items.map((item, idx) => (
             <ConcertCarouselSlide
               key={item.id}

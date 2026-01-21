@@ -86,10 +86,20 @@ const theme = createTheme({
 
     MuiContainer: {
       defaultProps: { disableGutters: true },
+      // styleOverrides: {
+      //   root: {
+      //     paddingLeft: 20,
+      //     paddingRight: 20,
+      //   },
+      // },
+    },
+    MuiCardActionArea: {
       styleOverrides: {
         root: {
-          paddingLeft: 20,
-          paddingRight: 20,
+          '& .MuiCardActionArea-focusHighlight': {
+            opacity: 0,
+            backgroundColor: 'transparent',
+          },
         },
       },
     },
@@ -107,6 +117,14 @@ const theme = createTheme({
           '&:hover': {
             color: '#ff5500',
             backgroundColor: 'transparent',
+          },
+        },
+
+        outlined: {
+          borderColor: '#c0c0c0',
+          '&:hover': {
+            borderColor: '#ff5500',
+            backgroundColor: 'rgba(255, 85, 0, 0.04)',
           },
         },
       },
