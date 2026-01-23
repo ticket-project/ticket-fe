@@ -1,15 +1,15 @@
-import { UpcomingCarouselItem } from '../../types/concert.types';
-import UpcomingConcertCard from './UpcomingConcertCard';
+import { UpcomingConcertItem } from '../../types/concert.types';
+import UpcomingConcertCard from '../ConcertCard';
 import UpcomingConcertMoreButton from './UpcomingConcertMoreButton';
-import { UpcomingList } from './UpcomingConcerts.style';
+import { UpcomingConcertCardList } from '../Concerts.style';
 interface UpcomingConcertsProps {
-  items: UpcomingCarouselItem[];
+  items: UpcomingConcertItem[];
 }
 
 const UpcomingConcerts = ({ items }: UpcomingConcertsProps) => {
   return (
     <>
-      <UpcomingList
+      <UpcomingConcertCardList
         as="ul"
         tabIndex={0}
         role="region"
@@ -18,7 +18,7 @@ const UpcomingConcerts = ({ items }: UpcomingConcertsProps) => {
         {items.map((item) => (
           <UpcomingConcertCard key={item.id} item={item} />
         ))}
-      </UpcomingList>
+      </UpcomingConcertCardList>
       <UpcomingConcertMoreButton />
     </>
   );

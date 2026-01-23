@@ -9,13 +9,14 @@ export interface ConcertCarouselItem {
   concertEndDate: string;
   type: 'ballad' | 'rock' | 'international' | 'festival';
   ticketOpenDate: string;
+  saleType: '단독판매' | '일반판매';
   image: {
     src: string;
     alt: string;
   };
 }
 
-export interface UpcomingCarouselItem {
+export interface UpcomingConcertItem {
   id: string;
   title: string;
   subtitle: string;
@@ -24,6 +25,23 @@ export interface UpcomingCarouselItem {
   concertEndDate: string;
   type: 'ballad' | 'rock' | 'international' | 'festival';
   ticketOpenDate: string;
+  saleType: '단독판매' | '일반판매';
+  image: {
+    src: string;
+    alt: string;
+  };
+}
+
+export interface ConcertItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  venue: string;
+  concertStartDate: string;
+  concertEndDate: string;
+  type: 'ballad' | 'rock' | 'international' | 'festival';
+  ticketOpenDate: string;
+  saleType: '단독판매' | '일반판매';
   image: {
     src: string;
     alt: string;

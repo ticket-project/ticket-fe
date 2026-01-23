@@ -4,7 +4,7 @@ import {
 } from '../data/concertMocksData';
 import {
   ConcertCarouselItem,
-  UpcomingCarouselItem,
+  UpcomingConcertItem,
 } from '../types/concert.types';
 
 export const getConcertCarousel = async (): Promise<ConcertCarouselItem[]> => {
@@ -18,7 +18,7 @@ export const getConcertCarousel = async (): Promise<ConcertCarouselItem[]> => {
 export const getUpcomingConcerts = async (
   limit?: number,
   sortBy?: 'date'
-): Promise<UpcomingCarouselItem[]> => {
+): Promise<UpcomingConcertItem[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       let data = [...upcomingConcertsData];

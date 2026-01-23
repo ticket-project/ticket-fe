@@ -1,65 +1,75 @@
-import { styled, Card, CardActionArea, CardContent } from '@mui/material';
-
-interface StyledCardProps {
-  isSelected: boolean;
-}
+import {
+  styled,
+  Card,
+  CardActionArea,
+  CardContent,
+  Box,
+  IconButton,
+} from '@mui/material';
 
 interface StyledCardActionAreaProps {
-  isActive: boolean;
   isSelected: boolean;
 }
 
-export const StyledCard = styled(Card, {
-  shouldForwardProp: (prop) => prop !== 'isSelected',
-})<StyledCardProps>(({ isSelected, theme }) => ({
-  position: 'relative',
-  marginLeft: isSelected ? theme.spacing(2.6) : 0,
-  marginRight: isSelected ? theme.spacing(2.6) : 0,
-  minWidth: 0,
-  overflow: 'visible',
-  transition: 'margin 0.3s ease',
+interface StyledIconButtonProps {
+  direction: 'prev' | 'next';
+}
 
+export const ConcertCarouselContainer = styled(Box)(({ theme }) => ({
+  alignItems: 'center',
+  display: 'flex',
+  marginLeft: theme.spacing(-8),
+}));
+
+export const StyledCard = styled(Card)(({ theme }) => ({
+  minWidth: 0,
+  paddingLeft: theme.spacing(8),
+  overflow: 'visible',
   [theme.breakpoints.down('md')]: {
     flex: '0 0 100%',
   },
-  [theme.breakpoints.between('md', 'lg')]: {
-    flex: '0 0 33.333%',
+  [theme.breakpoints.up('md')]: {
+    flex: '0 0 36%',
   },
-  [theme.breakpoints.up('lg')]: {
-    flex: '0 0 22%',
-  },
-  aspectRatio: '3/3.5',
 }));
 
 export const StyledCardActionArea = styled(CardActionArea, {
-  shouldForwardProp: (prop) => prop !== 'isActive' && prop !== 'isSelected',
-})<StyledCardActionAreaProps>(({ isActive, isSelected, theme }) => ({
+  shouldForwardProp: (prop) => prop !== 'isSelected',
+})<StyledCardActionAreaProps>(({ isSelected, theme }) => ({
   height: '100%',
-  borderRadius: '1.8rem',
+  // borderRadius: '1rem',
   overflow: 'hidden',
-  transform: isSelected ? 'scale(1.1)' : 'scale(1)',
-  transition: 'transform 0.3s ease',
-  '&:after': {
-    content: '""',
-    position: 'absolute',
-    inset: 0,
-    zIndex: 1,
-    height: '100%',
-    width: '100%',
-    backdropFilter: 'blur(3px)',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    opacity: isActive ? 0 : 1,
-    transition: 'opacity 0.2s ease, backdrop-filter 0.2s ease',
+  transform: isSelected ? 'scale(1.18)' : 'scale(1)',
+  transition: 'transform 0.2s',
+  [theme.breakpoints.down('md')]: {
+    transform: 'scale(1)',
   },
-
-  [theme.breakpoints.down('sm')]: {
-    transform: 'none',
-  },
+  aspectRatio: '1/1',
 }));
 
 export const ContentBox = styled(CardContent)(({ theme }) => ({
   position: 'absolute',
   bottom: 0,
-  padding: theme.spacing(3, 3),
+  padding: theme.spacing(3, 1),
   width: '100%',
+  textAlign: 'center',
+}));
+
+export const StyledIconButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'direction',
+})<StyledIconButtonProps>(({ direction }) => ({
+  position: 'absolute',
+  top: '50%',
+  height: 'var(--button-size)',
+  width: 'var(--button-size)',
+  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+  transform: 'translateY(-50%)',
+  '--button-size': '48px',
+  ...(direction === 'prev'
+    ? { left: 'calc((var(--button-size) / 2) * -1)' }
+    : { right: 'calc((var(--button-size) / 2) * -1)' }),
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+  },
 }));

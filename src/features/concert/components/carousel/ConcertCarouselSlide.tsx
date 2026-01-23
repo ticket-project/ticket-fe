@@ -12,13 +12,11 @@ interface ConcertCarouselSlideProps {
   idx: number;
   item: ConcertCarouselItem;
   total: number;
-  isActive: boolean;
   isSelected: boolean;
 }
 
 const ConcertCarouselSlide = ({
   idx,
-  isActive,
   isSelected,
   item,
   total,
@@ -29,7 +27,6 @@ const ConcertCarouselSlide = ({
       role="group"
       aria-label={`슬라이드 ${idx + 1} / ${total}`}
       elevation={0}
-      isSelected={isSelected}
     >
       <StyledCardActionArea
         {...{
@@ -37,7 +34,6 @@ const ConcertCarouselSlide = ({
           href: `/concert/${item.id}`,
         }}
         aria-label={`${item.title} 상세로 이동`}
-        isActive={isActive}
         isSelected={isSelected}
       >
         <Image
@@ -49,13 +45,20 @@ const ConcertCarouselSlide = ({
           priority={idx === 0}
         />
         <ContentBox>
-          <Typography variant="overline" sx={{ fontSize: '1.6rem' }}>
-            {item.subtitle}
-          </Typography>
           <Typography variant="h6" sx={{ fontSize: '2.6rem', fontWeight: 900 }}>
             {item.title}
           </Typography>
-          <Typography
+          <span
+            style={{ display: 'block', fontSize: '1.5rem', fontWeight: 600 }}
+          >
+            {item.concertStartDate} ~ {item.concertEndDate}
+          </span>
+          <span
+            style={{ display: 'block', fontSize: '1.5rem', fontWeight: 600 }}
+          >
+            {item.venue}
+          </span>
+          {/* <Typography
             variant="body2"
             sx={{ fontSize: '1.5rem', fontWeight: 600 }}
           >
@@ -66,7 +69,7 @@ const ConcertCarouselSlide = ({
             sx={{ fontSize: '1.5rem', fontWeight: 600 }}
           >
             {item.concertStartDate} ~ {item.concertEndDate}
-          </Typography>
+          </Typography> */}
         </ContentBox>
       </StyledCardActionArea>
     </StyledCard>

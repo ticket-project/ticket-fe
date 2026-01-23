@@ -26,7 +26,7 @@ const theme = createTheme({
     primary: {
       contrastText: '#ffffff',
       dark: '#e24a00',
-      light: '#ff836c',
+      light: '#fef4f0',
       main: '#ff5500',
     },
     // secondary: {
@@ -39,11 +39,12 @@ const theme = createTheme({
     //   // default: '#FFFFFF', // 메인 배경
     //   // paper: '#FAFAFA', // 카드/서피스 배경
     // },
-    // text: {
-    //   // primary: '#212529', // 주요 텍스트
-    //   // secondary: '#757575', // 보조 텍스트
-    //   // disabled: '#BDBDBD',
-    // },
+    text: {
+      // default: '#212529',
+      primary: '#ff5500', // 주요 텍스트
+      secondary: '#7a7a7a', // 보조 텍스트
+      disabled: '#BDBDBD',
+    },
     success: {
       main: '#34c759',
     },
@@ -124,7 +125,7 @@ const theme = createTheme({
           borderColor: '#c0c0c0',
           '&:hover': {
             borderColor: '#ff5500',
-            backgroundColor: 'rgba(255, 85, 0, 0.04)',
+            backgroundColor: '#fef4f0',
           },
         },
       },
@@ -183,14 +184,17 @@ const theme = createTheme({
     },
 
     fontFamily: [
-      'CustomFont',
       '-apple-system',
       'BlinkMacSystemFont',
-      '"Segoe UI"',
+      'Segoe UI',
       'Roboto',
-      '"Helvetica Neue"',
       'Arial',
+      'Noto Sans',
       'sans-serif',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      'Noto Color emoji',
     ].join(','),
     htmlFontSize: 10, // 1rem = 10px
     // h1: {

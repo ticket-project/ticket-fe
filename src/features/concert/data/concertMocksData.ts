@@ -1,6 +1,6 @@
 import {
   ConcertCarouselItem,
-  UpcomingCarouselItem,
+  UpcomingConcertItem,
 } from '../types/concert.types';
 
 export const concertCarouselData: ConcertCarouselItem[] = [
@@ -13,6 +13,7 @@ export const concertCarouselData: ConcertCarouselItem[] = [
     concertEndDate: '2024-05-17',
     type: 'festival',
     ticketOpenDate: '2024-04-01',
+    saleType: '일반판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: '2024 서울 재즈 페스티벌',
@@ -27,6 +28,7 @@ export const concertCarouselData: ConcertCarouselItem[] = [
     concertEndDate: '2024-06-23',
     type: 'ballad',
     ticketOpenDate: '2024-05-10',
+    saleType: '일반판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: 'IU 콘서트 2024',
@@ -41,6 +43,7 @@ export const concertCarouselData: ConcertCarouselItem[] = [
     concertEndDate: '2024-07-14',
     type: 'rock',
     ticketOpenDate: '2024-06-01',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: 'NELL 20주년 콘서트',
@@ -55,6 +58,7 @@ export const concertCarouselData: ConcertCarouselItem[] = [
     concertEndDate: '2024-08-07',
     type: 'international',
     ticketOpenDate: '2024-07-01',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: 'Coldplay Music of the Spheres',
@@ -69,6 +73,7 @@ export const concertCarouselData: ConcertCarouselItem[] = [
     concertEndDate: '2024-09-19',
     type: 'rock',
     ticketOpenDate: '2024-08-10',
+    saleType: '일반판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: '데이식스 콘서트',
@@ -83,6 +88,7 @@ export const concertCarouselData: ConcertCarouselItem[] = [
     concertEndDate: '2024-10-27',
     type: 'ballad',
     ticketOpenDate: '2024-09-15',
+    saleType: '일반판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: '백예린 단독 콘서트',
@@ -90,7 +96,7 @@ export const concertCarouselData: ConcertCarouselItem[] = [
   },
 ];
 
-export const upcomingConcertsData: UpcomingCarouselItem[] = [
+export const upcomingConcertsData: UpcomingConcertItem[] = [
   {
     id: '1',
     title: '2024 서울 재즈 페스티벌',
@@ -100,6 +106,7 @@ export const upcomingConcertsData: UpcomingCarouselItem[] = [
     concertEndDate: '2024-05-17',
     type: 'festival',
     ticketOpenDate: '2024-04-01',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: '2024 서울 재즈 페스티벌',
@@ -114,6 +121,7 @@ export const upcomingConcertsData: UpcomingCarouselItem[] = [
     concertEndDate: '2024-06-23',
     type: 'ballad',
     ticketOpenDate: '2024-05-10',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: 'IU 콘서트 2024',
@@ -128,6 +136,7 @@ export const upcomingConcertsData: UpcomingCarouselItem[] = [
     concertEndDate: '2024-07-14',
     type: 'rock',
     ticketOpenDate: '2024-06-01',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: 'NELL 20주년 콘서트',
@@ -142,6 +151,7 @@ export const upcomingConcertsData: UpcomingCarouselItem[] = [
     concertEndDate: '2024-08-07',
     type: 'international',
     ticketOpenDate: '2024-07-01',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: 'Coldplay Music of the Spheres',
@@ -156,6 +166,7 @@ export const upcomingConcertsData: UpcomingCarouselItem[] = [
     concertEndDate: '2024-09-19',
     type: 'rock',
     ticketOpenDate: '2024-08-10',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: '데이식스 콘서트',
@@ -170,6 +181,97 @@ export const upcomingConcertsData: UpcomingCarouselItem[] = [
     concertEndDate: '2024-10-27',
     type: 'ballad',
     ticketOpenDate: '2024-09-15',
+    saleType: '단독판매',
+    image: {
+      src: '/images/dummy-poster.jpeg',
+      alt: '백예린 단독 콘서트',
+    },
+  },
+  {
+    id: '7',
+    title: '2024 서울 재즈 페스티벌',
+    subtitle: '최고의 재즈 아티스트들과 함께하는 밤',
+    venue: '올림픽공원 88잔디마당',
+    concertStartDate: '2024-05-15',
+    concertEndDate: '2024-05-17',
+    type: 'festival',
+    ticketOpenDate: '2024-04-01',
+    saleType: '일반판매',
+    image: {
+      src: '/images/dummy-poster.jpeg',
+      alt: '2024 서울 재즈 페스티벌',
+    },
+  },
+  {
+    id: '8',
+    title: 'IU 콘서트 2024',
+    subtitle: 'The Golden Hour',
+    venue: '고척스카이돔',
+    concertStartDate: '2024-06-20',
+    concertEndDate: '2024-06-23',
+    type: 'ballad',
+    ticketOpenDate: '2024-05-10',
+    saleType: '단독판매',
+    image: {
+      src: '/images/dummy-poster.jpeg',
+      alt: 'IU 콘서트 2024',
+    },
+  },
+  {
+    id: '9',
+    title: 'NELL 20주년 콘서트',
+    subtitle: 'The End of The Beginning',
+    venue: 'KSPO DOME',
+    concertStartDate: '2024-07-12',
+    concertEndDate: '2024-07-14',
+    type: 'rock',
+    ticketOpenDate: '2024-06-01',
+    saleType: '단독판매',
+    image: {
+      src: '/images/dummy-poster.jpeg',
+      alt: 'NELL 20주년 콘서트',
+    },
+  },
+  {
+    id: '10',
+    title: 'Coldplay Music of the Spheres',
+    subtitle: 'World Tour 2024',
+    venue: '잠실주경기장',
+    concertStartDate: '2024-08-05',
+    concertEndDate: '2024-08-07',
+    type: 'international',
+    ticketOpenDate: '2024-07-01',
+    saleType: '일반판매',
+    image: {
+      src: '/images/dummy-poster.jpeg',
+      alt: 'Coldplay Music of the Spheres',
+    },
+  },
+  {
+    id: '11',
+    title: '데이식스 콘서트',
+    subtitle: 'Forever Young',
+    venue: '잠실실내체육관',
+    concertStartDate: '2024-09-18',
+    concertEndDate: '2024-09-19',
+    type: 'rock',
+    ticketOpenDate: '2024-08-10',
+    saleType: '단독판매',
+    image: {
+      src: '/images/dummy-poster.jpeg',
+      alt: '데이식스 콘서트',
+    },
+  },
+  {
+    id: '12',
+    title: '백예린 단독 콘서트',
+    subtitle: 'Our Love is Great',
+    venue: '블루스퀘어 마스터카드홀',
+    concertStartDate: '2024-10-25',
+    concertEndDate: '2024-10-27',
+    type: 'ballad',
+    ticketOpenDate: '2024-09-15',
+    saleType: '단독판매',
     image: {
       src: '/images/dummy-poster.jpeg',
       alt: '백예린 단독 콘서트',

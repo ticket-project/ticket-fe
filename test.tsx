@@ -1,64 +1,116 @@
-import { Box, CardContent } from '@mui/material';
-import Image from 'next/image';
-import Link from 'next/link';
-import { UpcomingCarouselItem } from '../../types/concert.types';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import React, { useCallback, useEffect, useRef } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
 import {
-  PosterBox,
-  UpcomingCard,
-  UpcomingLinkArea,
-  UpcomingList,
-  ViewAllButton,
-  DateText,
-  TitleText,
-  VenueText,
-} from './UpcomingConcerts.style';
-interface UpcomingConcertsProps {
-  items: UpcomingCarouselItem[];
-}
+  NextButton,
+  PrevButton,
+  usePrevNextButtons,
+} from './EmblaCarouselArrowButtons';
+import { DotButton, useDotButton } from './EmblaCarouselDotButton';
 
-const UpcomingConcerts = ({ items }: UpcomingConcertsProps) => {
+const TWEEN_FACTOR_BASE = 0.52;
+
+const numberWithinRange = (number, min, max) =>
+  Math.min(Math.max(number, min), max);
+
+const EmblaCarousel = (props) => {
+  const { options, slides } = props;
+  const [emblaRef, emblaApi] = useEmblaCarousel(options);
+  const tweenFactor = useRef(0);
+  const tweenNodes = useRef([]);
+
+  const { onDotButtonClick, scrollSnaps, selectedIndex } =
+    useDotButton(emblaApi);
+
+  const {
+    nextBtnDisabled,
+    onNextButtonClick,
+    onPrevButtonClick,
+    prevBtnDisabled,
+  } = usePrevNextButtons(emblaApi);
+
+  const setTweenNodes = useCallback((emblaApi) => {
+    tweenNodes.current = emblaApi.slideNodes().map((slideNode) => {
+      return slideNode.querySelector('.embla__slide__number');
+    });
+  }, []);
+
+  const setTweenFactor = useCallback((emblaApi) => {
+    tweenFactor.current = TWEEN_FACTOR_BASE * emblaApi.snapList().length;
+  }, []);
+
+  const tweenScale = useCallback((emblaApi, event) => {
+    const engine = emblaApi.internalEngine();
+    const scrollProgress = emblaApi.scrollProgress();
+    const slidesInView = emblaApi.slidesInView();
+    const isScrollEvent = event?.type === 'scroll';
+
+    emblaApi.snapList().forEach((scrollSnap, snapIndex) => {
+      let diffToTarget = scrollSnap - scrollProgress;
+      const slidesInSnap = engine.scrollSnapList.slidesBySnap[snapIndex];
+
+      slidesInSnap.forEach((slideIndex) => {
+        if (isScrollEvent && !slidesInView.includes(slideIndex)) return;
+
+        if (engine.options.loop) {
+          engine.slideLooper.loopPoints.forEach((loopItem) => {
+            const target = loopItem.target();
+
+            if (slideIndex === loopItem.index && target !== 0) {
+              const sign = Math.sign(target);
+
+              if (sign === -1) {
+                diffToTarget = scrollSnap - (1 + scrollProgress);
+              }
+              if (sign === 1) {
+                diffToTarget = scrollSnap + (1 - scrollProgress);
+              }
+            }
+          });
+        }
+
+        const tweenValue = 1 - Math.abs(diffToTarget * tweenFactor.current);
+        const scale = numberWithinRange(tweenValue, 0, 1).toString();
+        const tweenNode = tweenNodes.current[slideIndex];
+        tweenNode.style.transform = `scale(${scale})`;
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    setTweenNodes(emblaApi);
+    setTweenFactor(emblaApi);
+    tweenScale(emblaApi);
+
+    emblaApi
+      .on('reinit', setTweenNodes)
+      .on('reinit', setTweenFactor)
+      .on('reinit', tweenScale)
+      .on('scroll', tweenScale)
+      .on('slidefocus', tweenScale);
+  }, [emblaApi, tweenScale]);
+
   return (
-    <>
-      <UpcomingList
-        component="ul"
-        tabIndex={0}
-        aria-label="Upcoming Concerts List"
-      >
-        {items.map((item) => (
-          <UpcomingCard component="li" key={item.id} elevation={0}>
-            <UpcomingLinkArea component={Link} href={`/concert/${item.id}`}>
-              <PosterBox>
-                <Image
-                  src={item.image.src}
-                  alt={item.image.alt}
-                  fill
-                  sizes="(max-width: 767px) 80vw, (max-width: 1279px) 30vw, 20vw"
-                  style={{ objectFit: 'cover' }}
-                />
-              </PosterBox>
-              <CardContent>
-                <DateText variant="overline">{item.ticketOpenDate}</DateText>
-                <TitleText variant="h6">{item.title}</TitleText>
-                <VenueText variant="body2">{item.venue}</VenueText>
-              </CardContent>
-            </UpcomingLinkArea>
-          </UpcomingCard>
-        ))}
-      </UpcomingList>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-        <ViewAllButton
-          component={Link}
-          href="/concert/upcoming"
-          variant="outlined"
-          size="large"
-        >
-          오픈예정 공연 전체보기
-          <ChevronRightIcon sx={{ ml: 1 }} />
-        </ViewAllButton>
-      </Box>
-    </>
+    <div className="embla">
+      <div className="embla__viewport" ref={emblaRef}>
+        <div className="embla__container">
+          {slides.map((index) => (
+            <div className="embla__slide" key={index}>
+              <div className="embla__slide__number">{index + 1}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="embla__controls">
+        <div className="embla__buttons">
+          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default UpcomingConcerts;
+export default EmblaCarousel;
