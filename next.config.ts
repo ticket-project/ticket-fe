@@ -12,9 +12,13 @@ const nextConfig: NextConfig = {
     emotion: true,
   },
 
-  // 환경 변수
-  env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/:path*`,
+      },
+    ];
   },
 };
 

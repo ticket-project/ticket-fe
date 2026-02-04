@@ -1,27 +1,45 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/react-query/queryKeys';
-import { getConcertCarousel, getUpcomingConcerts } from '../api';
+import {
+  getConcertCarousel,
+  getConcertList,
+  getUpcomingConcerts,
+  getUpcomingConcertsPreview,
+} from '../api';
+
+export const CONCERT_QUERY_OPTIONS = {
+  staleTime: 1000 * 60 * 5,
+  gcTime: 1000 * 60 * 10,
+} as const;
 
 export const useConcertCarousel = () => {
   return useQuery({
     queryKey: queryKeys.concert.carousel(),
     queryFn: getConcertCarousel,
-    staleTime: 1000 * 60 * 5, // 5분간 데이터가 신선하다고 간주 (불필요한 재요청 방지)
+    ...CONCERT_QUERY_OPTIONS,
   });
 };
 
-export const useUpcomingConcerts = (limit?: number, sortBy?: 'date') => {
+export const useUpcomingConcertsPreview = () => {
   return useQuery({
-    queryKey: queryKeys.concert.upcoming(limit, sortBy),
-    queryFn: () => getUpcomingConcerts(limit, sortBy),
-    staleTime: 1000 * 60 * 5,
+    queryKey: queryKeys.concert.upcomingPreview(),
+    queryFn: getUpcomingConcertsPreview,
+    ...CONCERT_QUERY_OPTIONS,
   });
 };
 
-export const useUpcomingTop5 = () => {
-  return useUpcomingConcerts(5, 'date');
+export const useUpcomingConcerts = () => {
+  return useQuery({
+    queryKey: queryKeys.concert.upcoming(),
+    queryFn: getUpcomingConcerts,
+    ...CONCERT_QUERY_OPTIONS,
+  });
 };
 
-export const useUpcomingConcertsFull = () => {
-  return useUpcomingConcerts(undefined, 'date');
+export const useConcertList = () => {
+  return useQuery({
+    queryKey: queryKeys.concert.list(),
+    queryFn: getConcertList,
+    ...CONCERT_QUERY_OPTIONS,
+  });
 };

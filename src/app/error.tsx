@@ -1,15 +1,16 @@
 'use client';
 
-/**
- * 에러 페이지
- */
+import { EmptyState } from '@/components/common/EmptyState';
+import { useRouter } from 'next/navigation';
 
 const Error = () => {
+  const router = useRouter();
   return (
-    <div>
-      <h2>문제가 발생했습니다!</h2>
-      {/* <button onClick={() => reset()}>다시 시도</button> */}
-    </div>
+    <EmptyState
+      title="데이터를 불러올 수 없습니다."
+      description="잠시 후 다시 시도해주세요."
+      onRetry={() => router.refresh()}
+    />
   );
 };
 

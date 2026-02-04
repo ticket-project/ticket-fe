@@ -37,8 +37,10 @@ const ConcertCarouselSlide = ({
         isSelected={isSelected}
       >
         <Image
-          src={item.image.src}
-          alt={item.image.alt}
+          // src={item.image.src}
+          // alt={item.image.alt}
+          src="/images/dummy-poster.jpeg"
+          alt={`${item.title} 포스터`}
           fill
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 33.333vw, 25vw"
           style={{ objectFit: 'cover' }}
@@ -51,7 +53,7 @@ const ConcertCarouselSlide = ({
           <span
             style={{ display: 'block', fontSize: '1.5rem', fontWeight: 600 }}
           >
-            {item.concertStartDate} ~ {item.concertEndDate}
+            {item.startDate} ~ {item.endDate}
           </span>
           <span
             style={{ display: 'block', fontSize: '1.5rem', fontWeight: 600 }}

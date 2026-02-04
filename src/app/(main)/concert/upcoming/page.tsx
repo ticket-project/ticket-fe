@@ -1,11 +1,17 @@
+'use client';
+
 import Section from '@/components/layouts/Section';
-import ConcertListSection from '@/features/concert/sections/ConcertListSection';
+import ConcertList from '@/features/concert/components/ConcertList';
+import { useUpcomingConcerts } from '@/features/concert/hooks/useConcertQueries';
+import QueryBoundary from '@/components/common/QueryBoundary';
 
 const UpcomingPage = () => {
+  const upcoming = useUpcomingConcerts();
   return (
     <Section title="오픈예정">
-      {/* 전체리스트 형태 이거 컴포넌트화 */}
-      <ConcertListSection />
+      <QueryBoundary query={upcoming}>
+        {(items) => <ConcertList items={items} />}
+      </QueryBoundary>
     </Section>
   );
 };

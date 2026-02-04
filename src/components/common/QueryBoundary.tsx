@@ -1,14 +1,18 @@
 'use client';
 
 import { Box, CircularProgress } from '@mui/material';
-import { useConcertCarousel } from '@/features/concert/hooks/useConcertQueries';
-import ConcertCarousel from '../components/carousel/ConcertCarousel';
 import { EmptyState } from '@/components/common/EmptyState';
+import { UseQueryResult } from '@tanstack/react-query';
 
-const ConcertCarouselSection = () => {
-  const { data, isError, isLoading, refetch } = useConcertCarousel();
+interface QueryBoundaryProps<T> {
+  query: UseQueryResult<T[], Error>;
+  children: (items: T[]) => React.ReactNode;
+}
 
-  // 로딩 상태 처리
+const QueryBoundary = <T,>({ children, query }: QueryBoundaryProps<T>) => {
+  const { data, error, isError, isLoading, refetch } = query;
+
+  // 로딩
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 10 }}>
@@ -17,19 +21,20 @@ const ConcertCarouselSection = () => {
     );
   }
 
-  // 에러 상태 처리
+  // 에러
   if (isError) {
     return (
       <EmptyState
         title="데이터를 불러올 수 없습니다"
-        description="잠시 후 다시 시도해주세요."
+        description={`잠시 후 다시 시도해주세요. ${error.message}`}
         onRetry={refetch}
       />
     );
   }
 
   // 빈 데이터
-  if (!data || data.length === 0) {
+  const items = data ?? [];
+  if (items.length === 0) {
     return (
       <EmptyState
         title="등록된 콘서트가 없습니다"
@@ -38,7 +43,7 @@ const ConcertCarouselSection = () => {
     );
   }
 
-  return <ConcertCarousel items={data} />;
+  return <>{children(items)}</>;
 };
 
-export default ConcertCarouselSection;
+export default QueryBoundary;

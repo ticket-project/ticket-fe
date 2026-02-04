@@ -1,27 +1,41 @@
-import Section from '@/components/layouts/Section';
-import ConcertCarouselSection from '@/features/concert/sections/ConcertCarouselSection';
-import UpcomingConcertSection from '@/features/concert/sections/UpcomingConcertSection';
-import { Box } from '@mui/material';
+import {
+  getConcertCarousel,
+  getConcertList,
+  getUpcomingConcertsPreview,
+} from '@/features/concert/api';
 import { Metadata } from 'next';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { createQueryClient } from '@/lib/react-query/queryClient';
+import ConcertPageClient from '../../../features/concert/components/ConcertPageClient';
+import { queryKeys } from '@/lib/react-query/queryKeys';
 
 export const metadata: Metadata = {
   description: '최신 콘서트 정보를 확인하세요.',
   title: '콘서트 예매 | 티켓팅',
 };
 
-const ConcertPage = () => {
+const ConcertPage = async () => {
+  const queryClient = createQueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: queryKeys.concert.carousel(),
+      queryFn: getConcertCarousel,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: queryKeys.concert.upcomingPreview(),
+      queryFn: getUpcomingConcertsPreview,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: queryKeys.concert.list(),
+      queryFn: getConcertList,
+    }),
+  ]);
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <Section>
-        <ConcertCarouselSection />
-      </Section>
-
-      <Section title="오픈예정">
-        <UpcomingConcertSection />
-      </Section>
-
-      <Section title="전체리스트">cont</Section>
-    </Box>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ConcertPageClient />
+    </HydrationBoundary>
   );
 };
 

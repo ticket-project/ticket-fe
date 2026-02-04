@@ -1,9 +1,13 @@
-/**
- * 로딩 페이지
- */
+import { Box } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Loading = () => {
-  return <div>로딩 중...</div>;
+  return (
+    // <Box sx={{ display: 'flex', justifyContent: 'center', p: 10 }}>
+    //   <CircularProgress />
+    // </Box>
+    <></>
+  );
 };
 
 export default Loading;

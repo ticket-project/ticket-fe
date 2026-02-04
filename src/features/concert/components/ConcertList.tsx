@@ -1,9 +1,9 @@
-import { ConcertItem } from '../types/concert.types';
 import ConcertCard from './ConcertCard';
 import { ConcertCardList } from './Concerts.style';
+import { ConcertBase, UpcomingConcertItem } from '../types/concert.types';
 //타입 폴더에 공통으로 재정의하기
 interface ConcertListProps {
-  items: ConcertItem[];
+  items: ConcertBase[] | UpcomingConcertItem[];
 }
 
 const ConcertList = ({ items }: ConcertListProps) => {

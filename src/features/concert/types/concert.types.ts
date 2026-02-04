@@ -1,49 +1,37 @@
 // 나중애 보고 extends 이런거로 바꾸가
 
-export interface ConcertCarouselItem {
-  id: string;
+export interface ConcertBase {
+  id: number;
   title: string;
-  subtitle: string;
+  subTitle: string;
+  categoryName: string;
+  startDate: string;
+  endDate: string;
+  viewCount: number;
+  saleType: 'GENERAL' | 'EXCLUSIVE';
+  saleStartDate: string;
+  saleEndDate: string;
+  createdAt: string;
+  region: 'SEOUL' | 'BUSAN' | 'GYEONGGI' | 'JEJU';
   venue: string;
-  concertStartDate: string;
-  concertEndDate: string;
-  type: 'ballad' | 'rock' | 'international' | 'festival';
-  ticketOpenDate: string;
-  saleType: '단독판매' | '일반판매';
-  image: {
-    src: string;
-    alt: string;
-  };
+  image: string;
 }
 
-export interface UpcomingConcertItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  venue: string;
-  concertStartDate: string;
-  concertEndDate: string;
-  type: 'ballad' | 'rock' | 'international' | 'festival';
-  ticketOpenDate: string;
-  saleType: '단독판매' | '일반판매';
-  image: {
-    src: string;
-    alt: string;
-  };
+// 상세 정보
+export interface ConcertDetail extends ConcertBase {
+  // subTitle: string;
+  // viewCount: number;
+  // saleType: 'GENERAL' | 'EXCLUSIVE';
+  // saleStartDate: string;
+  // saleEndDate: string;
 }
 
-export interface ConcertItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  venue: string;
-  concertStartDate: string;
-  concertEndDate: string;
-  type: 'ballad' | 'rock' | 'international' | 'festival';
-  ticketOpenDate: string;
-  saleType: '단독판매' | '일반판매';
-  image: {
-    src: string;
-    alt: string;
-  };
-}
+export type ConcertCarouselItem = Pick<
+  ConcertBase,
+  'id' | 'title' | 'startDate' | 'endDate' | 'venue' | 'image'
+>;
+
+export type UpcomingConcertItem = Pick<
+  ConcertBase,
+  'id' | 'title' | 'saleType' | 'saleStartDate' | 'venue' | 'region' | 'image'
+>;

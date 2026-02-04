@@ -8,7 +8,7 @@ import perfectionist from 'eslint-plugin-perfectionist';
 export default tseslint.config(
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.styles.ts', '**/*.styles.tsx', '**/*.tsx'],
+    files: ['**/*.styles.ts', '**/*.styles.tsx'],
     plugins: { perfectionist },
     rules: {
       'perfectionist/sort-objects': [

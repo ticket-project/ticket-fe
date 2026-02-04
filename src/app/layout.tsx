@@ -4,8 +4,8 @@ import Providers from './providers';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: '티켓',
-  description: '티켓',
+  title: '티켓 예매 사이트',
+  description: '티켓 예매 사이트',
 };
 
 export default function RootLayout({
