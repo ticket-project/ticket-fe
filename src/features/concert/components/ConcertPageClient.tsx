@@ -10,7 +10,7 @@ import {
 import QueryBoundary from '@/components/common/QueryBoundary';
 import ConcertList from '@/features/concert/components/ConcertList';
 import { ConcertCarousel } from '@/features/concert/components/carousel';
-import UpcomingConcertMoreButton from '@/features/concert/components/upcoming/UpcomingConcertMoreButton';
+import UpcomingConcertsPreview from './upcoming/UpcomingConcertsPreview';
 
 const ConcertPageClient = () => {
   const carousel = useConcertCarousel();
@@ -27,9 +27,8 @@ const ConcertPageClient = () => {
 
       <Section title="오픈예정">
         <QueryBoundary query={upcomingPreview}>
-          {(items) => <ConcertList items={items} />}
+          {(items) => <UpcomingConcertsPreview items={items} />}
         </QueryBoundary>
-        <UpcomingConcertMoreButton />
       </Section>
 
       <Section title="전체리스트">

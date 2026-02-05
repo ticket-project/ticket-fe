@@ -16,6 +16,7 @@ import Tag from '@/components/ui/Tag';
 // 공용으로 써서 타입 바껴야할거같음
 interface ConcertCardProps {
   item: ConcertBase | UpcomingConcertItem;
+  variant?: 'hScroll' | 'grid';
 }
 
 const SALE_TYPE_LABEL: Record<ConcertBase['saleType'], string> = {
@@ -23,7 +24,7 @@ const SALE_TYPE_LABEL: Record<ConcertBase['saleType'], string> = {
   GENERAL: '일반판매',
 };
 
-const ConcertCard = ({ item }: ConcertCardProps) => {
+const ConcertCard = ({ item, variant = 'grid' }: ConcertCardProps) => {
   const isExclusive = item.saleType === 'EXCLUSIVE';
 
   return (
@@ -31,6 +32,7 @@ const ConcertCard = ({ item }: ConcertCardProps) => {
       <ConcertCardWrapper as="li" elevation={0}>
         <ConcertCardLinkArea
           {...{ component: Link, href: `/concert/${item.id}` }}
+          variant={variant}
         >
           <PosterBox>
             <Image

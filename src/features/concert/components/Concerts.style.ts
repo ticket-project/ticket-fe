@@ -1,27 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  styled,
-  Typography,
-} from '@mui/material';
-
-export const UpcomingConcertCardList = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing(2),
-  overflowX: 'auto',
-  scrollbarWidth: 'none',
-  WebkitOverflowScrolling: 'touch',
-  '&::-webkit-scrollbar': { display: 'none' },
-  scrollSnapType: 'x mandatory',
-  [theme.breakpoints.up('md')]: {
-    scrollSnapType: 'none',
-  },
-  [theme.breakpoints.up('lg')]: {
-    overflowX: 'visible',
-  },
-}));
+import { Box, Card, CardActionArea, styled, Typography } from '@mui/material';
 
 export const ConcertCardList = styled(Box)(({ theme }) => ({
   display: 'grid',
@@ -50,7 +27,9 @@ export const ConcertCardWrapper = styled(Card)(({ theme }) => ({
     flex: 1,
   },
 }));
-export const ConcertCardLinkArea = styled(CardActionArea)(({ theme }) => ({
+export const ConcertCardLinkArea = styled(CardActionArea)<{
+  variant?: 'hScroll' | 'grid';
+}>(({ variant, theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '1.6rem',
@@ -61,12 +40,14 @@ export const ConcertCardLinkArea = styled(CardActionArea)(({ theme }) => ({
   '& img': {
     transition: 'transform 0.3s ease',
   },
-  [theme.breakpoints.down('md')]: {
-    // 업커밍 제외
-    display: 'grid',
-    gridTemplateColumns: '1fr 1.5fr',
-    alignItems: 'center',
-  },
+  ...(variant !== 'hScroll' && {
+    [theme.breakpoints.down('md')]: {
+      // 업커밍 제외
+      display: 'grid',
+      gridTemplateColumns: '1fr 1.5fr',
+      alignItems: 'center',
+    },
+  }),
 }));
 
 export const PosterBox = styled(Box)(({ theme }) => ({
@@ -76,15 +57,6 @@ export const PosterBox = styled(Box)(({ theme }) => ({
   overflow: 'hidden',
   aspectRatio: '3/3.8',
   border: `1px solid ${theme.palette.grey[100]}`,
-}));
-
-export const ViewAllButton = styled(Button)(({ theme }) => ({
-  alignItems: 'center',
-  display: 'flex',
-  fontSize: '1.6rem',
-  fontWeight: 800,
-  borderRadius: 50,
-  padding: theme.spacing(1.5, 4),
 }));
 
 export const ConcertTicketDate = styled(Typography)(({ theme }) => ({
