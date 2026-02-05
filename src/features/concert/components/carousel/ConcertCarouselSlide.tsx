@@ -12,12 +12,10 @@ interface ConcertCarouselSlideProps {
   idx: number;
   item: ConcertCarouselItem;
   total: number;
-  isSelected: boolean;
 }
 
 const ConcertCarouselSlide = ({
   idx,
-  isSelected,
   item,
   total,
 }: ConcertCarouselSlideProps) => {
@@ -34,7 +32,6 @@ const ConcertCarouselSlide = ({
           href: `/concert/${item.id}`,
         }}
         aria-label={`${item.title} 상세로 이동`}
-        isSelected={isSelected}
       >
         <Image
           // src={item.image.src}

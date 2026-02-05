@@ -1,7 +1,6 @@
 'use client';
 
 import { Box } from '@mui/material';
-import Section from '@/components/layouts/Section';
 import {
   useConcertCarousel,
   useConcertList,
@@ -11,6 +10,8 @@ import QueryBoundary from '@/components/common/QueryBoundary';
 import ConcertList from '@/features/concert/components/ConcertList';
 import { ConcertCarousel } from '@/features/concert/components/carousel';
 import UpcomingConcertsPreview from './upcoming/UpcomingConcertsPreview';
+import SectionFrame from '@/components/layouts/SectionFrame';
+import ConcertFilter from './filter/ConcertFilter';
 
 const ConcertPageClient = () => {
   const carousel = useConcertCarousel();
@@ -18,24 +19,29 @@ const ConcertPageClient = () => {
   const concertList = useConcertList();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <Section>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <SectionFrame isFirstSection>
         <QueryBoundary query={carousel}>
           {(items) => <ConcertCarousel items={items} />}
         </QueryBoundary>
-      </Section>
+      </SectionFrame>
 
-      <Section title="오픈예정">
+      <SectionFrame title="오픈예정">
         <QueryBoundary query={upcomingPreview}>
           {(items) => <UpcomingConcertsPreview items={items} />}
         </QueryBoundary>
-      </Section>
+      </SectionFrame>
 
-      <Section title="전체리스트">
+      <SectionFrame title="전체리스트" actions={<ConcertFilter />}>
         <QueryBoundary query={concertList}>
-          {(items) => <ConcertList items={items} />}
+          {(items) => (
+            <>
+              {/* <FilterTest>필터링 영역</FilterTest> */}
+              <ConcertList items={items} />
+            </>
+          )}
         </QueryBoundary>
-      </Section>
+      </SectionFrame>
     </Box>
   );
 };

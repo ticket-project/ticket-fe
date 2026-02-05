@@ -20,52 +20,37 @@ const theme = createTheme({
   //   borderRadius: 8,
   // },
   palette: {
-    common: {
-      white: '#ffffff',
-    },
+    mode: 'light',
     primary: {
-      contrastText: '#ffffff',
-      dark: '#e24a00',
-      light: '#fef4f0',
-      main: '#ff5500',
+      main: '#dc2626',
+      dark: '#b91c1c',
+      light: '#ffecec',
     },
-    // secondary: {
-    //   main: '#ff5500',
-    //   light: '#ff836c',
-    //   dark: '#e24a00',
-    //   contrastText: '#ffffff',
-    // },
-    // background: {
-    //   // default: '#FFFFFF', // 메인 배경
-    //   // paper: '#FAFAFA', // 카드/서피스 배경
-    // },
-    text: {
-      // default: '#212529',
-      primary: '#ff5500', // 주요 텍스트
-      secondary: '#7a7a7a', // 보조 텍스트
-      disabled: '#BDBDBD',
-    },
-    success: {
-      main: '#34c759',
-    },
-    warning: {
-      main: '#ff9500',
+    secondary: {
+      main: '#f5f5f5',
     },
     error: {
-      main: '#d6341e',
+      main: '#dc2626',
+      dark: '#b91c1c',
+    },
+    success: {
+      main: '#16a34a',
+    },
+    background: {
+      default: '#ffffff',
+      paper: '#ffffff',
+    },
+    text: {
+      primary: '#1a1a1a',
+      secondary: '#737373',
     },
     grey: {
-      ////////// 필요한가...
-      50: '#f1f1f1',
-      100: '#dddddd',
-      200: '#c0c0c0',
-      300: '#a7a7a7',
-      400: '#909090',
-      500: '#7a7a7a',
-      600: '#666666',
-      700: '#4f4f4f',
-      800: '#313131',
-      900: '#111111',
+      50: '#fafafa',
+      100: '#f5f5f5',
+      200: '#e5e5e5',
+      500: '#737373',
+      800: '#333',
+      900: '#1a1a1a',
     },
   },
   components: {
@@ -116,7 +101,7 @@ const theme = createTheme({
         },
         text: {
           '&:hover': {
-            color: '#ff5500',
+            color: '#dc2626',
             backgroundColor: 'transparent',
           },
         },
@@ -124,7 +109,7 @@ const theme = createTheme({
         outlined: {
           borderColor: '#c0c0c0',
           '&:hover': {
-            borderColor: '#ff5500',
+            borderColor: '#dc2626',
             backgroundColor: '#fef4f0',
           },
         },
