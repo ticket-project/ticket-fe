@@ -1,8 +1,15 @@
 'use client';
 
-import { Box, Chip, FormControl, MenuItem, Select, Stack } from '@mui/material';
+import { MenuItem, Select } from '@mui/material';
 import { ConcertFilterState, Genre, Region, Sort } from '../../types';
 import { GENRE_OPTIONS, REGION_OPTIONS, SORT_OPTIONS } from '../../constants';
+import {
+  Root,
+  GenreStack,
+  GenreChip,
+  SelectStack,
+  SelectControl,
+} from './ConcertListFilter.style';
 
 interface ConcertListFilterProps {
   filters: ConcertFilterState;
@@ -18,63 +25,30 @@ const ConcertListFilter = ({
   onSortChange,
 }: ConcertListFilterProps) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: { xs: 'stretch', md: 'center' },
-        gap: 2,
-        justifyContent: 'space-between',
-        flexDirection: { xs: 'column', md: 'row' },
-      }}
-    >
-      {/* 장르 필터 버튼 그룹 */}
-      <Stack
-        direction="row"
-        spacing={1}
-        aria-label="장르 필터"
-        sx={{ flexWrap: 'wrap', rowGap: 1 }}
-      >
+    <Root>
+      <GenreStack direction="row" spacing={1} aria-label="장르 필터">
         {GENRE_OPTIONS.map((opt) => {
           const selected = filters.genre === opt.value;
 
           return (
-            <Chip
+            <GenreChip
               key={opt.value}
               label={opt.label}
               clickable
               onClick={() => onGenreChange(opt.value)}
               aria-pressed={selected}
-              sx={{
-                fontSize: '1.5rem',
-                fontWeight: 800,
-                borderRadius: 999,
-                px: 2,
-                py: 2.5,
-                bgcolor: selected ? 'primary.main' : 'grey.100',
-                color: selected ? 'white' : 'black',
-                '&:hover': {
-                  bgcolor: selected ? 'primary.main' : 'grey.200',
-                },
-              }}
+              selected={selected}
             />
           );
         })}
-      </Stack>
+      </GenreStack>
 
-      <Stack
-        direction="row"
-        spacing={1.5}
-        sx={{
-          justifyContent: { xs: 'flex-start', md: 'flex-end' },
-          flexWrap: 'wrap',
-          rowGap: 1,
-        }}
-      >
-        <FormControl size="small" sx={{ minWidth: 140 }}>
+      <SelectStack direction="row" spacing={1.5}>
+        <SelectControl size="small">
           <Select
             id="region-select"
             value={filters.region}
-            onChange={(e) => onRegionChange(e.target.value as Region)}
+            onChange={(e) => onRegionChange(e.target.value)}
             displayEmpty
             inputProps={{ 'aria-label': '지역 필터' }}
           >
@@ -84,13 +58,13 @@ const ConcertListFilter = ({
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </SelectControl>
 
-        <FormControl size="small" sx={{ minWidth: 120 }}>
+        <SelectControl size="small">
           <Select
             id="sort-select"
             value={filters.sort}
-            onChange={(e) => onSortChange(e.target.value as Sort)}
+            onChange={(e) => onSortChange(e.target.value)}
             displayEmpty
             inputProps={{ 'aria-label': '정렬 필터' }}
           >
@@ -100,9 +74,9 @@ const ConcertListFilter = ({
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
-      </Stack>
-    </Box>
+        </SelectControl>
+      </SelectStack>
+    </Root>
   );
 };
 

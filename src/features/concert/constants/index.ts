@@ -13,7 +13,7 @@ export const SORT_OPTIONS = [
 ];
 
 export const REGION_OPTIONS = [
-  { label: '전체', value: 'ALL' },
+  { label: '지역 전체', value: 'ALL' },
   { label: '서울', value: 'SEOUL' },
   { label: '경기도', value: 'GYEONGGI' },
   { label: '인천', value: 'INCHEON' },

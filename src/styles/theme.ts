@@ -47,7 +47,7 @@ const theme = createTheme({
     grey: {
       50: '#fafafa',
       100: '#f5f5f5',
-      200: '#e5e5e5',
+      200: '#e2e2e2',
       500: '#737373',
       800: '#333',
       900: '#1a1a1a',
@@ -69,7 +69,21 @@ const theme = createTheme({
         },
       },
     },
-
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          border: 0,
+        },
+        root: {
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            border: 0,
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            border: 0,
+          },
+        },
+      },
+    },
     MuiContainer: {
       defaultProps: { disableGutters: true },
       // styleOverrides: {
@@ -107,7 +121,7 @@ const theme = createTheme({
         },
 
         outlined: {
-          borderColor: '#c0c0c0',
+          borderColor: '#e2e2e2',
           '&:hover': {
             borderColor: '#dc2626',
             backgroundColor: '#fef4f0',
@@ -140,27 +154,28 @@ const theme = createTheme({
         },
       },
     },
-    // MuiButton: {
-    //   styleOverrides: {
-    //     contained: {
-    //       boxShadow: 'none',
-    //       '&:hover': {
-    //         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-    //       },
-    //     },
-    //     root: {
-    //       color: '#212529',
-    //       '&.Mui-focusVisible': {
-    //         backgroundColor: 'transparent',
-    //         boxShadow: 'none',
-    //         backgroundImage: 'none',
-    //       },
-    //       // borderRadius: '8px',
-    //       // padding: '10px 20px',
-    //       // fontWeight: 600,
-
-    //       textTransform: 'none',
-    //     },
+    MuiSelect: {
+      styleOverrides: {
+        select: {
+          border: '1px solid #e2e2e2',
+          borderRadius: 999,
+          paddingLeft: '14px',
+          fontSize: '1.5rem',
+          // paddingRight: '20px',
+          '&:focus': {
+            // backgroundColor: 'transparent',
+          },
+          // '& .MuiSvgIcon-root': {
+          //   right: '4px',
+          // },
+        },
+        icon: {
+          right: '10px',
+          // 드롭다운 아이콘 스타일
+          color: '#737373',
+        },
+      },
+    },
   },
 
   typography: {
