@@ -1,9 +1,10 @@
-import { resolve } from 'path';
 import {
   ConcertBase,
   ConcertCarouselItem,
+  GetConcertListParams,
+  PaginatedResponse,
   UpcomingConcertItem,
-} from '../types/concert.types';
+} from '../types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -45,8 +46,21 @@ export const getUpcomingConcerts = async (): Promise<UpcomingConcertItem[]> => {
   return data.items;
 };
 
-export const getConcertList = async (): Promise<ConcertBase[]> => {
-  const data = await apiClient<{ items: ConcertBase[] }>('/api/v1/shows');
+export const getConcertListPaginated = async (
+  params: GetConcertListParams
+): Promise<PaginatedResponse<ConcertBase>> => {
+  const searchParams = new URLSearchParams();
+  if (params.category) searchParams.set('category', params.category);
+  if (params.region && params.region !== 'ALL')
+    searchParams.set('region', params.region);
+  if (params.cursor) searchParams.set('cursor', params.cursor);
+  if (params.size) searchParams.set('size', params.size.toString());
+  if (params.sort) searchParams.set('sort', params.sort);
 
-  return data.items;
+  const queryString = searchParams.toString();
+  const data = await apiClient<PaginatedResponse<ConcertBase>>(
+    `/api/v1/shows?${queryString}`
+  );
+
+  return data;
 };

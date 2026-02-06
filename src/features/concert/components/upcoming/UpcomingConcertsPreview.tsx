@@ -1,4 +1,4 @@
-import { UpcomingConcertItem } from '../../types/concert.types';
+import { UpcomingConcertItem } from '../../types';
 import ConcertCard from '../ConcertCard';
 import UpcomingConcertMoreButton from './UpcomingConcertMoreButton';
 import { UpcomingConcertsPreviewList } from './UpcomingConcertsPreview.style';

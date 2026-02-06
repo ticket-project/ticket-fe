@@ -1,4 +1,4 @@
-// 나중애 보고 extends 이런거로 바꾸가
+import { GENRE_OPTIONS, REGION_OPTIONS, SORT_OPTIONS } from '../constants';
 
 export interface ConcertBase {
   id: number;
@@ -12,7 +12,10 @@ export interface ConcertBase {
   saleStartDate: string;
   saleEndDate: string;
   createdAt: string;
-  region: 'SEOUL' | 'BUSAN' | 'GYEONGGI' | 'JEJU';
+  region: {
+    name: string;
+    code: string;
+  };
   venue: string;
   image: string;
 }
@@ -35,3 +38,27 @@ export type UpcomingConcertItem = Pick<
   ConcertBase,
   'id' | 'title' | 'saleType' | 'saleStartDate' | 'venue' | 'region' | 'image'
 >;
+
+export type Genre = (typeof GENRE_OPTIONS)[number]['value'];
+export type Region = (typeof REGION_OPTIONS)[number]['value'];
+export type Sort = (typeof SORT_OPTIONS)[number]['value'];
+
+export interface ConcertFilterState {
+  genre: Genre;
+  region: Region;
+  sort: Sort;
+}
+
+export interface GetConcertListParams {
+  cursor?: string | null;
+  category?: string;
+  region?: string;
+  sort?: string;
+  size?: number;
+}
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  nextCursor: string | null;
+  hasNext: boolean;
+}

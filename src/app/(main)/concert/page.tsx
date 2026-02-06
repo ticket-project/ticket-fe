@@ -1,6 +1,5 @@
 import {
   getConcertCarousel,
-  getConcertList,
   getUpcomingConcertsPreview,
 } from '@/features/concert/api';
 import { Metadata } from 'next';
@@ -25,10 +24,6 @@ const ConcertPage = async () => {
     queryClient.prefetchQuery({
       queryKey: queryKeys.concert.upcomingPreview(),
       queryFn: getUpcomingConcertsPreview,
-    }),
-    queryClient.prefetchQuery({
-      queryKey: queryKeys.concert.list(),
-      queryFn: getConcertList,
     }),
   ]);
 

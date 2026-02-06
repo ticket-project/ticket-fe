@@ -9,7 +9,7 @@ import {
   Divider,
 } from './Concerts.style';
 import { CardContent } from '@mui/material';
-import { ConcertBase, UpcomingConcertItem } from '../types/concert.types';
+import { ConcertBase, UpcomingConcertItem } from '../types';
 import Link from 'next/link';
 import Tag from '@/components/ui/Tag';
 
@@ -49,6 +49,7 @@ const ConcertCard = ({ item, variant = 'grid' }: ConcertCardProps) => {
             </ConcertTicketDate>
             <ConcertTitle as="strong">{item.title}</ConcertTitle>
             <ConcertVenue as="span">{item.venue}</ConcertVenue>
+            <p>{item.region?.name}</p>
             {isExclusive && (
               <Tag
                 label={SALE_TYPE_LABEL[item.saleType]}
