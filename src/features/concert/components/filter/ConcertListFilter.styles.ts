@@ -6,6 +6,7 @@ export const Root = styled(Box)(({ theme }) => ({
   flexDirection: 'row',
   gap: theme.spacing(2),
   justifyContent: 'space-between',
+  marginTop: theme.spacing(2),
   [theme.breakpoints.down('md')]: {
     alignItems: 'stretch',
     flexDirection: 'column',

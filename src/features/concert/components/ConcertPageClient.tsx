@@ -16,14 +16,17 @@ const ConcertPageClient = () => {
   const upcomingPreview = useUpcomingConcertsPreview();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <SectionFrame isFirstSection>
+    <Box sx={{ display: 'flex', flexDirection: 'column', pt: 6, px: 2 }}>
+      <SectionFrame>
         <QueryBoundary query={carousel}>
           {(items) => <ConcertCarousel items={items} />}
         </QueryBoundary>
       </SectionFrame>
 
-      <SectionFrame title="오픈예정">
+      <SectionFrame
+        title="오픈 예정"
+        description="곧 시작되는 예매 정보를 확인하세요."
+      >
         <QueryBoundary query={upcomingPreview}>
           {(items) => <UpcomingConcertsPreview items={items} />}
         </QueryBoundary>

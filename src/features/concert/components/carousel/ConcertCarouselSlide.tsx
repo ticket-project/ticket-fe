@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Typography } from '@mui/material';
 import { ConcertCarouselItem } from '../../types';
 import {
-  StyledCard,
+  Root,
   StyledCardActionArea,
   ContentBox,
+  ConcertTitle,
+  ConcertVenue,
+  ConcertDate,
+  MiniBadge,
 } from './ConcertCarousel.styles';
 
 interface ConcertCarouselSlideProps {
@@ -14,13 +17,18 @@ interface ConcertCarouselSlideProps {
   total: number;
 }
 
+const BADGES = ['WORLD TOUR', 'MEMBERSHOP', 'PRE-SALE'] as const;
+const pickBadge = (seed: number) => BADGES[seed % BADGES.length];
+
 const ConcertCarouselSlide = ({
   idx,
   item,
   total,
 }: ConcertCarouselSlideProps) => {
+  const badge = pickBadge(item.id ?? idx);
+
   return (
-    <StyledCard
+    <Root
       as="li"
       role="group"
       aria-label={`슬라이드 ${idx + 1} / ${total}`}
@@ -44,34 +52,15 @@ const ConcertCarouselSlide = ({
           priority={idx === 0}
         />
         <ContentBox>
-          <Typography variant="h6" sx={{ fontSize: '2.6rem', fontWeight: 900 }}>
-            {item.title}
-          </Typography>
-          <span
-            style={{ display: 'block', fontSize: '1.5rem', fontWeight: 600 }}
-          >
+          <MiniBadge>{badge}</MiniBadge>
+          <ConcertTitle as="strong">{item.title}</ConcertTitle>
+          <ConcertVenue as="span">{item.venue}</ConcertVenue>
+          <ConcertDate as="span">
             {item.startDate} ~ {item.endDate}
-          </span>
-          <span
-            style={{ display: 'block', fontSize: '1.5rem', fontWeight: 600 }}
-          >
-            {item.venue}
-          </span>
-          {/* <Typography
-            variant="body2"
-            sx={{ fontSize: '1.5rem', fontWeight: 600 }}
-          >
-            {item.venue}
-          </Typography>
-          <Typography
-            variant="caption"
-            sx={{ fontSize: '1.5rem', fontWeight: 600 }}
-          >
-            {item.concertStartDate} ~ {item.concertEndDate}
-          </Typography> */}
+          </ConcertDate>
         </ContentBox>
       </StyledCardActionArea>
-    </StyledCard>
+    </Root>
   );
 };
 

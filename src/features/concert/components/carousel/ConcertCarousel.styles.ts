@@ -5,6 +5,7 @@ import {
   CardContent,
   Box,
   IconButton,
+  Typography,
 } from '@mui/material';
 
 interface StyledIconButtonProps {
@@ -12,12 +13,12 @@ interface StyledIconButtonProps {
 }
 
 export const ConcertCarouselContainer = styled(Box)(({ theme }) => ({
-  alignItems: 'center',
   display: 'flex',
+  alignItems: 'center',
   gap: theme.spacing(2.8),
 }));
 
-export const StyledCard = styled(Card)(({ theme }) => ({
+export const Root = styled(Card)(({ theme }) => ({
   minWidth: 0,
   [theme.breakpoints.down('md')]: {
     flex: '0 0 100%',
@@ -37,8 +38,38 @@ export const StyledCardActionArea = styled(CardActionArea)(() => ({
 export const ContentBox = styled(CardContent)(() => ({
   position: 'absolute',
   bottom: 0,
+  padding: '2.6rem',
   width: '100%',
-  textAlign: 'center',
+}));
+
+export const MiniBadge = styled(Typography)(() => ({
+  display: 'block',
+  marginBottom: '1rem',
+  fontSize: '1.6rem',
+  fontWeight: 500,
+  lineHeight: 1.3,
+}));
+
+export const ConcertTitle = styled(Typography)(() => ({
+  display: 'block',
+  marginBottom: '0.3rem',
+  fontSize: '2.6rem',
+  fontWeight: 900,
+}));
+
+export const ConcertVenue = styled(Typography)(() => ({
+  display: 'block',
+  marginBottom: '1.8rem',
+  fontSize: '1.6rem',
+  fontWeight: 600,
+  lineHeight: 1.3,
+}));
+
+export const ConcertDate = styled(Typography)(() => ({
+  display: 'block',
+  fontSize: '1.5rem',
+  fontWeight: 600,
+  lineHeight: 1.3,
 }));
 
 export const StyledIconButton = styled(IconButton, {

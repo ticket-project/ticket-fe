@@ -79,6 +79,7 @@ const ConcertCarousel = ({ items }: ConcertCarouselProps) => {
         aria-label="최신 콘서트 배너"
         onKeyDown={handleKeyDown}
         tabIndex={0}
+        sx={{ overflow: 'hidden' }}
       >
         <ConcertCarouselContainer as="ul">
           {items.map((item, idx) => (

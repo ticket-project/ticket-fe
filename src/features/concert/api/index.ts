@@ -52,7 +52,7 @@ export const getGenres = async (category?: string): Promise<GenreDto[]> => {
 export const getUpcomingConcerts = async (
   params: GetConcertListParams
 ): Promise<PaginatedResponse<UpcomingConcertItem>> => {
-  await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
+  // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
   const searchParams = new URLSearchParams();
   if (params.category) searchParams.set('category', params.category);
   if (params.region && params.region !== 'ALL')
