@@ -1,6 +1,5 @@
 'use client';
 
-import { Box } from '@mui/material';
 import {
   useConcertCarousel,
   useUpcomingConcertsPreview,
@@ -10,13 +9,14 @@ import { ConcertCarousel } from '@/features/concert/components/carousel';
 import UpcomingConcertsPreview from './upcoming/UpcomingConcertsPreview';
 import SectionFrame from '@/components/layouts/SectionFrame';
 import ConcertInfiniteList from './ConcertInfiniteList';
+import PageContainer from '@/components/common/PageContainer';
 
 const ConcertPageClient = () => {
   const carousel = useConcertCarousel();
   const upcomingPreview = useUpcomingConcertsPreview();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', pt: 6, px: 2 }}>
+    <PageContainer>
       <SectionFrame>
         <QueryBoundary query={carousel}>
           {(items) => <ConcertCarousel items={items} />}
@@ -33,7 +33,7 @@ const ConcertPageClient = () => {
       </SectionFrame>
 
       <ConcertInfiniteList />
-    </Box>
+    </PageContainer>
   );
 };
 

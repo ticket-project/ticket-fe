@@ -14,7 +14,8 @@ export const Root = styled(Box)(({ theme }) => ({
 }));
 
 export const GenreStack = styled(Stack)(({ theme }) => ({
-  flexWrap: 'wrap',
+  flex: '1 1 0',
+  minWidth: 0,
   rowGap: theme.spacing(1),
 }));
 
@@ -40,7 +41,9 @@ export const GenreChip = styled(Chip)<{ selected?: boolean }>(
 );
 
 export const SelectStack = styled(Stack)(({ theme }) => ({
+  flex: '1 1 0',
   justifyContent: 'flex-end',
+  minWidth: 0,
   [theme.breakpoints.down('md')]: {
     justifyContent: 'flex-start',
   },

@@ -58,6 +58,7 @@ const ConcertCard = ({ item, variant = 'all' }: ConcertCardProps) => {
             )}
             <ConcertTitle as="strong">{item.title}</ConcertTitle>
             <ConcertVenue as="span">{item.venue}</ConcertVenue>
+            <span>{item.region?.name}</span>
             {!isUpcoming && isConcertBase(item) && (
               <ConcertDate as="span">
                 {item.startDate} ~ {item.endDate}
