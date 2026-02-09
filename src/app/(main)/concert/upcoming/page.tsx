@@ -30,6 +30,7 @@ const UpcomingPage = () => {
             filters={filters}
             onRegionChange={setRegion}
             onSortChange={setSort}
+            sortType="upcoming"
           />
         }
       >

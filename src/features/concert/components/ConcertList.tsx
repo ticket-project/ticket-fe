@@ -9,8 +9,8 @@ interface ConcertListProps {
 const ConcertList = ({ items, variant }: ConcertListProps) => {
   return (
     <ConcertCardList as="ul">
-      {items.map((item) => (
-        <ConcertCard key={item.id} item={item} variant={variant} />
+      {items.map((item, index) => (
+        <ConcertCard key={index} item={item} variant={variant} />
       ))}
     </ConcertCardList>
   );

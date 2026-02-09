@@ -1,9 +1,15 @@
-export const SORT_OPTIONS = [
-  { label: '인기순', value: 'popular' },
-  { label: '최신순', value: 'latest' },
-  { label: '공연임박순', value: 'showStartApproaching' },
-];
-
+export const SORT_OPTIONS = {
+  concert: [
+    { label: '인기순', value: 'popular' },
+    { label: '최신순', value: 'latest' },
+    { label: '공연임박순', value: 'showStartApproaching' },
+  ],
+  upcoming: [
+    { label: '인기순', value: 'popular' },
+    { label: '최신순', value: 'latest' },
+    { label: '오픈임박순', value: 'showStartApproaching' },
+  ],
+};
 export const REGION_OPTIONS = [
   { label: '지역 전체', value: 'ALL' },
   { label: '서울', value: 'SEOUL' },
