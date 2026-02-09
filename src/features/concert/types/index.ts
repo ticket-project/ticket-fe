@@ -1,4 +1,4 @@
-import { GENRE_OPTIONS, REGION_OPTIONS, SORT_OPTIONS } from '../constants';
+import { REGION_OPTIONS, SORT_OPTIONS } from '../constants';
 
 export interface ConcertBase {
   id: number;
@@ -39,7 +39,13 @@ export type UpcomingConcertItem = Pick<
   'id' | 'title' | 'saleType' | 'saleStartDate' | 'venue' | 'region' | 'image'
 >;
 
-export type Genre = (typeof GENRE_OPTIONS)[number]['value'];
+export interface GenreDto {
+  id: number;
+  code: string;
+  name: string;
+}
+
+export type Genre = string;
 export type Region = (typeof REGION_OPTIONS)[number]['value'];
 export type Sort = (typeof SORT_OPTIONS)[number]['value'];
 
@@ -58,6 +64,7 @@ export interface GetConcertListParams {
   cursor?: string | null;
   category?: string;
   region?: string;
+  genre?: string;
   sort?: string;
   size?: number;
 }

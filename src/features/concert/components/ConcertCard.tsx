@@ -63,7 +63,6 @@ const ConcertCard = ({ item, variant = 'all' }: ConcertCardProps) => {
                 {item.startDate} ~ {item.endDate}
               </ConcertDate>
             )}
-            <p>{item.genre}</p>
             {isExclusive && (
               <Tag
                 label={SALE_TYPE_LABEL[item.saleType]}

@@ -13,6 +13,8 @@ export const queryKeys = {
     carousel: () => [...queryKeys.concert.all, 'carousel'] as const,
     upcomingPreview: () =>
       [...queryKeys.concert.all, 'upcomingPreview'] as const,
+    genres: (category: string) =>
+      [...queryKeys.concert.all, 'genres', category] as const,
     upcomingListFiltered: (filters: UpcomingConcertFilterState) =>
       [
         ...queryKeys.concert.all,

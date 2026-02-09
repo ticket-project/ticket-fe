@@ -2,7 +2,7 @@
 
 import { MenuItem, Select } from '@mui/material';
 import { ConcertFilterState, Genre, Region, Sort } from '../../types';
-import { GENRE_OPTIONS, REGION_OPTIONS, SORT_OPTIONS } from '../../constants';
+import { REGION_OPTIONS, SORT_OPTIONS } from '../../constants';
 import {
   Root,
   GenreStack,
@@ -10,6 +10,7 @@ import {
   SelectStack,
   SelectControl,
 } from './ConcertListFilter.styles';
+import { useConcertGenres } from '../../hooks/useConcertQueries';
 
 interface ConcertListFilterProps {
   filters: ConcertFilterState;
@@ -24,11 +25,14 @@ const ConcertListFilter = ({
   onRegionChange,
   onSortChange,
 }: ConcertListFilterProps) => {
+  const { data: genres } = useConcertGenres('CONCERT');
+  const genreOptions = [{ label: '전체', value: 'ALL' }, ...(genres ?? [])];
+
   return (
     <Root>
       {onGenreChange && (
         <GenreStack direction="row" spacing={1} aria-label="장르 필터">
-          {GENRE_OPTIONS.map((opt) => {
+          {genreOptions.map((opt) => {
             const selected = filters.genre === opt.value;
 
             return (

@@ -3,6 +3,7 @@ import { queryKeys } from '@/lib/react-query/queryKeys';
 import {
   getConcertCarousel,
   getConcertListPaginated,
+  getGenres,
   getUpcomingConcerts,
   getUpcomingConcertsPreview,
 } from '../api';
@@ -27,6 +28,16 @@ export const useUpcomingConcertsPreview = () => {
   return useQuery({
     queryKey: queryKeys.concert.upcomingPreview(),
     queryFn: getUpcomingConcertsPreview,
+    ...CONCERT_QUERY_OPTIONS,
+  });
+};
+
+export const useConcertGenres = (category: string = 'CONCERT') => {
+  return useQuery({
+    queryKey: queryKeys.concert.genres(category),
+    queryFn: () => getGenres(category),
+    select: (data) =>
+      data.map((genre) => ({ label: genre.name, value: genre.code })),
     ...CONCERT_QUERY_OPTIONS,
   });
 };

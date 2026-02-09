@@ -1,6 +1,7 @@
 import {
   ConcertBase,
   ConcertCarouselItem,
+  GenreDto,
   GetConcertListParams,
   PaginatedResponse,
   UpcomingConcertItem,
@@ -38,6 +39,16 @@ export const getUpcomingConcertsPreview = async (): Promise<
   return data.shows;
 };
 
+export const getGenres = async (category?: string): Promise<GenreDto[]> => {
+  const searchParams = new URLSearchParams();
+  if (category) searchParams.set('category', category);
+
+  const queryString = searchParams.toString();
+  const data = await apiClient<GenreDto[]>(`/api/v1/genres?${queryString}`);
+
+  return data;
+};
+
 export const getUpcomingConcerts = async (
   params: GetConcertListParams
 ): Promise<PaginatedResponse<UpcomingConcertItem>> => {
@@ -66,6 +77,8 @@ export const getConcertListPaginated = async (
   if (params.category) searchParams.set('category', params.category);
   if (params.region && params.region !== 'ALL')
     searchParams.set('region', params.region);
+  if (params.genre && params.genre !== 'ALL')
+    searchParams.set('genre', params.genre);
   if (params.cursor) searchParams.set('cursor', params.cursor);
   if (params.size) searchParams.set('size', params.size.toString());
   if (params.sort) searchParams.set('sort', params.sort);
