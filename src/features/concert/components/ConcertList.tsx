@@ -1,16 +1,16 @@
 import ConcertCard from './ConcertCard';
-import { ConcertCardList } from './Concerts.style';
+import { ConcertCardList } from './Concerts.styles';
 import { ConcertBase, UpcomingConcertItem } from '../types';
-//타입 폴더에 공통으로 재정의하기
 interface ConcertListProps {
   items: ConcertBase[] | UpcomingConcertItem[];
+  variant?: 'upcoming' | 'all';
 }
 
-const ConcertList = ({ items }: ConcertListProps) => {
+const ConcertList = ({ items, variant }: ConcertListProps) => {
   return (
     <ConcertCardList as="ul">
       {items.map((item) => (
-        <ConcertCard key={item.id} item={item} />
+        <ConcertCard key={item.id} item={item} variant={variant} />
       ))}
     </ConcertCardList>
   );

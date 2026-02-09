@@ -1,7 +1,7 @@
 import { UpcomingConcertItem } from '../../types';
 import ConcertCard from '../ConcertCard';
 import UpcomingConcertMoreButton from './UpcomingConcertMoreButton';
-import { UpcomingConcertsPreviewList } from './UpcomingConcertsPreview.style';
+import { UpcomingConcertsPreviewList } from './UpcomingConcertsPreview.styles';
 
 interface UpcomingConcertsPreviewProps {
   items: UpcomingConcertItem[];
@@ -17,7 +17,7 @@ const UpcomingConcertsPreview = ({ items }: UpcomingConcertsPreviewProps) => {
         aria-label="오픈 예정 공연 목록"
       >
         {items.map((item) => (
-          <ConcertCard key={item.id} item={item} variant="hScroll" />
+          <ConcertCard key={item.id} item={item} variant="upcoming" />
         ))}
       </UpcomingConcertsPreviewList>
       <UpcomingConcertMoreButton />

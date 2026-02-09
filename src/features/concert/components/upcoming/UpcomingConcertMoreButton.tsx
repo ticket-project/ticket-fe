@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import Link from 'next/link';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { ViewAllButton } from './UpcomingConcertsPreview.style';
+import { ViewAllButton } from './UpcomingConcertsPreview.styles';
 
 const UpcomingConcertMoreButton = () => {
   return (

@@ -1,10 +1,11 @@
 import { Box, Card, CardActionArea, styled, Typography } from '@mui/material';
 
+type ConcertVenueProps = {
+  isUpcoming?: boolean;
+};
+
 export const ConcertCardList = styled(Box)(({ theme }) => ({
   display: 'grid',
-  columnGap: theme.spacing(2),
-  rowGap: theme.spacing(2),
-  gridTemplateColumns: 'repeat(1, 1fr)',
   [theme.breakpoints.up('md')]: {
     gridTemplateColumns: 'repeat(3, 1fr)',
     rowGap: theme.spacing(9),
@@ -12,13 +13,15 @@ export const ConcertCardList = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     gridTemplateColumns: 'repeat(5, 1fr)',
   },
+  columnGap: theme.spacing(2),
+  gridTemplateColumns: 'repeat(1, 1fr)',
+  rowGap: theme.spacing(2),
 }));
 
 export const ConcertCardWrapper = styled(Card)(({ theme }) => ({
+  flex: '0 0 80%',
   height: '100%',
   minWidth: 0,
-  flex: '0 0 80%',
-  scrollSnapAlign: 'center',
   [theme.breakpoints.up('md')]: {
     flex: '0 0 26%',
     scrollSnapAlign: 'start',
@@ -26,66 +29,73 @@ export const ConcertCardWrapper = styled(Card)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     flex: 1,
   },
+  scrollSnapAlign: 'center',
 }));
 export const ConcertCardLinkArea = styled(CardActionArea)<{
-  variant?: 'hScroll' | 'grid';
-}>(({ variant, theme }) => ({
+  variant?: 'upcoming' | 'all';
+}>(({ theme, variant }) => ({
   display: 'flex',
+  alignItems: 'start',
   flexDirection: 'column',
   gap: '1.6rem',
-  alignItems: 'start',
   '&:hover img': {
     transform: 'scale(1.1)',
   },
   '& img': {
     transition: 'transform 0.3s ease',
   },
-  ...(variant !== 'hScroll' && {
+  ...(variant !== 'upcoming' && {
     [theme.breakpoints.down('md')]: {
-      // 업커밍 제외
       display: 'grid',
-      gridTemplateColumns: '1fr 1.5fr',
       alignItems: 'center',
+      gridTemplateColumns: '1fr 1.5fr',
     },
   }),
 }));
 
 export const PosterBox = styled(Box)(({ theme }) => ({
-  width: '100%',
   position: 'relative',
+  width: '100%',
+  border: `1px solid ${theme.palette.grey[100]}`,
   borderRadius: '1.2rem',
   overflow: 'hidden',
   aspectRatio: '3/3.8',
-  border: `1px solid ${theme.palette.grey[100]}`,
 }));
 
 export const ConcertTicketDate = styled(Typography)(({ theme }) => ({
   display: 'block',
-  color: theme.palette.text.primary,
+  marginBottom: '0.4rem',
+  color: theme.palette.primary.main,
   fontSize: '1.7rem',
   fontWeight: 700,
 }));
 
 export const ConcertTitle = styled(Typography)(() => ({
   display: 'block',
-  marginTop: '0.4rem',
   fontSize: '1.7rem',
   fontWeight: 700,
 }));
 
-export const ConcertVenue = styled(Typography)(({ theme }) => ({
+export const ConcertVenue = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'isUpcoming',
+})<ConcertVenueProps>(({ isUpcoming, theme }) => ({
   display: 'block',
-  marginBottom: '0.4rem',
-  marginTop: '0.6rem',
-  color: theme.palette.text.secondary,
+  marginTop: '0.8rem',
+  color: isUpcoming ? theme.palette.grey[500] : theme.palette.grey[900],
+  fontSize: '1.5rem',
+}));
+
+export const ConcertDate = styled(Typography)(({ theme }) => ({
+  display: 'block',
+  color: theme.palette.grey[400],
   fontSize: '1.5rem',
 }));
 
 export const Divider = styled(Box)(({ theme }) => ({
   display: 'none',
-  width: '100%',
   height: '1px',
-  backgroundColor: theme.palette.grey[100],
+  width: '100%',
+  backgroundColor: theme.palette.grey[200],
   [theme.breakpoints.down('md')]: {
     display: 'block',
   },

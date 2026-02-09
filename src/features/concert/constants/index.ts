@@ -23,3 +23,5 @@ export const REGION_OPTIONS = [
   { label: '경상', value: 'GYEONGSANG' },
   { label: '제주', value: 'JEJU' },
 ];
+
+export const PAGE_SIZE = 15;

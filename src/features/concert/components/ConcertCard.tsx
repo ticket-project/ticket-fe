@@ -7,16 +7,16 @@ import {
   ConcertTitle,
   ConcertVenue,
   Divider,
-} from './Concerts.style';
+  ConcertDate,
+} from './Concerts.styles';
 import { CardContent } from '@mui/material';
 import { ConcertBase, UpcomingConcertItem } from '../types';
 import Link from 'next/link';
 import Tag from '@/components/ui/Tag';
 
-// 공용으로 써서 타입 바껴야할거같음
 interface ConcertCardProps {
   item: ConcertBase | UpcomingConcertItem;
-  variant?: 'hScroll' | 'grid';
+  variant?: 'upcoming' | 'all';
 }
 
 const SALE_TYPE_LABEL: Record<ConcertBase['saleType'], string> = {
@@ -24,8 +24,15 @@ const SALE_TYPE_LABEL: Record<ConcertBase['saleType'], string> = {
   GENERAL: '일반판매',
 };
 
-const ConcertCard = ({ item, variant = 'grid' }: ConcertCardProps) => {
+const isConcertBase = (
+  item: ConcertBase | UpcomingConcertItem
+): item is ConcertBase => {
+  return 'startDate' in item && 'endDate' in item;
+};
+
+const ConcertCard = ({ item, variant = 'all' }: ConcertCardProps) => {
   const isExclusive = item.saleType === 'EXCLUSIVE';
+  const isUpcoming = variant === 'upcoming';
 
   return (
     <>
@@ -44,17 +51,25 @@ const ConcertCard = ({ item, variant = 'grid' }: ConcertCardProps) => {
             />
           </PosterBox>
           <CardContent sx={{ padding: 0 }}>
-            <ConcertTicketDate as="span">
-              {item.saleStartDate}
-            </ConcertTicketDate>
+            {isUpcoming && (
+              <ConcertTicketDate as="span">
+                {item.saleStartDate}
+              </ConcertTicketDate>
+            )}
             <ConcertTitle as="strong">{item.title}</ConcertTitle>
             <ConcertVenue as="span">{item.venue}</ConcertVenue>
-            <p>{item.region?.name}</p>
+            {!isUpcoming && isConcertBase(item) && (
+              <ConcertDate as="span">
+                {item.startDate} ~ {item.endDate}
+              </ConcertDate>
+            )}
+            <p>{item.genre}</p>
             {isExclusive && (
               <Tag
                 label={SALE_TYPE_LABEL[item.saleType]}
                 color="primary"
                 size="small"
+                sx={{ mt: 1 }}
               />
             )}
           </CardContent>

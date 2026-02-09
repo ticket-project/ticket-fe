@@ -9,11 +9,11 @@ import {
   GenreChip,
   SelectStack,
   SelectControl,
-} from './ConcertListFilter.style';
+} from './ConcertListFilter.styles';
 
 interface ConcertListFilterProps {
   filters: ConcertFilterState;
-  onGenreChange: (genre: Genre) => void;
+  onGenreChange?: (genre: Genre) => void;
   onRegionChange: (region: Region) => void;
   onSortChange: (sort: Sort) => void;
 }
@@ -26,22 +26,24 @@ const ConcertListFilter = ({
 }: ConcertListFilterProps) => {
   return (
     <Root>
-      <GenreStack direction="row" spacing={1} aria-label="장르 필터">
-        {GENRE_OPTIONS.map((opt) => {
-          const selected = filters.genre === opt.value;
+      {onGenreChange && (
+        <GenreStack direction="row" spacing={1} aria-label="장르 필터">
+          {GENRE_OPTIONS.map((opt) => {
+            const selected = filters.genre === opt.value;
 
-          return (
-            <GenreChip
-              key={opt.value}
-              label={opt.label}
-              clickable
-              onClick={() => onGenreChange(opt.value)}
-              aria-pressed={selected}
-              selected={selected}
-            />
-          );
-        })}
-      </GenreStack>
+            return (
+              <GenreChip
+                key={opt.value}
+                label={opt.label}
+                clickable
+                onClick={() => onGenreChange(opt.value)}
+                aria-pressed={selected}
+                selected={selected}
+              />
+            );
+          })}
+        </GenreStack>
+      )}
 
       <SelectStack direction="row" spacing={1.5}>
         <SelectControl size="small">

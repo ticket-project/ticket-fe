@@ -38,17 +38,30 @@ export const getUpcomingConcertsPreview = async (): Promise<
   return data.shows;
 };
 
-export const getUpcomingConcerts = async (): Promise<UpcomingConcertItem[]> => {
-  const data = await apiClient<{ items: UpcomingConcertItem[] }>(
-    '/api/v1/shows/sale-opening-soon/page'
+export const getUpcomingConcerts = async (
+  params: GetConcertListParams
+): Promise<PaginatedResponse<UpcomingConcertItem>> => {
+  await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
+  const searchParams = new URLSearchParams();
+  if (params.category) searchParams.set('category', params.category);
+  if (params.region && params.region !== 'ALL')
+    searchParams.set('region', params.region);
+  if (params.cursor) searchParams.set('cursor', params.cursor);
+  if (params.size) searchParams.set('size', params.size.toString());
+  if (params.sort) searchParams.set('sort', params.sort);
+
+  const queryString = searchParams.toString();
+  const data = await apiClient<PaginatedResponse<UpcomingConcertItem>>(
+    `/api/v1/shows/sale-opening-soon/page?${queryString}`
   );
 
-  return data.items;
+  return data;
 };
 
 export const getConcertListPaginated = async (
   params: GetConcertListParams
 ): Promise<PaginatedResponse<ConcertBase>> => {
+  // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
   const searchParams = new URLSearchParams();
   if (params.category) searchParams.set('category', params.category);
   if (params.region && params.region !== 'ALL')

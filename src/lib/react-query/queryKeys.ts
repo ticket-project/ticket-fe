@@ -2,7 +2,10 @@
  * React Query Keys
  */
 
-import { ConcertFilterState } from '@/features/concert/types';
+import {
+  ConcertFilterState,
+  UpcomingConcertFilterState,
+} from '@/features/concert/types';
 
 export const queryKeys = {
   concert: {
@@ -10,8 +13,14 @@ export const queryKeys = {
     carousel: () => [...queryKeys.concert.all, 'carousel'] as const,
     upcomingPreview: () =>
       [...queryKeys.concert.all, 'upcomingPreview'] as const,
-    upcoming: () => [...queryKeys.concert.all, 'upcoming'] as const,
-    // list: () => [...queryKeys.concert.all, 'list'] as const,
+    upcomingListFiltered: (filters: UpcomingConcertFilterState) =>
+      [
+        ...queryKeys.concert.all,
+        'upcoming',
+        'list',
+        'filtered',
+        filters,
+      ] as const,
     listFiltered: (filters: ConcertFilterState) =>
       [...queryKeys.concert.all, 'list', 'filtered', filters] as const,
   },

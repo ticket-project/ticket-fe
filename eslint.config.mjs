@@ -15,57 +15,44 @@ export default tseslint.config(
         'error',
         {
           customGroups: [
-            // (옵션) pseudo-element 내부에서 content를 항상 맨 위로
             { elementNamePattern: '^content$', groupName: 'content' },
-
             { elementNamePattern: '^position$', groupName: 'position' },
             {
               elementNamePattern: '^(top|right|bottom|left|inset)$',
               groupName: 'coords',
             },
             { elementNamePattern: '^zIndex$', groupName: 'z' },
-
+            { elementNamePattern: '^display$', groupName: 'display' },
             {
               elementNamePattern:
-                '^(display|flex|flexDirection|alignItems|justifyContent|gap)$',
+                '^(flex|flexDirection|alignItems|justifyContent|gap)$',
               groupName: 'layout',
             },
-
             {
               elementNamePattern:
                 '^(width|height|minWidth|maxWidth|minHeight|maxHeight|padding|paddingTop|paddingRight|paddingBottom|paddingLeft|margin|marginTop|marginRight|marginBottom|marginLeft)$',
               groupName: 'sizing-spacing',
             },
-
             {
               elementNamePattern:
                 '^(font|fontSize|fontWeight|lineHeight|letterSpacing|textAlign|textDecoration|color)$',
               groupName: 'typography',
             },
-
-            // 폴백에서 자주 섞이는 것들(overflow/opacity/filter 등)도 visual로 묶어주면 깔끔해짐
             {
               elementNamePattern:
                 '^(background|backgroundColor|border|borderRadius|boxShadow|opacity|overflow|filter|backdropFilter)$',
               groupName: 'visual',
             },
-
-            // transform/transition도 고정 위치로
             {
               elementNamePattern: '^(transform|transition|animation)$',
               groupName: 'motion',
             },
-
-            // ✅ &:after / &::after / &:before / &::before
             { elementNamePattern: '^&::?(before|after)$', groupName: 'pseudo' },
-
-            // 기존 states 확장(원하면 더 추가)
             {
               elementNamePattern:
                 '^(&:?hover|&:?focus|&:?focus-visible|&:?active|&\\[aria-current="page"\\])$',
               groupName: 'states',
             },
-
             {
               elementNamePattern:
                 '^\\[?theme\\.breakpoints\\.down\\([\'"]xs[\'"]\\)\\]?$',
@@ -112,7 +99,6 @@ export default tseslint.config(
                 '^\\[?theme\\.breakpoints\\.between\\([\'"]lg[\'"]\\s*,\\s*[\'"]xl[\'"]\\)\\]?$',
               groupName: 'bp-between-lg-xl',
             },
-
             {
               elementNamePattern:
                 '^\\[?theme\\.breakpoints\\.up\\([\'"]xs[\'"]\\)\\]?$',
@@ -139,7 +125,6 @@ export default tseslint.config(
               groupName: 'bp-up-xl',
             },
           ],
-
           fallbackSort: { order: 'asc', type: 'natural' },
 
           groups: [
@@ -147,6 +132,7 @@ export default tseslint.config(
             'position',
             'coords',
             'z',
+            'display',
             'layout',
             'sizing-spacing',
             'typography',

@@ -4,7 +4,7 @@ export interface ConcertBase {
   id: number;
   title: string;
   subTitle: string;
-  categoryName: string;
+  genreNames: string[];
   startDate: string;
   endDate: string;
   viewCount: number;
@@ -44,9 +44,14 @@ export type Region = (typeof REGION_OPTIONS)[number]['value'];
 export type Sort = (typeof SORT_OPTIONS)[number]['value'];
 
 export interface ConcertFilterState {
-  genre: Genre;
-  region: Region;
-  sort: Sort;
+  genre?: Genre;
+  region?: Region;
+  sort?: Sort;
+}
+
+export interface UpcomingConcertFilterState {
+  region?: string;
+  sort?: string;
 }
 
 export interface GetConcertListParams {
