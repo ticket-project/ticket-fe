@@ -4,99 +4,126 @@ import { Box, Container, Toolbar } from '@mui/material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NAV_ITEMS } from './constants';
-import SearchIcon from '@mui/icons-material/Search';
-import LoginIcon from '@mui/icons-material/Login';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+
+import { useEffect, useRef, useState } from 'react';
+
+// const HEADER_HEIGHT = 130;
+
+import SearchBar from '@/components/common/searchBar/SearchBar';
 import {
-  AuthButton,
+  Root,
+  DefaultHeader,
+  StickyHeader,
+  TopArea,
+  BottomArea,
   LogoText,
   NavButton,
-  Search,
-  SearchButton,
-  StyledAppBar,
-  StyledInputBase,
 } from './MainHeader.styles';
-// import { MainHeaderProps } from './MainHeader.types';
+import AuthButtons from '@/components/common/authButtons/AuthButtons';
 
 const MainHeader = ({}) => {
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      setIsScrolled(y >= 100);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <StyledAppBar
-      elevation={0}
-      // className={className}
-    >
-      <Box sx={{ borderBottom: 1, borderColor: 'grey.100' }}>
-        <Container sx={{ px: 2 }}>
-          <Toolbar disableGutters>
-            <Box
-              component={Link}
-              href="/"
-              aria-label="홈으로 이동"
-              sx={{ mr: 2 }}
+    <Root>
+      <DefaultHeader elevation={0} isScrolled={isScrolled}>
+        <TopArea>
+          <Container sx={{ px: 2 }}>
+            <Toolbar disableGutters>
+              <Box component={Link} href="/" aria-label="홈으로 이동">
+                <LogoText variant="h1">
+                  <span>ONE</span> 티켓
+                </LogoText>
+              </Box>
+              <SearchBar sx={{ ml: 2 }} />
+              <AuthButtons />
+            </Toolbar>
+          </Container>
+        </TopArea>
+        <BottomArea sx={{ px: 2 }}>
+          <Toolbar
+            disableGutters
+            variant="dense"
+            sx={{ alignItems: 'center', height: '100%' }}
+          >
+            <nav
+              aria-label="메뉴"
+              id="gnb-menu"
+              tabIndex={-1}
+              style={{ height: '100%' }}
             >
-              <LogoText variant="h1">TICKET</LogoText>
-            </Box>
-            <Search role="search" onSubmit={(e) => e.preventDefault()}>
-              <label htmlFor="header-search" className="sr-only">
-                검색
-              </label>
-              <StyledInputBase
-                id="header-search"
-                type="search"
-                aria-label="검색어 입력"
-                placeholder="Highlight 왔다, 에블바디 뛰어 !"
-              />
-              <SearchButton type="submit" aria-label="검색">
-                <SearchIcon />
-              </SearchButton>
-            </Search>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: 'flex', gap: '0.8rem' }}>
-              <AuthButton
-                {...{
-                  component: Link,
-                  href: '/login',
-                }}
-                startIcon={<LoginIcon />}
+              <Box
+                component="ul"
+                sx={{ display: 'flex', alignItems: 'stretch', height: '100%' }}
               >
-                로그인
-              </AuthButton>
-              <AuthButton
-                {...{
-                  component: Link,
-                  href: '/signup',
-                }}
-                startIcon={<PersonOutlineIcon />}
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.name}>
+                    <NavButton
+                      {...{
+                        component: Link,
+                        href: item.href,
+                      }}
+                      aria-current={pathname === item.href ? 'page' : undefined}
+                    >
+                      {item.name}
+                    </NavButton>
+                  </li>
+                ))}
+              </Box>
+            </nav>
+          </Toolbar>
+        </BottomArea>
+      </DefaultHeader>
+      <StickyHeader elevation={0} isScrolled={isScrolled}>
+        <Container sx={{ px: 2, height: '100%' }}>
+          <Toolbar
+            disableGutters
+            variant="dense"
+            sx={{ alignItems: 'center', height: '100%' }}
+          >
+            <nav
+              aria-label="메뉴"
+              id="gnb-menu"
+              tabIndex={-1}
+              style={{ height: '100%' }}
+            >
+              <Box
+                component="ul"
+                sx={{ display: 'flex', alignItems: 'stretch', height: '100%' }}
               >
-                회원가입
-              </AuthButton>
-            </Box>
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.name}>
+                    <NavButton
+                      {...{
+                        component: Link,
+                        href: item.href,
+                      }}
+                      aria-current={pathname === item.href ? 'page' : undefined}
+                    >
+                      {item.name}
+                    </NavButton>
+                  </li>
+                ))}
+              </Box>
+            </nav>
+            <SearchBar sx={{ ml: 1 }} />
+            <AuthButtons />
           </Toolbar>
         </Container>
-      </Box>
-      <Container sx={{ px: 2 }}>
-        <Toolbar disableGutters variant="dense">
-          <nav aria-label="메뉴" id="gnb-menu" tabIndex={-1}>
-            <Box component="ul" sx={{ display: 'flex' }}>
-              {NAV_ITEMS.map((item) => (
-                <li key={item.name}>
-                  <NavButton
-                    {...{
-                      component: Link,
-                      href: item.href,
-                    }}
-                    aria-current={pathname === item.href ? 'page' : undefined}
-                  >
-                    {item.name}
-                  </NavButton>
-                </li>
-              ))}
-            </Box>
-          </nav>
-        </Toolbar>
-      </Container>
-    </StyledAppBar>
+      </StickyHeader>
+    </Root>
   );
 };
 
