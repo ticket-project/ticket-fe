@@ -50,6 +50,13 @@ export default tseslint.config(
             'motion',
             'interaction',
 
+            // Breakpoints
+            'breakpoint-xs',
+            'breakpoint-sm',
+            'breakpoint-md',
+            'breakpoint-lg',
+            'breakpoint-xl',
+
             // Nested selectors / pseudos (MUI 포함)
             'nested-selector',
             'media-query',
@@ -139,6 +146,26 @@ export default tseslint.config(
               groupName: 'interaction',
               elementNamePattern: '^(cursor|pointerEvents|userSelect)$',
             },
+            {
+              groupName: 'breakpoint-xs',
+              elementNamePattern: 'breakpoints\\.up\\([\'"]xs[\'"]\\)',
+            },
+            {
+              groupName: 'breakpoint-sm',
+              elementNamePattern: 'breakpoints\\.up\\([\'"]sm[\'"]\\)',
+            },
+            {
+              groupName: 'breakpoint-md',
+              elementNamePattern: 'breakpoints\\.up\\([\'"]md[\'"]\\)',
+            },
+            {
+              groupName: 'breakpoint-lg',
+              elementNamePattern: 'breakpoints\\.up\\([\'"]lg[\'"]\\)',
+            },
+            {
+              groupName: 'breakpoint-xl',
+              elementNamePattern: 'breakpoints\\.up\\([\'"]xl[\'"]\\)',
+            },
 
             // Nested selectors / pseudos (MUI 포함)
             { groupName: 'nested-selector', elementNamePattern: '^&' },
@@ -184,7 +211,7 @@ export default tseslint.config(
   // Prettier
   eslintPluginPrettier,
 
-  //  ts/tsx 파일 규칙
+  // ts/tsx 파일 규칙
   {
     files: ['**/*.ts', '**/*.tsx'],
     plugins: { perfectionist },

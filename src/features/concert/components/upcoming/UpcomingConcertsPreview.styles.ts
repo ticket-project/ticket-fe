@@ -4,15 +4,15 @@ export const UpcomingConcertsPreviewList = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: theme.spacing(2),
   overflowX: 'auto',
-  '&::-webkit-scrollbar': { display: 'none' },
-  scrollbarWidth: 'none',
-  scrollSnapType: 'x mandatory',
-  [theme.breakpoints.up('lg')]: {
-    overflowX: 'visible',
-  },
   [theme.breakpoints.up('md')]: {
     scrollSnapType: 'none',
   },
+  [theme.breakpoints.up('lg')]: {
+    overflowX: 'visible',
+  },
+  '&::-webkit-scrollbar': { display: 'none' },
+  scrollbarWidth: 'none',
+  scrollSnapType: 'x mandatory',
   WebkitOverflowScrolling: 'touch',
 }));
 

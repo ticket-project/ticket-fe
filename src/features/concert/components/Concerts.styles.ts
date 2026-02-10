@@ -9,12 +9,13 @@ export const ConcertCardList = styled(Box)(({ theme }) => ({
   columnGap: theme.spacing(2),
   rowGap: theme.spacing(2),
   gridTemplateColumns: 'repeat(1, 1fr)',
-  [theme.breakpoints.up('lg')]: {
-    gridTemplateColumns: 'repeat(5, 1fr)',
-  },
+
   [theme.breakpoints.up('md')]: {
     rowGap: theme.spacing(9),
     gridTemplateColumns: 'repeat(3, 1fr)',
+  },
+  [theme.breakpoints.up('lg')]: {
+    gridTemplateColumns: 'repeat(5, 1fr)',
   },
 }));
 
@@ -22,14 +23,14 @@ export const ConcertCardWrapper = styled(Card)(({ theme }) => ({
   flex: '0 0 80%',
   height: '100%',
   minWidth: 0,
-  scrollSnapAlign: 'center',
-  [theme.breakpoints.up('lg')]: {
-    flex: 1,
-  },
   [theme.breakpoints.up('md')]: {
     flex: '0 0 26%',
     scrollSnapAlign: 'start',
   },
+  [theme.breakpoints.up('lg')]: {
+    flex: 1,
+  },
+  scrollSnapAlign: 'center',
 }));
 export const ConcertCardLinkArea = styled(CardActionArea)<{
   variant?: 'upcoming' | 'all';

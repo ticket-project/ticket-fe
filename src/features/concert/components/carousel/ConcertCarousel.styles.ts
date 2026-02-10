@@ -19,10 +19,8 @@ export const ConcertCarouselContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const Root = styled(Card)(({ theme }) => ({
+  flex: '0 0 100%',
   minWidth: 0,
-  [theme.breakpoints.down('md')]: {
-    flex: '0 0 100%',
-  },
   [theme.breakpoints.up('md')]: {
     flex: '0 0 32%',
   },
