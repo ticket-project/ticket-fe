@@ -1,6 +1,6 @@
 'use client';
 
-import NextLink from 'next/link';
+import Link from 'next/link';
 import { KeyboardEventHandler, MouseEventHandler } from 'react';
 
 import { Box, Container } from '@mui/material';
@@ -66,7 +66,7 @@ const Footer = () => {
                 </Box>
                 <Box component="li">
                   <NavLink
-                    as={NextLink}
+                    as={Link}
                     href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
@@ -81,7 +81,7 @@ const Footer = () => {
               <NavList as="ul">
                 <Box component="li">
                   <NavLink
-                    as={NextLink}
+                    as={Link}
                     href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
@@ -91,7 +91,7 @@ const Footer = () => {
                 </Box>
                 <Box component="li">
                   <NavLink
-                    as={NextLink}
+                    as={Link}
                     href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
@@ -101,7 +101,7 @@ const Footer = () => {
                 </Box>
                 <Box component="li">
                   <NavLink
-                    as={NextLink}
+                    as={Link}
                     href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
