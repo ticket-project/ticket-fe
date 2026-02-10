@@ -3,7 +3,7 @@
 import { Box } from '@mui/material';
 
 import InfiniteQueryBoundary from '@/components/common/InfiniteQueryBoundary';
-import PageContainer from '@/components/common/PageContainer';
+import PageContainer from '@/components/layouts/PageContainer';
 import SectionFrame from '@/components/layouts/SectionFrame';
 import ConcertList from '@/features/concert/components/ConcertList';
 import ConcertListFilter from '@/features/concert/components/filter/ConcertListFilter';

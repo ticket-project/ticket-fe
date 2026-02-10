@@ -1,14 +1,14 @@
 'use client';
 
-import PageContainer from '@/components/common/PageContainer';
 import QueryBoundary from '@/components/common/QueryBoundary';
+import PageContainer from '@/components/layouts/PageContainer';
 import SectionFrame from '@/components/layouts/SectionFrame';
-import { ConcertCarousel } from '@/features/concert/components/carousel';
 import {
   useConcertCarousel,
   useUpcomingConcertsPreview,
 } from '@/features/concert/hooks/useConcertQueries';
 
+import ConcertCarousel from './carousel/ConcertCarousel';
 import ConcertInfiniteList from './ConcertInfiniteList';
 import UpcomingConcertsPreview from './upcoming/UpcomingConcertsPreview';
 

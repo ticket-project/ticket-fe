@@ -89,13 +89,24 @@ const theme = createTheme({
       },
     },
     MuiContainer: {
-      defaultProps: { disableGutters: true },
-      // styleOverrides: {
-      //   root: {
-      //     paddingLeft: 20,
-      //     paddingRight: 20,
-      //   },
-      // },
+      defaultProps: {
+        disableGutters: true,
+      },
+      styleOverrides: {
+        root: {
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          '@media (min-width: 768px)': {
+            paddingLeft: '24px',
+            paddingRight: '24px',
+          },
+          '@media (min-width: 1280px)': {
+            paddingLeft: '33px',
+            paddingRight: '33px',
+            maxWidth: '1346px',
+          },
+        },
+      },
     },
     MuiCardActionArea: {
       styleOverrides: {

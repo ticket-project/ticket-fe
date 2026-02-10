@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, Typography } from '@mui/material';
+import { AppBar, Box, Container, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const Root = styled(Box)(() => ({
@@ -6,7 +6,9 @@ export const Root = styled(Box)(() => ({
   '--header-bottom-height': '45px',
   '--header-height': '130px',
   '--header-top-height': '85px',
+
   '& .MuiToolbar-root': {
+    height: '100%',
     minHeight: 'var(--header-bottom-height)',
   },
 }));
@@ -27,12 +29,22 @@ export const StickyHeader = styled(AppBar, {
   left: 0,
   right: 0,
   top: 0,
+  zIndex: theme.zIndex.appBar,
   height: 'var(--compact-header-height)',
   opacity: isScrolled ? 1 : 0,
   backgroundColor: 'rgba(255, 255, 255, 0.8)',
   borderBottom: `1px solid ${theme.palette.grey[200]}`,
   backdropFilter: 'blur(8px)',
+
   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+  transform: isScrolled ? 'translateY(0)' : 'translateY(-8px)',
+  pointerEvents: isScrolled ? 'auto' : 'none',
+}));
+
+export const HeaderContainer = styled(Container)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  height: '100%',
 }));
 
 export const TopArea = styled(Box)(({ theme }) => ({
@@ -43,8 +55,7 @@ export const TopArea = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.grey[100]}`,
 }));
 
-export const BottomArea = styled(Container)(({ theme }) => ({
-  position: 'relative',
+export const BottomArea = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   height: 'var(--header-bottom-height)',
@@ -61,24 +72,5 @@ export const LogoText = styled(Typography)(({ theme }) => ({
     fontSize: '2.8rem',
     fontWeight: 800,
     color: theme.palette.primary.main,
-  },
-}));
-
-export const NavButton = styled(Button)(({ theme }) => ({
-  position: 'relative',
-  height: '100%',
-  fontSize: '1.5rem',
-  fontWeight: '600',
-  '&[aria-current="page"]': {
-    color: theme.palette.primary.main,
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      bottom: '-1px',
-      left: 0,
-      right: 0,
-      height: '2px',
-      backgroundColor: theme.palette.primary.main,
-    },
   },
 }));
