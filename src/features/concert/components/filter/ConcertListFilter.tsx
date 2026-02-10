@@ -1,8 +1,12 @@
 'use client';
 
 import { MenuItem, Select } from '@mui/material';
+
 import { ConcertFilterState, Genre, Region, Sort } from '../../types';
+
 import { REGION_OPTIONS, SORT_OPTIONS } from '../../constants';
+import { useConcertGenres } from '../../hooks/useConcertQueries';
+
 import {
   Root,
   GenreStack,
@@ -10,7 +14,6 @@ import {
   SelectStack,
   SelectControl,
 } from './ConcertListFilter.styles';
-import { useConcertGenres } from '../../hooks/useConcertQueries';
 
 interface ConcertListFilterProps {
   filters: ConcertFilterState;

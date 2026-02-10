@@ -6,12 +6,16 @@ import {
   useEffect,
   useState,
 } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
+
 import { Box } from '@mui/material';
 import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
+
 import { ConcertCarouselItem } from '../../types';
+
 import CarouselNavButton from './CarouselNavButton';
 import ConcertCarouselSlide from './ConcertCarouselSlide';
+
 import { ConcertCarouselContainer } from './ConcertCarousel.styles';
 
 const AUTOPLAY_DELAY = 5000;

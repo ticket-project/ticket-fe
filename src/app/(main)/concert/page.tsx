@@ -1,12 +1,15 @@
+import { Metadata } from 'next';
+
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+
 import {
   getConcertCarousel,
   getUpcomingConcertsPreview,
 } from '@/features/concert/api';
-import { Metadata } from 'next';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { createQueryClient } from '@/lib/react-query/queryClient';
-import ConcertPageClient from '../../../features/concert/components/ConcertPageClient';
 import { queryKeys } from '@/lib/react-query/queryKeys';
+
+import ConcertPageClient from '../../../features/concert/components/ConcertPageClient';
 
 export const metadata: Metadata = {
   description: '최신 콘서트 정보를 확인하세요.',

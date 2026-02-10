@@ -1,7 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
+import styled from '@emotion/styled';
 import {
   AppBar,
   Box,
@@ -15,8 +17,6 @@ import {
   Tooltip,
   MenuItem,
 } from '@mui/material';
-import styled from '@emotion/styled';
-import Link from 'next/link';
 
 // Emotion styled components 예시
 const StyledAppBar = styled(AppBar)`

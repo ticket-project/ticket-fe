@@ -1,14 +1,16 @@
 'use client';
 
-import SectionFrame from '@/components/layouts/SectionFrame';
-import ConcertListFilter from './filter/ConcertListFilter';
 import { Box } from '@mui/material';
-import ConcertList from './ConcertList';
+
+import InfiniteQueryBoundary from '@/components/common/InfiniteQueryBoundary';
+import SectionFrame from '@/components/layouts/SectionFrame';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+
 import useConcertListFilter from '../hooks/useConcertListFilter';
 import { useConcertListInfinite } from '../hooks/useConcertQueries';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import ConcertList from './ConcertList';
+import ConcertListFilter from './filter/ConcertListFilter';
 import SkeletonGrid from './skeleton/SkeletonGrid';
-import InfiniteQueryBoundary from '@/components/common/InfiniteQueryBoundary';
 
 const ConcertInfiniteList = () => {
   const { filters, setGenre, setRegion, setSort } = useConcertListFilter();

@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
-import { EmptyState } from '@/components/common/EmptyState';
-import SkeletonGrid from '@/features/concert/components/skeleton/SkeletonGrid';
+
 import type {
   InfiniteData,
   UseInfiniteQueryResult,
 } from '@tanstack/react-query';
+
+import { EmptyState } from '@/components/common/EmptyState';
+import SkeletonGrid from '@/features/concert/components/skeleton/SkeletonGrid';
 
 type ItemOfPage<TPage extends { items: unknown[] }> = TPage['items'][number];
 

@@ -1,15 +1,16 @@
 'use client';
 
-import { Box, Container, Toolbar } from '@mui/material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NAV_ITEMS } from './constants';
-
 import { useEffect, useRef, useState } from 'react';
 
-// const HEADER_HEIGHT = 130;
+import { Box, Container, Toolbar } from '@mui/material';
 
+import AuthButtons from '@/components/common/authButtons/AuthButtons';
 import SearchBar from '@/components/common/searchBar/SearchBar';
+
+import { NAV_ITEMS } from './constants';
+
 import {
   Root,
   DefaultHeader,
@@ -19,8 +20,8 @@ import {
   LogoText,
   NavButton,
 } from './MainHeader.styles';
-import AuthButtons from '@/components/common/authButtons/AuthButtons';
 
+// const HEADER_HEIGHT = 130;
 const MainHeader = ({}) => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);

@@ -1,5 +1,6 @@
-import { Chip, ChipProps } from '@mui/material';
 import { ReactNode } from 'react';
+
+import { Chip, ChipProps } from '@mui/material';
 
 export type TagColor = 'default' | 'primary';
 

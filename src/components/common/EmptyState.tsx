@@ -1,6 +1,6 @@
-import { Box, Typography, SxProps, Theme, IconButton } from '@mui/material';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { Box, Typography, SxProps, Theme, IconButton } from '@mui/material';
 
 export interface EmptyStateProps {
   icon?: boolean;

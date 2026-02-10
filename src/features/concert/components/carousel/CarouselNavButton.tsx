@@ -1,6 +1,7 @@
-import { IconButtonProps } from '@mui/material';
 import ChevronLeftRounded from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRounded from '@mui/icons-material/ChevronRightRounded';
+import { IconButtonProps } from '@mui/material';
+
 import { StyledIconButton } from './ConcertCarousel.styles';
 
 interface CarouselNavButtonProps extends Omit<IconButtonProps, 'children'> {

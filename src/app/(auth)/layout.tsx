@@ -1,7 +1,8 @@
+import { Box } from '@mui/material';
+
 import Footer from '@/components/layouts/footer/Footer';
 import { MainHeader } from '@/components/layouts/header';
 import SkipLink from '@/components/layouts/SkipLink';
-import { Box } from '@mui/material';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (

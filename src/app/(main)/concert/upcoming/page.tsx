@@ -1,15 +1,16 @@
 'use client';
 
-import ConcertList from '@/features/concert/components/ConcertList';
-import { useUpcomingConcertsInfinite } from '@/features/concert/hooks/useConcertQueries';
-import SectionFrame from '@/components/layouts/SectionFrame';
-import useConcertListFilter from '@/features/concert/hooks/useConcertListFilter';
-import ConcertListFilter from '@/features/concert/components/filter/ConcertListFilter';
-import InfiniteQueryBoundary from '@/components/common/InfiniteQueryBoundary';
-import SkeletonGrid from '@/features/concert/components/skeleton/SkeletonGrid';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { Box } from '@mui/material';
+
+import InfiniteQueryBoundary from '@/components/common/InfiniteQueryBoundary';
 import PageContainer from '@/components/common/PageContainer';
+import SectionFrame from '@/components/layouts/SectionFrame';
+import ConcertList from '@/features/concert/components/ConcertList';
+import ConcertListFilter from '@/features/concert/components/filter/ConcertListFilter';
+import SkeletonGrid from '@/features/concert/components/skeleton/SkeletonGrid';
+import useConcertListFilter from '@/features/concert/hooks/useConcertListFilter';
+import { useUpcomingConcertsInfinite } from '@/features/concert/hooks/useConcertQueries';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const UpcomingPage = () => {
   const { filters, setRegion, setSort } = useConcertListFilter();

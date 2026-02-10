@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
+
 // @/components/layouts/PageContainer.tsx
 import { Box, BoxProps } from '@mui/material';
-import { ReactNode } from 'react';
 
 interface PageContainerProps extends Omit<BoxProps, 'sx'> {
   children: ReactNode;

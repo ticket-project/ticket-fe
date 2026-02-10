@@ -1,6 +1,7 @@
-import ConcertCard from './ConcertCard';
-import { ConcertCardList } from './Concerts.styles';
 import { ConcertBase, UpcomingConcertItem } from '../types';
+import ConcertCard from './ConcertCard';
+
+import { ConcertCardList } from './Concerts.styles';
 interface ConcertListProps {
   items: ConcertBase[] | UpcomingConcertItem[];
   variant?: 'upcoming' | 'all';

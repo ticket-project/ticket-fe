@@ -1,8 +1,10 @@
-import { Box } from '@mui/material';
-import { AuthButton } from './AuthButtons.styles';
+import Link from 'next/link';
+
 import LoginIcon from '@mui/icons-material/Login';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import Link from 'next/link';
+import { Box } from '@mui/material';
+
+import { AuthButton } from './AuthButtons.styles';
 
 const AuthButtons = () => {
   return (

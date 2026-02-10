@@ -17,8 +17,8 @@ export const PosterSkeleton = styled(Skeleton)(({ theme }) => ({
   position: 'relative',
   height: '100%',
   width: '100%',
+  overflow: 'hidden',
   border: `1px solid ${theme.palette.grey[100]}`,
   borderRadius: '1.2rem',
-  overflow: 'hidden',
   aspectRatio: '3/3.8',
 }));

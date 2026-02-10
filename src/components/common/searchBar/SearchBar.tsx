@@ -1,6 +1,7 @@
-import { SxProps } from '@mui/material';
-import { Search, SearchButton, StyledInputBase } from './SearchBar.styles';
 import SearchIcon from '@mui/icons-material/Search';
+import { SxProps } from '@mui/material';
+
+import { Search, SearchButton, StyledInputBase } from './SearchBar.styles';
 
 interface SearchBarProps {
   sx?: SxProps;

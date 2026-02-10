@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { defaultQueryClientOptions } from '@/lib/react-query/queryClient';
+
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import theme from '@/styles/theme';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import { defaultQueryClientOptions } from '@/lib/react-query/queryClient';
+import theme from '@/styles/theme';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(

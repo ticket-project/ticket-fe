@@ -1,4 +1,12 @@
 import Image from 'next/image';
+import Link from 'next/link';
+
+import { CardContent } from '@mui/material';
+
+import Tag from '@/components/ui/Tag';
+
+import { ConcertBase, UpcomingConcertItem } from '../types';
+
 import {
   PosterBox,
   ConcertCardWrapper,
@@ -9,10 +17,6 @@ import {
   Divider,
   ConcertDate,
 } from './Concerts.styles';
-import { CardContent } from '@mui/material';
-import { ConcertBase, UpcomingConcertItem } from '../types';
-import Link from 'next/link';
-import Tag from '@/components/ui/Tag';
 
 interface ConcertCardProps {
   item: ConcertBase | UpcomingConcertItem;

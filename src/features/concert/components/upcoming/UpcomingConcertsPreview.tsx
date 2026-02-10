@@ -1,6 +1,8 @@
 import { UpcomingConcertItem } from '../../types';
+
 import ConcertCard from '../ConcertCard';
 import UpcomingConcertMoreButton from './UpcomingConcertMoreButton';
+
 import { UpcomingConcertsPreviewList } from './UpcomingConcertsPreview.styles';
 
 interface UpcomingConcertsPreviewProps {

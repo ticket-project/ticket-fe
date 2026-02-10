@@ -1,15 +1,16 @@
 'use client';
 
+import PageContainer from '@/components/common/PageContainer';
+import QueryBoundary from '@/components/common/QueryBoundary';
+import SectionFrame from '@/components/layouts/SectionFrame';
+import { ConcertCarousel } from '@/features/concert/components/carousel';
 import {
   useConcertCarousel,
   useUpcomingConcertsPreview,
 } from '@/features/concert/hooks/useConcertQueries';
-import QueryBoundary from '@/components/common/QueryBoundary';
-import { ConcertCarousel } from '@/features/concert/components/carousel';
-import UpcomingConcertsPreview from './upcoming/UpcomingConcertsPreview';
-import SectionFrame from '@/components/layouts/SectionFrame';
+
 import ConcertInfiniteList from './ConcertInfiniteList';
-import PageContainer from '@/components/common/PageContainer';
+import UpcomingConcertsPreview from './upcoming/UpcomingConcertsPreview';
 
 const ConcertPageClient = () => {
   const carousel = useConcertCarousel();

@@ -30,16 +30,16 @@ export const Root = styled(Card)(({ theme }) => ({
 
 export const StyledCardActionArea = styled(CardActionArea)(() => ({
   height: '100%',
-  borderRadius: '1.4rem',
   overflow: 'hidden',
+  borderRadius: '1.4rem',
   aspectRatio: '1/1.2',
 }));
 
 export const ContentBox = styled(CardContent)(() => ({
   position: 'absolute',
   bottom: 0,
-  padding: '2.6rem',
   width: '100%',
+  padding: '2.6rem',
 }));
 
 export const MiniBadge = styled(Typography)(() => ({
@@ -75,6 +75,7 @@ export const ConcertDate = styled(Typography)(() => ({
 export const StyledIconButton = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== 'direction',
 })<StyledIconButtonProps>(({ direction }) => ({
+  '--button-size': '56px',
   position: 'absolute',
   top: '50%',
   height: 'var(--button-size)',
@@ -82,7 +83,6 @@ export const StyledIconButton = styled(IconButton, {
   backgroundColor: 'rgba(255, 255, 255, 0.7)',
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
   transform: 'translateY(-50%)',
-  '--button-size': '56px',
   ...(direction === 'prev'
     ? { left: 'calc((var(--button-size) / 2) * -1)' }
     : { right: 'calc((var(--button-size) / 2) * -1)' }),

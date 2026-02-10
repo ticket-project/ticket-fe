@@ -6,30 +6,30 @@ type ConcertVenueProps = {
 
 export const ConcertCardList = styled(Box)(({ theme }) => ({
   display: 'grid',
-  [theme.breakpoints.up('md')]: {
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    rowGap: theme.spacing(9),
-  },
+  columnGap: theme.spacing(2),
+  rowGap: theme.spacing(2),
+  gridTemplateColumns: 'repeat(1, 1fr)',
   [theme.breakpoints.up('lg')]: {
     gridTemplateColumns: 'repeat(5, 1fr)',
   },
-  columnGap: theme.spacing(2),
-  gridTemplateColumns: 'repeat(1, 1fr)',
-  rowGap: theme.spacing(2),
+  [theme.breakpoints.up('md')]: {
+    rowGap: theme.spacing(9),
+    gridTemplateColumns: 'repeat(3, 1fr)',
+  },
 }));
 
 export const ConcertCardWrapper = styled(Card)(({ theme }) => ({
   flex: '0 0 80%',
   height: '100%',
   minWidth: 0,
+  scrollSnapAlign: 'center',
+  [theme.breakpoints.up('lg')]: {
+    flex: 1,
+  },
   [theme.breakpoints.up('md')]: {
     flex: '0 0 26%',
     scrollSnapAlign: 'start',
   },
-  [theme.breakpoints.up('lg')]: {
-    flex: 1,
-  },
-  scrollSnapAlign: 'center',
 }));
 export const ConcertCardLinkArea = styled(CardActionArea)<{
   variant?: 'upcoming' | 'all';
@@ -56,18 +56,18 @@ export const ConcertCardLinkArea = styled(CardActionArea)<{
 export const PosterBox = styled(Box)(({ theme }) => ({
   position: 'relative',
   width: '100%',
+  overflow: 'hidden',
   border: `1px solid ${theme.palette.grey[100]}`,
   borderRadius: '1.2rem',
-  overflow: 'hidden',
   aspectRatio: '3/3.8',
 }));
 
 export const ConcertTicketDate = styled(Typography)(({ theme }) => ({
   display: 'block',
   marginBottom: '0.4rem',
-  color: theme.palette.primary.main,
   fontSize: '1.7rem',
   fontWeight: 700,
+  color: theme.palette.primary.main,
 }));
 
 export const ConcertTitle = styled(Typography)(() => ({
@@ -81,14 +81,14 @@ export const ConcertVenue = styled(Typography, {
 })<ConcertVenueProps>(({ isUpcoming, theme }) => ({
   display: 'block',
   marginTop: '0.8rem',
-  color: isUpcoming ? theme.palette.grey[500] : theme.palette.grey[900],
   fontSize: '1.5rem',
+  color: isUpcoming ? theme.palette.grey[500] : theme.palette.grey[900],
 }));
 
 export const ConcertDate = styled(Typography)(({ theme }) => ({
   display: 'block',
-  color: theme.palette.grey[400],
   fontSize: '1.5rem',
+  color: theme.palette.grey[400],
 }));
 
 export const Divider = styled(Box)(({ theme }) => ({

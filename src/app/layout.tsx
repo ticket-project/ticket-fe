@@ -1,7 +1,10 @@
-import type { Metadata } from 'next';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import Providers from './providers';
 import '@/styles/globals.css';
+
+import type { Metadata } from 'next';
+
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: '티켓 예매 사이트',

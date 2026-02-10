@@ -1,5 +1,6 @@
-import { Container, Skeleton } from '@mui/material';
 import { Suspense } from 'react';
+
+import { Container, Skeleton } from '@mui/material';
 
 const Homepage = () => {
   return (

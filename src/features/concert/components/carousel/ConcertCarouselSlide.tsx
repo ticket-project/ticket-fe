@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { ConcertCarouselItem } from '../../types';
+
 import {
   Root,
   StyledCardActionArea,

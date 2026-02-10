@@ -1,6 +1,8 @@
-import { Box, Container, Typography } from '@mui/material';
-import type { ContainerProps, SxProps, Theme } from '@mui/material';
 import type { ReactNode } from 'react';
+
+import type { ContainerProps, SxProps, Theme } from '@mui/material';
+
+import { Box, Container, Typography } from '@mui/material';
 
 interface SectionFrameProps {
   title?: ReactNode;

@@ -1,7 +1,8 @@
 'use client';
 
-import { EmptyState } from '@/components/common/EmptyState';
 import { useRouter } from 'next/navigation';
+
+import { EmptyState } from '@/components/common/EmptyState';
 
 const Error = () => {
   const router = useRouter();

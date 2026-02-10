@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
-import ConcertCardSkeleton from './ConcertCardSkeleton';
+
 import { PAGE_SIZE } from '../../constants';
+import ConcertCardSkeleton from './ConcertCardSkeleton';
 
 const SkeletonGrid = () => {
   return (

@@ -15,8 +15,8 @@ export const Root = styled(Box)(({ theme }) => ({
 
 export const GenreStack = styled(Stack)(({ theme }) => ({
   flex: '1 1 0',
-  minWidth: 0,
   rowGap: theme.spacing(1),
+  minWidth: 0,
 }));
 
 export const GenreChip = styled(Chip)<{ selected?: boolean }>(
@@ -25,9 +25,9 @@ export const GenreChip = styled(Chip)<{ selected?: boolean }>(
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingTop: theme.spacing(2.5),
-    color: selected ? 'white' : theme.palette.text.primary,
     fontSize: '1.5rem',
     fontWeight: 800,
+    color: selected ? 'white' : theme.palette.text.primary,
     backgroundColor: selected
       ? theme.palette.primary.main
       : theme.palette.grey[100],
@@ -42,13 +42,13 @@ export const GenreChip = styled(Chip)<{ selected?: boolean }>(
 
 export const SelectStack = styled(Stack)(({ theme }) => ({
   flex: '1 1 0',
+  flexWrap: 'wrap',
   justifyContent: 'flex-end',
+  rowGap: theme.spacing(1),
   minWidth: 0,
   [theme.breakpoints.down('md')]: {
     justifyContent: 'flex-start',
   },
-  flexWrap: 'wrap',
-  rowGap: theme.spacing(1),
 }));
 
 export const SelectControl = styled(FormControl)(() => ({

@@ -1,8 +1,9 @@
 'use client';
 
 import { Box, CircularProgress } from '@mui/material';
-import { EmptyState } from '@/components/common/EmptyState';
 import { UseQueryResult } from '@tanstack/react-query';
+
+import { EmptyState } from '@/components/common/EmptyState';
 
 interface QueryBoundaryProps<T> {
   query: UseQueryResult<T[], Error>;

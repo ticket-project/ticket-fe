@@ -1,5 +1,7 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+
 import { queryKeys } from '@/lib/react-query/queryKeys';
+
 import {
   getConcertCarousel,
   getConcertListPaginated,
@@ -7,8 +9,8 @@ import {
   getUpcomingConcerts,
   getUpcomingConcertsPreview,
 } from '../api';
-import { ConcertFilterState, UpcomingConcertFilterState } from '../types';
 import { PAGE_SIZE } from '../constants';
+import { ConcertFilterState, UpcomingConcertFilterState } from '../types';
 
 /// 위치 확인 후 이동
 export const CONCERT_QUERY_OPTIONS = {
