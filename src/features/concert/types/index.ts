@@ -1,7 +1,6 @@
 import { REGION_OPTIONS, SORT_OPTIONS, SALE_TYPES } from '../constants';
 
-export type SaleType = (typeof SALE_TYPES)[number];
-
+export type SaleType = keyof typeof SALE_TYPES;
 export interface ConcertBase {
   id: number;
   title: string;

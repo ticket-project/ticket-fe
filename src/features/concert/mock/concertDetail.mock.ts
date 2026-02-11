@@ -21,12 +21,6 @@ export const CONCERT_DETAIL_MOCK: ConcertDetail = {
     { name: 'R', price: 154000 },
     { name: 'S', price: 143000 },
   ],
-  // benefits: [
-  //   { badge: 'NOL', title: 'NOL 카드 티켓 10만원 할인쿠폰', linkUrl: '...' },
-  // ],
-  // promotions: [
-  //   { title: '카카오페이 결제 시 4천원 즉시할인', description: '...' },
-  // ],
   delivery: { startDate: '2026-01-02', endDate: '2026-01-07' },
   like: {
     isLiked: true, // 로그인한 사용자의 찜 여부

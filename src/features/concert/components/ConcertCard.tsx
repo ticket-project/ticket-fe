@@ -5,6 +5,7 @@ import { CardContent } from '@mui/material';
 
 import Tag from '@/components/ui/Tag';
 
+import { SALE_TYPES } from '../constants';
 import { ConcertBase, UpcomingConcertItem } from '../types';
 
 import {
@@ -23,10 +24,10 @@ interface ConcertCardProps {
   variant?: 'upcoming' | 'all';
 }
 
-const SALE_TYPE_LABEL: Record<ConcertBase['saleType'], string> = {
-  EXCLUSIVE: '단독판매',
-  GENERAL: '일반판매',
-};
+// const SALE_TYPE_LABEL: Record<ConcertBase['saleType'], string> = {
+//   EXCLUSIVE: '단독판매',
+//   GENERAL: '일반판매',
+// };
 
 const isConcertBase = (
   item: ConcertBase | UpcomingConcertItem
@@ -69,7 +70,7 @@ const ConcertCard = ({ item, variant = 'all' }: ConcertCardProps) => {
             )}
             {isExclusive && (
               <Tag
-                label={SALE_TYPE_LABEL[item.saleType]}
+                label={SALE_TYPES[item.saleType].label}
                 color="primary"
                 size="small"
                 sx={{ mt: 1 }}

@@ -23,7 +23,7 @@ const ConcertDetailPageClient = ({
     <PageContainer>
       <SectionFrame>
         <QueryBoundary query={detail}>
-          {(data) => <DetailView data={data} />}
+          {(item) => <DetailView item={item} />}
         </QueryBoundary>
       </SectionFrame>
     </PageContainer>

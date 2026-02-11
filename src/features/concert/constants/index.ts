@@ -25,4 +25,7 @@ export const REGION_OPTIONS = [
 
 export const PAGE_SIZE = 15;
 
-export const SALE_TYPES = ['GENERAL', 'EXCLUSIVE'] as const;
+export const SALE_TYPES = {
+  GENERAL: { label: '일반판매' },
+  EXCLUSIVE: { label: '단독판매' },
+} as const;
