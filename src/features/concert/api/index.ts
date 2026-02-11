@@ -1,6 +1,8 @@
+import { CONCERT_DETAIL_MOCK } from '../mock/concertDetail.mock';
 import {
   ConcertBase,
   ConcertCarouselItem,
+  ConcertDetail,
   GenreDto,
   GetConcertListParams,
   PaginatedResponse,
@@ -39,17 +41,7 @@ export const getUpcomingConcertsPreview = async (): Promise<
   return data.shows;
 };
 
-export const getGenres = async (category?: string): Promise<GenreDto[]> => {
-  const searchParams = new URLSearchParams();
-  if (category) searchParams.set('category', category);
-
-  const queryString = searchParams.toString();
-  const data = await apiClient<GenreDto[]>(`/api/v1/genres?${queryString}`);
-
-  return data;
-};
-
-export const getUpcomingConcerts = async (
+export const getUpcomingConcertsList = async (
   params: GetConcertListParams
 ): Promise<PaginatedResponse<UpcomingConcertItem>> => {
   // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
@@ -69,7 +61,17 @@ export const getUpcomingConcerts = async (
   return data;
 };
 
-export const getConcertListPaginated = async (
+export const getGenres = async (category?: string): Promise<GenreDto[]> => {
+  const searchParams = new URLSearchParams();
+  if (category) searchParams.set('category', category);
+
+  const queryString = searchParams.toString();
+  const data = await apiClient<GenreDto[]>(`/api/v1/genres?${queryString}`);
+
+  return data;
+};
+
+export const getConcertList = async (
   params: GetConcertListParams
 ): Promise<PaginatedResponse<ConcertBase>> => {
   // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
@@ -88,5 +90,11 @@ export const getConcertListPaginated = async (
     `/api/v1/shows?${queryString}`
   );
 
+  return data;
+};
+
+export const getConcertDetail = async (_id: string): Promise<ConcertDetail> => {
+  // const data = await apiClient<ConcertDetail>(`/api/v1/shows/${id}`);
+  const data = CONCERT_DETAIL_MOCK;
   return data;
 };

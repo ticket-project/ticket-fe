@@ -6,8 +6,8 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { EmptyState } from '@/components/common/EmptyState';
 
 interface QueryBoundaryProps<T> {
-  query: UseQueryResult<T[], Error>;
-  children: (items: T[]) => React.ReactNode;
+  query: UseQueryResult<T, Error>;
+  children: (items: T) => React.ReactNode;
 }
 
 const QueryBoundary = <T,>({ children, query }: QueryBoundaryProps<T>) => {
@@ -34,8 +34,7 @@ const QueryBoundary = <T,>({ children, query }: QueryBoundaryProps<T>) => {
   }
 
   // 빈 데이터
-  const items = data ?? [];
-  if (items.length === 0) {
+  if (!data || (Array.isArray(data) && data.length === 0)) {
     return (
       <EmptyState
         title="등록된 콘서트가 없습니다"
@@ -44,7 +43,7 @@ const QueryBoundary = <T,>({ children, query }: QueryBoundaryProps<T>) => {
     );
   }
 
-  return <>{children(items)}</>;
+  return <>{children(data)}</>;
 };
 
 export default QueryBoundary;

@@ -9,7 +9,8 @@ export const SORT_OPTIONS = {
     { label: '최신순', value: 'latest' },
     { label: '오픈임박순', value: 'showStartApproaching' },
   ],
-};
+} as const;
+
 export const REGION_OPTIONS = [
   { label: '지역 전체', value: 'ALL' },
   { label: '서울', value: 'SEOUL' },
@@ -20,6 +21,8 @@ export const REGION_OPTIONS = [
   { label: '전라', value: 'JEOLLA' },
   { label: '경상', value: 'GYEONGSANG' },
   { label: '제주', value: 'JEJU' },
-];
+] as const;
 
 export const PAGE_SIZE = 15;
+
+export const SALE_TYPES = ['GENERAL', 'EXCLUSIVE'] as const;

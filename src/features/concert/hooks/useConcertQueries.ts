@@ -4,9 +4,10 @@ import { queryKeys } from '@/lib/react-query/queryKeys';
 
 import {
   getConcertCarousel,
-  getConcertListPaginated,
+  getConcertDetail,
+  getConcertList,
   getGenres,
-  getUpcomingConcerts,
+  getUpcomingConcertsList,
   getUpcomingConcertsPreview,
 } from '../api';
 import { PAGE_SIZE } from '../constants';
@@ -48,9 +49,9 @@ export const useUpcomingConcertsInfinite = (
   filters: UpcomingConcertFilterState
 ) => {
   return useInfiniteQuery({
-    queryKey: queryKeys.concert.upcomingListFiltered(filters),
+    queryKey: queryKeys.concert.upcomingList(filters),
     queryFn: ({ pageParam }: { pageParam: string | null }) =>
-      getUpcomingConcerts({
+      getUpcomingConcertsList({
         cursor: pageParam,
         category: 'CONCERT',
         size: PAGE_SIZE,
@@ -65,9 +66,9 @@ export const useUpcomingConcertsInfinite = (
 
 export const useConcertListInfinite = (filters: ConcertFilterState) => {
   return useInfiniteQuery({
-    queryKey: queryKeys.concert.listFiltered(filters),
+    queryKey: queryKeys.concert.list(filters),
     queryFn: ({ pageParam }: { pageParam: string | null }) =>
-      getConcertListPaginated({
+      getConcertList({
         cursor: pageParam,
         category: 'CONCERT',
         size: PAGE_SIZE,
@@ -86,6 +87,14 @@ export const useConcertListInfinite = (filters: ConcertFilterState) => {
         })),
       })),
     }),
+    ...CONCERT_QUERY_OPTIONS,
+  });
+};
+
+export const useConcertDetail = (id: string) => {
+  return useQuery({
+    queryKey: queryKeys.concert.detail(id),
+    queryFn: () => getConcertDetail(id),
     ...CONCERT_QUERY_OPTIONS,
   });
 };
