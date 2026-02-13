@@ -1,6 +1,10 @@
 import { REGION_OPTIONS, SORT_OPTIONS, SALE_TYPES } from '../constants';
 
 export type SaleType = keyof typeof SALE_TYPES;
+
+/**
+ * 콘서트 메인
+ */
 export interface ConcertBase {
   id: number;
   title: string;
@@ -19,7 +23,6 @@ export interface ConcertBase {
   venue: string;
   image: string;
 }
-
 export type ConcertCarouselItem = Pick<
   ConcertBase,
   'id' | 'title' | 'startDate' | 'endDate' | 'venue' | 'image'
@@ -29,31 +32,26 @@ export type UpcomingConcertItem = Pick<
   ConcertBase,
   'id' | 'title' | 'saleType' | 'saleStartDate' | 'venue' | 'region' | 'image'
 >;
-
 export interface GenreDto {
   id: number;
   code: string;
   name: string;
 }
-
 export type Genre = string;
 export type Region = (typeof REGION_OPTIONS)[number]['value'];
 export type Sort =
   (typeof SORT_OPTIONS)[keyof typeof SORT_OPTIONS][number]['value'];
 export type ConcertSort = (typeof SORT_OPTIONS.concert)[number]['value'];
 export type UpcomingSort = (typeof SORT_OPTIONS.upcoming)[number]['value'];
-
 export interface ConcertFilterState {
   genre?: Genre;
   region?: Region;
   sort?: ConcertSort;
 }
-
 export interface UpcomingConcertFilterState {
   region?: Region;
   sort?: UpcomingSort;
 }
-
 export interface GetConcertListParams {
   cursor?: string | null;
   category?: string;
@@ -62,34 +60,33 @@ export interface GetConcertListParams {
   sort?: Sort;
   size?: number;
 }
-
 export interface PaginatedResponse<T> {
   items: T[];
   nextCursor: string | null;
   hasNext: boolean;
 }
 
-// 상세 정보
+/**
+ * 콘서트 상세
+ */
+export interface VenueRegion {
+  name: string;
+  code: string;
+}
 export interface ConcertDetailVenue {
   id: number;
   name: string;
+  address: string;
+  region: VenueRegion;
+  latitude: number;
+  longitude: number;
+  phone: string;
+  imageUrl: string;
 }
-export interface ConcertDetailSale {
-  type: SaleType;
-  startDate: string;
-  endDate: string;
-}
-export interface DatePeriod {
-  startDate: string;
-  endDate: string;
-}
-export interface TicketGrade {
+export interface ConcertPerformer {
+  id: number;
   name: string;
-  price: number;
-}
-export interface DeliveryPeriod {
-  startDate: string;
-  endDate: string;
+  profileImageUrl: string;
 }
 export interface ConcertLike {
   isLiked: boolean;
@@ -100,53 +97,23 @@ export interface BookingSession {
   roundNo: number;
   startTime: string;
 }
-export interface RelatedPerformance {
-  id: number;
-  title: string;
-  posterUrl: string;
-  period: DatePeriod;
-}
-export interface PerformanceInfo {
-  timeLines: string[];
-  relatedPerformance: RelatedPerformance[];
-}
-export interface OrganizerInfo {
-  host: string;
-  organizer: string;
-  producer: string;
-}
-export interface ProductInfo {
-  host: string;
-  runningTime: string;
-  ageRating: string;
-  venue: string;
-}
-export interface SellerInfo {
-  host: string;
-  representative: string;
-  businessNumber: string;
-  email: string;
-  phone: string;
-  address: string;
-}
-export interface SalesInfo {
-  organizerInfo: OrganizerInfo;
-  productInfo: ProductInfo;
-  sellerInfo: SellerInfo;
-}
 export interface ConcertDetail {
   id: number;
   title: string;
-  posterUrl: string;
+  subTitle: string;
+  info: string;
+  startDate: string;
+  endDate: string;
+  saleType: SaleType;
+  saleStartDate: string;
+  saleEndDate: string;
+  image: string;
   venue: ConcertDetailVenue;
-  sale: ConcertDetailSale;
-  period: DatePeriod;
-  runningTime: number;
-  ageRating: string;
-  ticketGrades: TicketGrade[];
-  delivery: DeliveryPeriod;
+  performer: ConcertPerformer;
+  genreNames: Record<number, string>;
+  grades: unknown[];
+  performances: unknown[];
   like: ConcertLike;
   booking: Record<string, BookingSession[]>;
-  performanceInfo: PerformanceInfo;
-  salesInfo: SalesInfo;
+  viewCount: number;
 }

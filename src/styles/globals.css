@@ -247,3 +247,12 @@ a {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* Notistack 토스트 스타일 */
+.notistack-MuiContent.notistack-MuiContent {
+  font-size: 1.4rem;
+}
+.notistack-MuiContent-success.notistack-MuiContent-success {
+  background-color: #fff;
+  color: #000;
+}

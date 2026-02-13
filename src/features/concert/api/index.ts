@@ -93,8 +93,7 @@ export const getConcertList = async (
   return data;
 };
 
-export const getConcertDetail = async (_id: string): Promise<ConcertDetail> => {
-  // const data = await apiClient<ConcertDetail>(`/api/v1/shows/${id}`);
-  const data = CONCERT_DETAIL_MOCK;
+export const getConcertDetail = async (id: string): Promise<ConcertDetail> => {
+  const data = await apiClient<ConcertDetail>(`/api/v1/shows/${id}`);
   return data;
 };

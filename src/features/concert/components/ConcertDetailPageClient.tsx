@@ -5,8 +5,7 @@ import PageContainer from '@/components/layouts/PageContainer';
 import SectionFrame from '@/components/layouts/SectionFrame';
 import { useConcertDetail } from '@/features/concert/hooks/useConcertQueries';
 
-import ConcertCarousel from './carousel/ConcertCarousel';
-import DetailView from './DetailView';
+import EventDetailView from './detail/EventDetailView';
 
 interface ConcertDetailPageClientProps {
   concertId: string;
@@ -18,12 +17,12 @@ const ConcertDetailPageClient = ({
   const detail = useConcertDetail(concertId);
   //   const carousel = useConcertCarousel();
   //   const upcomingPreview = useUpcomingConcertsPreview();
-  console.log(detail);
+  // console.log(detail.data);
   return (
     <PageContainer>
       <SectionFrame>
         <QueryBoundary query={detail}>
-          {(item) => <DetailView item={item} />}
+          {(item) => <EventDetailView item={item} />}
         </QueryBoundary>
       </SectionFrame>
     </PageContainer>
