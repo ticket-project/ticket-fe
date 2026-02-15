@@ -9,9 +9,13 @@ import {
 
 import { INSTALLMENT_DATA } from '../../constants';
 
-const InstallmentTooltipContent = () => {
+interface InstallmentTooltipContentProps {
+  id: string;
+}
+
+const InstallmentTooltipContent = ({ id }: InstallmentTooltipContentProps) => {
   return (
-    <Box sx={{ p: 1.8 }}>
+    <Box id={id} sx={{ p: 1.8 }}>
       <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
         무이자할부 안내
       </Typography>

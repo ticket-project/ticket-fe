@@ -24,9 +24,9 @@ const ShowInfoTab = () => {
       </Box>
       <Box>
         <InfoTitle variant="h6">공지사항</InfoTitle>
-        <Stack spacing={1.5}>
+        <Stack component="ul" spacing={1.5}>
           {NOTICE_HIGHLIGHTS.map((notice, index) => (
-            <Box key={index}>
+            <Box key={`notice-${index}`} component="li">
               <Typography
                 variant="body2"
                 sx={{ color: '#4154ff', fontWeight: 700 }}

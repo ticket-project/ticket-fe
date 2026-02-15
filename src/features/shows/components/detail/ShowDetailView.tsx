@@ -26,7 +26,7 @@ interface ShowDetailViewProps {
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
   return (
     <Root>
-      <Box aria-label="공연 상세">
+      <Box>
         <SummaryTop item={item} />
         <SummaryBody>
           <ShowPoster item={item} />

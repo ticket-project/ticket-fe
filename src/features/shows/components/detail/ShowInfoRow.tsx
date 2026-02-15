@@ -88,6 +88,7 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
             component={Link}
             href="#"
             target="_blank"
+            rel="noopener noreferrer"
             direction="row"
             alignItems="center"
             spacing={1}
@@ -107,10 +108,11 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
           <Stack
             component={Link}
             href="#"
+            target="_blank"
+            rel="noopener noreferrer"
             direction="row"
             alignItems="center"
             spacing={1}
-            target="_blank"
           >
             <BenefitBadge
               sx={{
@@ -131,6 +133,7 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
           component={Link}
           href="#"
           target="_blank"
+          rel="noopener noreferrer"
           direction="row"
           alignItems="center"
           spacing={1}

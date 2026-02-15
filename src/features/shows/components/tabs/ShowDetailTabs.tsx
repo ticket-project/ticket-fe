@@ -9,6 +9,35 @@ import ShowSaleTab from './ShowSaleTab';
 
 import { StyledTabs } from './ShowDetailTabs.styles';
 
+type TabValue = 'info' | 'sale';
+
+interface TabPanelProps {
+  value: TabValue;
+  activeTab: TabValue;
+  children: React.ReactNode;
+}
+
+const a11yProps = (name: TabValue) => ({
+  id: `show-tab-${name}`,
+  'aria-controls': `show-tabpanel-${name}`,
+});
+
+const TabPanel = ({ value, activeTab, children }: TabPanelProps) => {
+  const isActive = value === activeTab;
+
+  return (
+    <Box
+      id={`show-tabpanel-${value}`}
+      role="tabpanel"
+      aria-labelledby={`show-tab-${value}`}
+      hidden={!isActive}
+      sx={{ pt: 7.5 }}
+    >
+      {children}
+    </Box>
+  );
+};
+
 const ShowDetailTabs = () => {
   const [activeTab, setActiveTab] = useState<'info' | 'sale'>('info');
 
@@ -21,14 +50,22 @@ const ShowDetailTabs = () => {
 
   return (
     <Box sx={{ mt: 7 }}>
-      <StyledTabs value={activeTab} onChange={handleTabChange}>
-        <Tab label="공연정보" value="info"></Tab>
-        <Tab label="판매정보" value="sale"></Tab>
+      <StyledTabs
+        value={activeTab}
+        onChange={handleTabChange}
+        aria-label="상세 정보 탭"
+      >
+        <Tab label="공연정보" value="info" {...a11yProps('info')} />
+        <Tab label="판매정보" value="sale" {...a11yProps('sale')} />
       </StyledTabs>
-      <Box sx={{ pt: 7.5 }}>
-        {activeTab === 'info' && <ShowInfoTab />}
-        {activeTab === 'sale' && <ShowSaleTab />}
-      </Box>
+
+      <TabPanel value="info" activeTab={activeTab}>
+        <ShowInfoTab />
+      </TabPanel>
+
+      <TabPanel value="sale" activeTab={activeTab}>
+        <ShowSaleTab />
+      </TabPanel>
     </Box>
   );
 };

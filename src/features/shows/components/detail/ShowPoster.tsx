@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useState } from 'react';
 
 import { FavoriteBorder, Share } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
@@ -13,6 +16,15 @@ interface ShowPosterProps {
 }
 
 const ShowPoster = ({ item }: ShowPosterProps) => {
+  const [liked, setLiked] = useState(false);
+
+  const handleToggleLike = () => {
+    setLiked((prev) => !prev);
+    // enqueueSnackbar(liked ? '찜 취소되었습니다.' : '찜하기가 추가되었습니다.', {
+    //   variant: 'success',
+    // });
+  };
+
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     enqueueSnackbar('공유 링크가 복사되었습니다.', {
@@ -33,7 +45,12 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
         />
       </PosterArea>
       <ActionArea>
-        <Button sx={{ p: 0 }}>
+        <Button
+          onClick={handleToggleLike}
+          aria-pressed={liked}
+          aria-label={liked ? '찜 취소' : '찜하기'}
+          sx={{ p: 0 }}
+        >
           <FavoriteBorder sx={{ mr: 0.6, fontSize: 23, color: 'grey.500' }} />
           <Typography component="span" sx={{ fontSize: 15 }}>
             티켓캐스트
@@ -48,7 +65,7 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
         <ShareButton
           size="small"
           onClick={handleShare}
-          // aria-label="공유하기"
+          aria-label="공유 링크 복사"
         >
           <Share sx={{ fontSize: 20 }} />
         </ShareButton>

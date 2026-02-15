@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
-import { TableBody, TableCell, TableRow, TableHead } from '@mui/material';
+import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 import {
   InfoTable,
@@ -13,40 +13,67 @@ const ShowSaleTab = () => {
     <Stack spacing={8}>
       <Box>
         <InfoTitle variant="h6">상품관련 정보</InfoTitle>
-        <InfoTable>
+
+        <InfoTable aria-label="상품관련 정보">
           <TableBody>
             <TableRow>
-              <InfoTableCell component="th">주최/기획</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                주최/기획
+              </InfoTableCell>
               <TableCell>주식회사 놀라운</TableCell>
-              <InfoTableCell component="th">고객문의</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                고객문의
+              </InfoTableCell>
               <TableCell>02-1544-1234</TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">공연시간</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                공연시간
+              </InfoTableCell>
               <TableCell>해당없음</TableCell>
-              <InfoTableCell component="th">관람등급</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                관람등급
+              </InfoTableCell>
               <TableCell>만 9세이상</TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">주연</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                주연
+              </InfoTableCell>
               <TableCell>해당없음</TableCell>
-              <InfoTableCell component="th">공연장소</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                공연장소
+              </InfoTableCell>
               <TableCell>KSPO DOME</TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">예매수수료</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                예매수수료
+              </InfoTableCell>
               <TableCell>장당 2,000원</TableCell>
-              <InfoTableCell component="th">배송료</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                배송료
+              </InfoTableCell>
               <TableCell>현장수령 무료 (배송불가)</TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">유효기간/이용조건</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                유효기간/이용조건
+              </InfoTableCell>
               <TableCell colSpan={3}>
                 2026.02.27~2026.03.01 예매한 공연 날짜, 회차에 한해 이용가능
               </TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">예매취소조건</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                예매취소조건
+              </InfoTableCell>
+
               <TableCell colSpan={3}>
                 <Typography variant="body2" sx={{ mb: 1 }}>
                   취소일자에 따라서 아래와 같이 취소수수료가 부과됩니다. 예매 일
@@ -54,23 +81,27 @@ const ShowSaleTab = () => {
                   이전 취소 시에는 취소수수료가 없으며, 예매 수수료도
                   환불됩니다.(취소기한 내에 한함)
                 </Typography>
-                <InfoTable compact>
+
+                <InfoTable compact aria-label="예매 취소 수수료 안내">
                   <TableHead>
                     <TableRow>
                       <TableCell
                         component="th"
+                        scope="col"
                         sx={{ bgcolor: '#f5f5f5', fontWeight: 600 }}
                       >
                         취소일
                       </TableCell>
                       <TableCell
                         component="th"
+                        scope="col"
                         sx={{ bgcolor: '#f5f5f5', fontWeight: 600 }}
                       >
                         취소수수료
                       </TableCell>
                     </TableRow>
                   </TableHead>
+
                   <TableBody>
                     <TableRow>
                       <TableCell>예매 후 7일 이내</TableCell>
@@ -100,8 +131,11 @@ const ShowSaleTab = () => {
                 </InfoTable>
               </TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">취소환불방법</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                취소환불방법
+              </InfoTableCell>
               <TableCell colSpan={3}>
                 <Stack component="ul" spacing={0.5} sx={{ pl: 2 }}>
                   <li>
@@ -121,8 +155,11 @@ const ShowSaleTab = () => {
                 </Stack>
               </TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">배송티켓 안내</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                배송티켓 안내
+              </InfoTableCell>
               <TableCell colSpan={3}>
                 <Stack component="ul" spacing={0.5} sx={{ pl: 2 }}>
                   <li>
@@ -147,8 +184,11 @@ const ShowSaleTab = () => {
                 </Stack>
               </TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">모바일티켓 안내</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                모바일티켓 안내
+              </InfoTableCell>
               <TableCell colSpan={3}>
                 <Stack component="ul" spacing={0.5} sx={{ pl: 2 }}>
                   <li>
@@ -197,34 +237,52 @@ const ShowSaleTab = () => {
           </TableBody>
         </InfoTable>
       </Box>
+
       <Box>
         <InfoTitle variant="h6">판매자 정보</InfoTitle>
-        <InfoTable>
+
+        <InfoTable aria-label="판매자 정보">
           <TableBody>
             <TableRow>
-              <InfoTableCell component="th">상호</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                상호
+              </InfoTableCell>
               <TableCell>주식회사 놀라운</TableCell>
-              <InfoTableCell component="th">대표자명</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                대표자명
+              </InfoTableCell>
               <TableCell>홍길동</TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">사업자등록번호</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                사업자등록번호
+              </InfoTableCell>
               <TableCell>123-456-7890</TableCell>
-              <InfoTableCell component="th">E-mail</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                E-mail
+              </InfoTableCell>
               <TableCell>help.oneticket@nola.com</TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">연락처</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                연락처
+              </InfoTableCell>
               <TableCell colSpan={3}>02-1544-1234</TableCell>
             </TableRow>
+
             <TableRow>
-              <InfoTableCell component="th">주소</InfoTableCell>
+              <InfoTableCell component="th" scope="row">
+                주소
+              </InfoTableCell>
               <TableCell colSpan={3}>
                 경기도 성남시 광진구 대남로 70(상곡동)
               </TableCell>
             </TableRow>
           </TableBody>
         </InfoTable>
+
         <Box
           sx={{
             mt: 2,
@@ -245,6 +303,7 @@ const ShowSaleTab = () => {
             </Typography>{' '}
             안내
           </Typography>
+
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             놀라운의 모든 상품은 판매자 및 결제 수단의 구분 없이 회원님들의
             구매안전을 위해 안전결제시스템을 도입하여 서비스하고 있습니다.
@@ -253,6 +312,7 @@ const ShowSaleTab = () => {
           </Typography>
         </Box>
       </Box>
+
       <Box>
         <InfoTitle variant="h6">예매 유의사항</InfoTitle>
         <StyledList component="ul" spacing={1}>
@@ -287,8 +347,10 @@ const ShowSaleTab = () => {
           </li>
         </StyledList>
       </Box>
+
       <Box>
         <InfoTitle variant="h6">환불안내</InfoTitle>
+
         <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
           신용카드 결제의 경우
         </Typography>
@@ -366,6 +428,7 @@ const ShowSaleTab = () => {
           바랍니다.
         </Typography>
       </Box>
+
       <Box>
         <InfoTitle variant="h6">무통장입금 시 주의사항</InfoTitle>
         <StyledList component="ul" spacing={1}>
@@ -392,8 +455,7 @@ const ShowSaleTab = () => {
               예매일 익일 오후 23시 59분까지 입금하지 않으시면 자동으로 예매취소
               되며, 상품에 따라 입금 기한이 상이 할 수 있으니 My 티켓에서 입금
               마감시간을 확인해주시기 바랍니다. (단, 오후 17시 이후에는
-              무통장입금 문의 대응이 어려울 수 있으니, 이전시간 입금을
-              권장합니다.)
+              무통장입금 문의 대응이 어려우니, 이전시간 입금을 권장합니다.)
             </Typography>
           </li>
           <li>
