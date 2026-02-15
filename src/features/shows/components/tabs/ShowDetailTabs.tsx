@@ -33,7 +33,7 @@ const TabPanel = ({ value, activeTab, children }: TabPanelProps) => {
       hidden={!isActive}
       sx={{ pt: 7.5 }}
     >
-      {children}
+      {isActive && children}
     </Box>
   );
 };

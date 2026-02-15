@@ -19,10 +19,6 @@ interface ShowDetailViewProps {
   item: ShowDetail;
 }
 
-/**
- * 퀵링크 넣기, aria-label 등 체킹
- */
-
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
   return (
     <Root>

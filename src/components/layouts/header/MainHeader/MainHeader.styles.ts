@@ -17,9 +17,11 @@ export const DefaultHeader = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'isScrolled',
 })<{ isScrolled: boolean }>(({ isScrolled, theme }) => ({
   position: 'static',
+  visibility: isScrolled ? 'hidden' : 'visible',
   opacity: isScrolled ? 0 : 1,
   background: theme.palette.common.white,
   borderBottom: `1px solid ${theme.palette.grey[200]}`,
+  pointerEvents: isScrolled ? 'none' : 'auto',
 }));
 
 export const StickyHeader = styled(AppBar, {
@@ -30,6 +32,7 @@ export const StickyHeader = styled(AppBar, {
   right: 0,
   top: 0,
   zIndex: theme.zIndex.appBar,
+  visibility: isScrolled ? 'visible' : 'hidden',
   height: 'var(--compact-header-height)',
   opacity: isScrolled ? 1 : 0,
   backgroundColor: 'rgba(255, 255, 255, 0.8)',

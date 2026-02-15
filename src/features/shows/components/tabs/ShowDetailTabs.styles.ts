@@ -12,6 +12,7 @@ type InfoTableProps = {
 };
 
 export const StyledTabs = styled(Tabs)(({ theme }) => ({
+  overflow: 'visible',
   borderBottom: '1px solid',
   borderColor: theme.palette.divider,
   '& .MuiTab-root': {
@@ -27,6 +28,9 @@ export const StyledTabs = styled(Tabs)(({ theme }) => ({
   '& .MuiTabs-indicator': {
     height: 4,
     backgroundColor: theme.palette.grey[900],
+  },
+  '& .MuiTabs-scroller': {
+    overflow: 'visible !important',
   },
 }));
 
