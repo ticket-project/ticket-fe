@@ -2,58 +2,38 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 
-import { ChevronRight, PlayArrow } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { ChevronRight } from '@mui/icons-material';
+import { Box, Stack, Typography } from '@mui/material';
 
-import { ConcertDetail } from '@/features/concert/types';
+import { ConcertDetail } from '../../types';
 
-import Tooltip from '@/components/ui/Tooltip';
+import InstallmentTooltip from './InstallmentTooltip';
 
-const INSTALLMENT_DATA = [
-  {
-    card: '비씨카드',
-    plan: '2~5개월',
-    condition: '5만원 이상 결제 시 (하나 BC, Non-bc카드 제외)',
-  },
-  { card: '우리카드', plan: '2~5개월', condition: '5만원 이상 결제 시' },
-  { card: '롯데카드', plan: '2~5개월', condition: '5만원 이상 결제 시' },
-  { card: '하나카드', plan: '2~4개월', condition: '5만원 이상 결제 시' },
-  { card: '국민카드', plan: '2~3개월', condition: '5만원 이상 결제 시' },
-  { card: '현대카드', plan: '2~3개월', condition: '5만원 이상 결제 시' },
-  { card: '신한카드', plan: '2~3개월', condition: '5만원 이상 결제시' },
-  { card: '삼성카드', plan: '2~3개월', condition: '5만원 이상 결제 시' },
-  { card: '농협카드', plan: '2~3개월', condition: '5만원 이상 결제 시' },
-];
+import { BenefitBadge } from './EventDetail.styles';
 
-function InfoRow({ label, children }) {
-  return (
-    <>
-      {/* display: contents 로 dt/dd를 같은 grid row에 자연스럽게 배치 */}
-      <Box sx={{ display: 'contents' }}>
-        <Typography component="dt" variant="body2" sx={{ fontWeight: 600 }}>
-          {label}
-        </Typography>
-
-        <Box component="dd">{children}</Box>
-      </Box>
-    </>
-  );
+interface EventInfoRowProps {
+  item: ConcertDetail;
 }
 
-const EventInfoRow = ({ item }) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+interface InfoRowProps {
+  label: string;
+  children: React.ReactNode;
+}
 
+const InfoRow = ({ label, children }: InfoRowProps) => {
+  return (
+    <Box sx={{ display: 'contents' }}>
+      <Typography component="dt" variant="body2" sx={{ fontWeight: 600 }}>
+        {label}
+      </Typography>
+
+      <Box component="dd">{children}</Box>
+    </Box>
+  );
+};
+
+const EventInfoRow = ({ item }: EventInfoRowProps) => {
   return (
     <Box
       component="dl"
@@ -65,10 +45,6 @@ const EventInfoRow = ({ item }) => {
       }}
     >
       <InfoRow label="장소">
-        {/* <Button variant="text" sx={{ fontWeight: 600 }}>
-          {item.venue.name}
-          <PlayArrow />
-        </Button> */}
         <Typography variant="body2">{item.venue.name}</Typography>
       </InfoRow>
       <InfoRow label="공연기간">
@@ -105,96 +81,24 @@ const EventInfoRow = ({ item }) => {
         </Stack>
       </InfoRow>
       <InfoRow label="혜택">
-        <Tooltip
-          placement="bottom-end"
-          open={tooltipOpen}
-          onClose={() => setTooltipOpen(false)}
-          title={
-            <Box sx={{ p: 1.8 }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
-                무이자할부 안내
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'grey.500',
-                  mb: 1.5,
-                  lineHeight: 1.4,
-                }}
-              >
-                체크,법인,기업,즉시불,기프트카드 제외
-                <br />
-                무이자할부 결제 시, 카드 포인트 및 마일리지 적립제외
-              </Typography>
-              <Table
-                size="small"
-                sx={{
-                  borderTop: 1,
-                  borderColor: 'divider',
-                }}
-              >
-                <TableBody>
-                  {INSTALLMENT_DATA.map((row) => (
-                    <TableRow key={row.card}>
-                      <TableCell
-                        component="th"
-                        sx={{
-                          bgcolor: 'grey.100',
-                          fontWeight: 600,
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {row.card}
-                      </TableCell>
-                      <TableCell sx={{ whiteSpace: 'nowrap' }}>
-                        {row.plan}
-                      </TableCell>
-                      <TableCell sx={{ width: 150 }}>{row.condition}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          }
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              mb: 1,
-            }}
-            onClick={() => setTooltipOpen(!tooltipOpen)}
-          >
-            무이자할부
-            <PlayArrow sx={{ fontSize: 13, ml: 0.2, mt: -0.1 }} />
-          </Typography>
-        </Tooltip>
+        <InstallmentTooltip />
 
         <Stack spacing={0.8}>
           <Stack
             component={Link}
             href="#"
+            target="_blank"
             direction="row"
             alignItems="center"
             spacing={1}
-            target="_blank"
           >
-            <Box
+            <BenefitBadge
               sx={{
                 bgcolor: '#1976d2',
-                color: 'white',
-                px: 0.4,
-                py: 0.1,
-                borderRadius: '3px',
-                fontSize: 11,
-                fontWeight: 800,
-                whiteSpace: 'nowrap',
               }}
             >
               ONE카드
-            </Box>
+            </BenefitBadge>
             <Typography sx={{ fontSize: 13, color: '#555' }}>
               ONE 카드 티켓 10만원 할인쿠폰
             </Typography>
@@ -208,20 +112,13 @@ const EventInfoRow = ({ item }) => {
             spacing={1}
             target="_blank"
           >
-            <Box
+            <BenefitBadge
               sx={{
                 bgcolor: '#fbc02d',
-                color: 'white',
-                px: 0.4,
-                py: 0.1,
-                borderRadius: '3px',
-                fontSize: 11,
-                fontWeight: 800,
-                whiteSpace: 'nowrap',
               }}
             >
               t:ping
-            </Box>
+            </BenefitBadge>
             <Typography sx={{ fontSize: 13, color: '#555' }}>
               가입하고 중복할인 쿠폰받기
             </Typography>
@@ -233,10 +130,10 @@ const EventInfoRow = ({ item }) => {
         <Stack
           component={Link}
           href="#"
+          target="_blank"
           direction="row"
           alignItems="center"
           spacing={1}
-          target="_blank"
         >
           <Image
             src="/images/ico-kakaopay.png"

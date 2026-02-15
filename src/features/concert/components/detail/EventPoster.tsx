@@ -6,7 +6,13 @@ import { enqueueSnackbar } from 'notistack';
 
 import { ConcertDetail } from '@/features/concert/types';
 
-const EventPoster = ({ item }: { item: ConcertDetail }) => {
+import { ActionArea, PosterArea, ShareButton } from './EventDetail.styles';
+
+interface EventPosterProps {
+  item: ConcertDetail;
+}
+
+const EventPoster = ({ item }: EventPosterProps) => {
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     enqueueSnackbar('공유 링크가 복사되었습니다.', {
@@ -16,7 +22,7 @@ const EventPoster = ({ item }: { item: ConcertDetail }) => {
 
   return (
     <Box>
-      <Box sx={{ position: 'relative', aspectRatio: '1/1.32' }}>
+      <PosterArea>
         <Image
           src={'/images/dummy-poster.jpeg'}
           alt={item.title}
@@ -25,15 +31,8 @@ const EventPoster = ({ item }: { item: ConcertDetail }) => {
           priority
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 33vw, 300px"
         />
-      </Box>
-      <Stack
-        sx={{
-          mt: 1.2,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
+      </PosterArea>
+      <ActionArea>
         <Button sx={{ p: 0 }}>
           <FavoriteBorder sx={{ mr: 0.6, fontSize: 23, color: 'grey.500' }} />
           <Typography component="span" sx={{ fontSize: 15 }}>
@@ -46,18 +45,14 @@ const EventPoster = ({ item }: { item: ConcertDetail }) => {
             2,198
           </Typography>
         </Button>
-        <IconButton
-          onClick={handleShare}
-          sx={{
-            bgcolor: 'grey.200',
-            '&:hover': { bgcolor: 'grey.300' },
-          }}
-          // aria-label="공유하기"
+        <ShareButton
           size="small"
+          onClick={handleShare}
+          // aria-label="공유하기"
         >
           <Share sx={{ fontSize: 20 }} />
-        </IconButton>
-      </Stack>
+        </ShareButton>
+      </ActionArea>
     </Box>
   );
 };

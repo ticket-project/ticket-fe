@@ -5,7 +5,11 @@ import { ConcertDetail } from '@/features/concert/types';
 import Tag from '@/components/ui/Tag';
 import { SALE_TYPES } from '@/features/concert/constants';
 
-const SummaryTop = ({ item }: { item: ConcertDetail }) => {
+interface SummaryTopProps {
+  item: ConcertDetail;
+}
+
+const SummaryTop = ({ item }: SummaryTopProps) => {
   return (
     <Stack
       spacing={1.5}
