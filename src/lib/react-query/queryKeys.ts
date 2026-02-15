@@ -3,28 +3,27 @@
  */
 
 import type {
-  ConcertFilterState,
-  UpcomingConcertFilterState,
-} from '@/features/concert/types';
+  ShowsFilterState,
+  UpcomingShowsFilterState,
+} from '@/features/shows/types';
 
 export const queryKeys = {
-  concert: {
-    all: ['concert'] as const,
-    carousel: () => [...queryKeys.concert.all, 'carousel'] as const,
-    upcomingPreview: () =>
-      [...queryKeys.concert.all, 'upcomingPreview'] as const,
+  show: {
+    all: ['show'] as const,
+    latest: () => [...queryKeys.show.all, 'latest'] as const,
+    upcomingPreview: () => [...queryKeys.show.all, 'upcomingPreview'] as const,
 
-    upcomingList: (filters: UpcomingConcertFilterState) =>
-      [...queryKeys.concert.all, 'upcoming', 'list', filters] as const,
+    upcomingList: (filters: UpcomingShowsFilterState) =>
+      [...queryKeys.show.all, 'upcoming', 'list', filters] as const,
 
     genres: (category: string) =>
-      [...queryKeys.concert.all, 'genres', category] as const,
+      [...queryKeys.show.all, 'genres', category] as const,
 
-    list: (filters: ConcertFilterState) =>
-      [...queryKeys.concert.all, 'list', filters] as const,
+    list: (filters: ShowsFilterState) =>
+      [...queryKeys.show.all, 'list', filters] as const,
 
-    detail: (concertId: string | number) =>
-      [...queryKeys.concert.all, 'detail', String(concertId)] as const,
+    detail: (showId: string | number) =>
+      [...queryKeys.show.all, 'detail', String(showId)] as const,
   },
 
   booking: {

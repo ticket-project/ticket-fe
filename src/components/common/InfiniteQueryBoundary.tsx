@@ -8,7 +8,7 @@ import type {
 } from '@tanstack/react-query';
 
 import { EmptyState } from '@/components/common/EmptyState';
-import SkeletonGrid from '@/features/concert/components/skeleton/SkeletonGrid';
+import SkeletonGrid from '@/features/shows/components/skeleton/ShowSkeletonGrid';
 
 type ItemOfPage<TPage extends { items: unknown[] }> = TPage['items'][number];
 

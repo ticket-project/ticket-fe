@@ -2,14 +2,11 @@ import { Metadata } from 'next';
 
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import {
-  getConcertCarousel,
-  getUpcomingConcertsPreview,
-} from '@/features/concert/api';
+import { getLatestShows, getUpcomingShowsPreview } from '@/features/shows/api';
 import { createQueryClient } from '@/lib/react-query/queryClient';
 import { queryKeys } from '@/lib/react-query/queryKeys';
 
-import ConcertPageClient from '../../../features/concert/components/ConcertPageClient';
+import ShowPageClient from '../../../features/shows/components/page/ShowPageClient';
 
 export const metadata: Metadata = {
   description: '최신 콘서트 정보를 확인하세요.',
@@ -21,18 +18,18 @@ const ConcertPage = async () => {
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: queryKeys.concert.carousel(),
-      queryFn: getConcertCarousel,
+      queryKey: queryKeys.show.latest(),
+      queryFn: getLatestShows,
     }),
     queryClient.prefetchQuery({
-      queryKey: queryKeys.concert.upcomingPreview(),
-      queryFn: getUpcomingConcertsPreview,
+      queryKey: queryKeys.show.upcomingPreview(),
+      queryFn: getUpcomingShowsPreview,
     }),
   ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ConcertPageClient />
+      <ShowPageClient />
     </HydrationBoundary>
   );
 };

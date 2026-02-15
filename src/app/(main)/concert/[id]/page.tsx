@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { getConcertDetail } from '@/features/concert/api';
-import ConcertDetailPageClient from '@/features/concert/components/ConcertDetailPageClient';
+import { getShowById } from '@/features/shows/api';
+import ShowDetailPageClient from '@/features/shows/components/page/ShowDetailPageClient';
 import { createQueryClient } from '@/lib/react-query/queryClient';
 import { queryKeys } from '@/lib/react-query/queryKeys';
 
@@ -10,13 +10,13 @@ const ConcertDetailPage = async ({ params }: { params: { id: string } }) => {
   const queryClient = createQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: queryKeys.concert.detail(id),
-    queryFn: () => getConcertDetail(id),
+    queryKey: queryKeys.show.detail(id),
+    queryFn: () => getShowById(id),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ConcertDetailPageClient concertId={id} />
+      <ShowDetailPageClient showId={id} />
     </HydrationBoundary>
   );
 };
