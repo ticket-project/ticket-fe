@@ -20,6 +20,8 @@ interface ShowDetailViewProps {
 }
 
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
+  console.log('✳️item', item);
+
   return (
     <Root>
       <Box>

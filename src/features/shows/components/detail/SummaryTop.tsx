@@ -22,7 +22,8 @@ const SummaryTop = ({ item }: SummaryTopProps) => {
       }}
     >
       <Tag
-        label={SALE_TYPES[item.saleType].label}
+        // label={SALE_TYPES[item.saleType].label}
+        label={item.saleType?.name}
         color="primary"
         size="small"
       />
