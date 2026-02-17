@@ -107,6 +107,12 @@ export interface BookingSession {
   startTime: string;
 }
 
+export interface ShowGrade {
+  id: number;
+  gradeName: string;
+  price: number;
+}
+
 export interface ShowDetail {
   id: number;
   title: string;
@@ -121,7 +127,7 @@ export interface ShowDetail {
   venue: ShowDetailVenue;
   performer: ShowPerformer;
   genreNames: Record<number, string>;
-  grades: unknown[];
+  grades: ShowGrade[];
   performances: unknown[];
   like: ShowLike;
   booking: Record<string, BookingSession[]>;

@@ -21,6 +21,12 @@ interface InfoRowProps {
   children: React.ReactNode;
 }
 
+//utils...
+const KRW_FORMATTER = new Intl.NumberFormat('ko-KR');
+const formatPrice = (price: number) => {
+  return KRW_FORMATTER.format(price) + '원';
+};
+
 const InfoRow = ({ label, children }: InfoRowProps) => {
   return (
     <Box sx={{ display: 'contents' }}>
@@ -61,22 +67,16 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
       <InfoRow label="가격">
         <Stack spacing={0.5}>
           <Stack component="ul" spacing={0.25}>
-            <Stack component="li" direction="row" spacing={1}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                R석
-              </Typography>
-              <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                132,000원
-              </Typography>
-            </Stack>
-            <Stack component="li" direction="row" spacing={1}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                S석
-              </Typography>
-              <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                121,000원
-              </Typography>
-            </Stack>
+            {item.grades.map((grade) => (
+              <Stack key={grade.id} component="li" direction="row" spacing={1}>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  {grade.gradeName}
+                </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                  {formatPrice(grade.price)}
+                </Typography>
+              </Stack>
+            ))}
           </Stack>
         </Stack>
       </InfoRow>
