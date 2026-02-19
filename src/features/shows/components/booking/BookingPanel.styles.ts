@@ -74,16 +74,22 @@ export const ForeignBookButton = styled(Button)(({ theme }) => ({
 }));
 
 export const BaseDay = styled(PickersDay)({
-  fontSize: '1.3rem',
+  fontSize: '1.4rem',
   fontWeight: 700,
   '&.MuiPickersDay-root.Mui-disabled': {
     color: 'rgba(0, 0, 0, 0.25)',
+  },
+  '&.MuiPickersDay-root.Mui-selected': {
+    fontWeight: 700,
   },
 });
 
 export const SundayDay = styled(BaseDay)({
   '&.MuiPickersDay-root.Mui-disabled': {
-    color: 'rgba(255, 0, 0, 0.38) !important',
+    color: 'rgba(255, 0, 0, 0.35)',
+  },
+  '&.MuiPickersDay-root.Mui-selected': {
+    color: 'white',
   },
   '&:not(.Mui-disabled)': {
     color: '#d32f2f',

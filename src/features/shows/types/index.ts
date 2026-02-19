@@ -101,16 +101,26 @@ export interface ShowLike {
   count: number;
 }
 
-export interface BookingSession {
-  sessionId: number;
-  roundNo: number;
-  startTime: string;
-}
-
 export interface ShowGrade {
   id: number;
   gradeName: string;
   price: number;
+}
+
+export interface PerformanceSession {
+  id: number;
+  performanceNo: number;
+  startTime: string;
+  endTime: string;
+  orderOpenTime: string;
+  orderCloseTime: string;
+  state: string;
+  bookingStatus: string;
+}
+
+export interface Performances {
+  date: string;
+  performances: PerformanceSession[];
 }
 
 export interface ShowDetail {
@@ -128,19 +138,7 @@ export interface ShowDetail {
   performer: ShowPerformer;
   genreNames: Record<number, string>;
   grades: ShowGrade[];
-  performances: unknown[];
+  performanceDates: Performances[];
   like: ShowLike;
-  booking: Record<string, BookingSession[]>;
   viewCount: number;
 }
-
-// 실제 데이터 확인하고 바꾸기
-export type PerformanceStatus = 'OPEN' | 'CLOSED';
-
-export interface Session {
-  sessionId: number;
-  time: string;
-  status: PerformanceStatus;
-}
-
-export type Performances = Record<string, Session[]>;

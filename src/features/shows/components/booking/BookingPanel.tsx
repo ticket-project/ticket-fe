@@ -2,7 +2,7 @@
 
 import 'dayjs/locale/ko';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -11,7 +11,12 @@ import dayjs, { Dayjs } from 'dayjs';
 
 import { Performances } from '../../types';
 
-import { getFirstSessionId, getInitialDateState, toDateKey } from '../../utils';
+import {
+  getInitialDateState,
+  getFirstSessionId,
+  toDateKey,
+  getSessionsByDateKey,
+} from '../../utils';
 import CalendarDay from './CalendarDay';
 import CollapsibleSection from './CollapsibleSection';
 
@@ -26,42 +31,44 @@ import {
 } from './BookingPanel.styles';
 
 interface BookingPanelProps {
-  performances: Performances;
+  performances: Performances[];
 }
 
 const BookingPanel = ({ performances }: BookingPanelProps) => {
-  const { availableDateSet, initialSelectedDate } = useMemo(
-    () => getInitialDateState(performances),
-    [performances]
-  );
+  const { availableDateSet, initialSelectedDate, initialSelectedSessionId } =
+    getInitialDateState(performances);
 
   const [selectedDate, setSelectedDate] = useState(initialSelectedDate);
-  const [selectedSession, setSelectedSession] = useState(() =>
-    getFirstSessionId(performances, toDateKey(initialSelectedDate))
+  const [selectedSession, setSelectedSession] = useState(
+    initialSelectedSessionId
   );
   const [isDateExpanded, setIsDateExpanded] = useState(true);
   const [isSessionExpanded, setIsSessionExpanded] = useState(true);
 
-  const selectedDateKey = toDateKey(selectedDate);
-  const sessions = performances[selectedDateKey] ?? [];
+  const selectedDateKey = selectedDate ? toDateKey(selectedDate) : '';
+  const sessions = getSessionsByDateKey(performances, selectedDateKey);
 
   const selectedDateLabel = selectedDate
-    .locale('ko')
-    .format('YYYY.MM.DD (ddd)');
-  const selectedSessionLabel = (() => {
-    const idx = sessions.findIndex((s) => s.sessionId === selectedSession);
-    const session = sessions[idx];
-    return session ? `${idx + 1}회 ${dayjs(session.time).format('HH:mm')}` : '';
-  })();
+    ? selectedDate.locale('ko').format('YYYY.MM.DD (ddd)')
+    : '선택 가능한 날짜 없음';
+
+  const selectedSessionIndex = sessions.findIndex(
+    (session) => session.id === selectedSession
+  );
+  const selectedSessionItem = sessions[selectedSessionIndex];
+
+  const selectedSessionLabel = selectedSessionItem
+    ? `${selectedSessionIndex + 1}회 ${dayjs(selectedSessionItem.startTime).format('HH:mm')}`
+    : '';
 
   const handleDateChange = (newValue: Dayjs | null) => {
     if (!newValue) return;
 
-    const nextDateKey = toDateKey(newValue);
-    if (!availableDateSet.has(nextDateKey)) return;
+    const newDateKey = toDateKey(newValue);
+    if (!availableDateSet.has(newDateKey)) return;
 
     setSelectedDate(newValue);
-    setSelectedSession(getFirstSessionId(performances, nextDateKey));
+    setSelectedSession(getFirstSessionId(performances, newDateKey));
   };
 
   const handleForeignBookClick = () => {
@@ -96,7 +103,9 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
                   disableHighlightToday
                   slots={{ day: CalendarDay }}
                   slotProps={{
-                    day: { availableDateSet } as any,
+                    day: {
+                      availableDateSet,
+                    } as any,
                   }}
                   onChange={handleDateChange}
                 />
@@ -115,17 +124,17 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
             }
           >
             <SessionGrid>
-              {sessions.map((session, index) => {
-                const isSelected = selectedSession === session.sessionId;
+              {sessions.map((session) => {
+                const isSelected = selectedSession === session.id;
 
                 return (
                   <SessionButton
-                    key={`${session.sessionId}-${index}`}
+                    key={session.id}
                     variant="outlined"
-                    onClick={() => setSelectedSession(session.sessionId)}
+                    onClick={() => setSelectedSession(session.id)}
                     $selected={isSelected}
                   >
-                    {index + 1}회 {dayjs(session.time).format('HH:mm')}
+                    {selectedSessionLabel}
                   </SessionButton>
                 );
               })}
