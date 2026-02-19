@@ -1,9 +1,10 @@
 'use client';
 
+import 'dayjs/locale/ko';
+
 import { useMemo, useState } from 'react';
 
-import { ExpandMore } from '@mui/icons-material';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { Dayjs } from 'dayjs';
@@ -12,6 +13,7 @@ import { Performances } from '../../types';
 
 import { getFirstSessionId, getInitialDateState, toDateKey } from '../../utils';
 import CalendarDay from './CalendarDay';
+import CollapsibleSection from './CollapsibleSection';
 
 import {
   BookButton,
@@ -37,12 +39,20 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
   const [selectedSession, setSelectedSession] = useState(() =>
     getFirstSessionId(performances, toDateKey(initialSelectedDate))
   );
+  const [isDateExpanded, setIsDateExpanded] = useState(true);
+  const [isSessionExpanded, setIsSessionExpanded] = useState(true);
 
   const selectedDateKey = toDateKey(selectedDate);
-  const sessions = useMemo(
-    () => performances[selectedDateKey] ?? [],
-    [performances, selectedDateKey]
-  );
+  const sessions = performances[selectedDateKey] ?? [];
+
+  const selectedDateLabel = selectedDate
+    .locale('ko')
+    .format('YYYY.MM.DD (ddd)');
+  const selectedSessionLabel = (() => {
+    const idx = sessions.findIndex((s) => s.sessionId === selectedSession);
+    const session = sessions[idx];
+    return session ? `${idx + 1}회 ${dayjs(session.time).format('HH:mm')}` : '';
+  })();
 
   const handleDateChange = (newValue: Dayjs | null) => {
     if (!newValue) return;
@@ -66,18 +76,16 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
     >
       <StyledPaper elevation={0}>
         <Stack spacing={3}>
-          <Box>
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ mb: 1.5 }}
-            >
-              <Typography sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
-                관람일
+          <CollapsibleSection
+            title="관람일"
+            expanded={isDateExpanded}
+            onToggle={() => setIsDateExpanded((prev) => !prev)}
+            summary={
+              <Typography sx={{ fontSize: '1.6rem', fontWeight: 700 }}>
+                {selectedDateLabel}
               </Typography>
-              <ExpandMore />
-            </Stack>
+            }
+          >
             <CalendarBox>
               <LocalizationProvider
                 dateAdapter={AdapterDayjs}
@@ -94,19 +102,18 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
                 />
               </LocalizationProvider>
             </CalendarBox>
-          </Box>
-          <Box>
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ mb: 1.5 }}
-            >
-              <Typography sx={{ fontSize: '15px', fontWeight: 700 }}>
-                회차
+          </CollapsibleSection>
+          <Divider sx={{ borderColor: 'grey.200' }} />
+          <CollapsibleSection
+            title="회차"
+            expanded={isSessionExpanded}
+            onToggle={() => setIsSessionExpanded((prev) => !prev)}
+            summary={
+              <Typography sx={{ fontSize: '1.6rem', fontWeight: 700 }}>
+                {selectedSessionLabel}
               </Typography>
-              <ExpandMore />
-            </Stack>
+            }
+          >
             <SessionGrid>
               {sessions.map((session, index) => {
                 const isSelected = selectedSession === session.sessionId;
@@ -123,10 +130,10 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
                 );
               })}
             </SessionGrid>
-            <Typography sx={{ mt: 1, fontSize: '11px', color: '#999' }}>
+            <Typography sx={{ mt: 1, fontSize: '1.3rem', color: 'grey.600' }}>
               잔여석 안내 서비스를 제공하지 않습니다.
             </Typography>
-          </Box>
+          </CollapsibleSection>
           <Stack spacing={1} sx={{ mt: 1 }}>
             <BookButton
               fullWidth
