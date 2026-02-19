@@ -7,21 +7,19 @@ import { Box } from '@mui/material';
 
 import { ShowDetail } from '../../types';
 
+import BookingPanel from '../booking/BookingPanel';
+import { performances } from '../booking/dummyData';
 import ShowDetailTabs from '../tabs/ShowDetailTabs';
-import BookingPanel from './BookingPanel';
 import ShowInfoRow from './ShowInfoRow';
 import ShowPoster from './ShowPoster';
 import SummaryTop from './SummaryTop';
 
 import { SummaryBody, Root } from './ShowDetail.styles';
-
 interface ShowDetailViewProps {
   item: ShowDetail;
 }
 
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
-  console.log('✳️item', item);
-
   return (
     <Root>
       <Box>
@@ -34,7 +32,7 @@ const ShowDetailView = ({ item }: ShowDetailViewProps) => {
         <ShowDetailTabs />
       </Box>
 
-      <BookingPanel />
+      <BookingPanel performances={performances} />
     </Root>
   );
 };

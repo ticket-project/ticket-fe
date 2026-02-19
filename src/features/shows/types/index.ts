@@ -133,3 +133,14 @@ export interface ShowDetail {
   booking: Record<string, BookingSession[]>;
   viewCount: number;
 }
+
+// 실제 데이터 확인하고 바꾸기
+export type PerformanceStatus = 'OPEN' | 'CLOSED';
+
+export interface Session {
+  sessionId: number;
+  time: string;
+  status: PerformanceStatus;
+}
+
+export type Performances = Record<string, Session[]>;
