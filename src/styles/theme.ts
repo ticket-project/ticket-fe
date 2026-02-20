@@ -150,16 +150,6 @@ const theme = createTheme({
         disableTouchRipple: true,
       },
     },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          '&:focus-within': {
-            outline: '2px solid blue',
-          },
-        },
-      },
-    },
-
     MuiInputBase: {
       styleOverrides: {
         input: {
