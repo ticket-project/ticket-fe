@@ -96,3 +96,23 @@ export const getShowById = async (id: string): Promise<ShowDetail> => {
   const data = await apiClient<ShowDetail>(`/api/v1/shows/${id}`);
   return data;
 };
+
+export const toggleShowLike = async (
+  id: string,
+  liked: boolean
+): Promise<{ liked: boolean; likeCount: number }> => {
+  ////?????
+  const response = await fetch(`${API_BASE_URL}/api/v1/shows/${id}/like`, {
+    method: liked ? 'DELETE' : 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`API Error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+};

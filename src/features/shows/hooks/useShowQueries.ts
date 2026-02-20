@@ -1,4 +1,9 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import { queryKeys } from '@/lib/react-query/queryKeys';
 
@@ -9,6 +14,7 @@ import {
   getShowsPage,
   getUpcomingShowsPage,
   getUpcomingShowsPreview,
+  toggleShowLike,
 } from '../api';
 import { PAGE_SIZE } from '../constants';
 import { ShowsFilterState, UpcomingShowsFilterState } from '../types';
@@ -93,5 +99,20 @@ export const useShowById = (id: string) => {
     queryKey: queryKeys.show.detail(id),
     queryFn: () => getShowById(id),
     ...SHOW_QUERY_CONFIG,
+  });
+};
+
+// 좋아요
+export const useToggleShowLike = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (liked: boolean) => toggleShowLike(id, liked),
+    onSuccess: () => {
+      //상세페이지 데이터 갱신(likecount 반영)
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.show.detail(id),
+      });
+    },
   });
 };

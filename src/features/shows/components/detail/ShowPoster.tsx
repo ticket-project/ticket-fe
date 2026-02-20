@@ -9,6 +9,8 @@ import { enqueueSnackbar } from 'notistack';
 
 import { ShowDetail } from '../../types';
 
+import { useToggleShowLike } from '../../hooks/useShowQueries';
+
 import { ActionArea, PosterArea, ShareButton } from './ShowDetail.styles';
 
 interface ShowPosterProps {
@@ -16,13 +18,21 @@ interface ShowPosterProps {
 }
 
 const ShowPoster = ({ item }: ShowPosterProps) => {
-  const [liked, setLiked] = useState(false);
+  // const [liked, setLiked] = useState(false);
+
+  const { mutate: toggleLike } = useToggleShowLike(item.id);
 
   const handleToggleLike = () => {
-    setLiked((prev) => !prev);
-    // enqueueSnackbar(liked ? '찜 취소되었습니다.' : '찜하기가 추가되었습니다.', {
-    //   variant: 'success',
-    // });
+    toggleLike(undefined, {
+      onSuccess: () => {
+        enqueueSnackbar(
+          item.like.isLiked ? '찜 취소되었습니다.' : '찜하기가 추가되었습니다.',
+          {
+            variant: 'success',
+          }
+        );
+      },
+    });
   };
 
   const handleShare = () => {
@@ -47,8 +57,8 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
       <ActionArea>
         <Button
           onClick={handleToggleLike}
-          aria-pressed={liked}
-          aria-label={liked ? '찜 취소' : '찜하기'}
+          // aria-pressed={liked}
+          // aria-label={liked ? '찜 취소' : '찜하기'}
           sx={{ p: 0 }}
         >
           <FavoriteBorder sx={{ mr: 0.6, fontSize: 23, color: 'grey.500' }} />
