@@ -1,3 +1,5 @@
+import { API_BASE_URL } from '@/lib/env';
+
 import {
   ShowBase,
   ShowCarouselItem,
@@ -7,8 +9,6 @@ import {
   GetShowsPageParams,
   Genre,
 } from '../types';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const apiClient = async <T>(endpoint: string): Promise<T> => {
   // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩

@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+import { API_BASE_URL } from '@/lib/env';
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // 이미지 도메인 설정
@@ -16,7 +18,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/:path*`,
+        destination: `${API_BASE_URL}/api/:path*`,
       },
     ];
   },
