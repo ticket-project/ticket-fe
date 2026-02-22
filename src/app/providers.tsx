@@ -1,23 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { MaterialDesignContent, SnackbarProvider } from 'notistack';
+import { SnackbarProvider } from 'notistack';
 
-import { defaultQueryClientOptions } from '@/lib/react-query/queryClient';
+import { defaultQueryClientOptions } from '@/lib/queryClient';
+import { useAuthStore } from '@/store/authStore';
 import theme from '@/styles/theme';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
+
   const [queryClient] = useState(
     () =>
       new QueryClient({
         ...defaultQueryClientOptions,
       })
   );
+
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
 
   return (
     <QueryClientProvider client={queryClient}>

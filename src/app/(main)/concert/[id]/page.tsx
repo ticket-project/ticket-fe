@@ -2,8 +2,8 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import { getShowById } from '@/features/shows/api';
 import ShowDetailPageClient from '@/features/shows/components/page/ShowDetailPageClient';
-import { createQueryClient } from '@/lib/react-query/queryClient';
-import { queryKeys } from '@/lib/react-query/queryKeys';
+import { createQueryClient } from '@/lib/queryClient';
+import { queryKeys } from '@/lib/queryKeys';
 
 const ConcertDetailPage = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;

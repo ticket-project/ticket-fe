@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import { queryKeys } from '@/lib/react-query/queryKeys';
+import { queryKeys } from '@/lib/queryKeys';
 
 import {
   getGenres,

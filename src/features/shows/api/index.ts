@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/lib/env';
+import { fetchApi } from '@/lib/api';
 
 import {
   ShowBase,
@@ -10,40 +10,33 @@ import {
   Genre,
 } from '../types';
 
-const apiClient = async <T>(endpoint: string): Promise<T> => {
-  // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
-  // throw new Error(`API Error`); //에러
-
-  const response = await fetch(`${API_BASE_URL}${endpoint}`);
-
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.status}`);
-  }
-
-  const data = await response.json();
-  return data.data;
+type ApiResponse<T> = {
+  result: string;
+  data: T;
+  error: unknown | null;
 };
 
 export const getLatestShows = async (): Promise<ShowCarouselItem[]> => {
-  const data = await apiClient<{ shows: ShowCarouselItem[] }>(
+  const res = await fetchApi<ApiResponse<{ shows: ShowCarouselItem[] }>>(
     '/api/v1/shows/latest'
   );
-  return data.shows;
+
+  return res?.data.shows ?? [];
 };
 
 export const getUpcomingShowsPreview = async (): Promise<
   UpcomingShowItem[]
 > => {
-  const data = await apiClient<{ shows: UpcomingShowItem[] }>(
+  const res = await fetchApi<ApiResponse<{ shows: UpcomingShowItem[] }>>(
     '/api/v1/shows/sale-opening-soon'
   );
-  return data.shows;
+
+  return res?.data.shows ?? [];
 };
 
 export const getUpcomingShowsPage = async (
   params: GetShowsPageParams
 ): Promise<PaginatedResponse<UpcomingShowItem>> => {
-  // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
   const searchParams = new URLSearchParams();
   if (params.category) searchParams.set('category', params.category);
   if (params.region && params.region !== 'ALL')
@@ -53,11 +46,16 @@ export const getUpcomingShowsPage = async (
   if (params.sort) searchParams.set('sort', params.sort);
 
   const queryString = searchParams.toString();
-  const data = await apiClient<PaginatedResponse<UpcomingShowItem>>(
+
+  const res = await fetchApi<ApiResponse<PaginatedResponse<UpcomingShowItem>>>(
     `/api/v1/shows/sale-opening-soon/page?${queryString}`
   );
 
-  return data;
+  if (!res?.data) {
+    throw new Error('API 응답이 비어있습니다.');
+  }
+
+  return res.data;
 };
 
 export const getGenres = async (category?: string): Promise<Genre[]> => {
@@ -65,15 +63,17 @@ export const getGenres = async (category?: string): Promise<Genre[]> => {
   if (category) searchParams.set('category', category);
 
   const queryString = searchParams.toString();
-  const data = await apiClient<Genre[]>(`/api/v1/genres?${queryString}`);
 
-  return data;
+  const res = await fetchApi<ApiResponse<Genre[]>>(
+    `/api/v1/genres?${queryString}`
+  );
+
+  return res?.data ?? [];
 };
 
 export const getShowsPage = async (
   params: GetShowsPageParams
 ): Promise<PaginatedResponse<ShowBase>> => {
-  // await new Promise((resolve) => setTimeout(resolve, 3000)); //로딩
   const searchParams = new URLSearchParams();
   if (params.category) searchParams.set('category', params.category);
   if (params.region && params.region !== 'ALL')
@@ -85,14 +85,24 @@ export const getShowsPage = async (
   if (params.sort) searchParams.set('sort', params.sort);
 
   const queryString = searchParams.toString();
-  const data = await apiClient<PaginatedResponse<ShowBase>>(
+
+  const res = await fetchApi<ApiResponse<PaginatedResponse<ShowBase>>>(
     `/api/v1/shows?${queryString}`
   );
 
-  return data;
+  if (!res?.data) {
+    throw new Error('API 응답이 비어있습니다.');
+  }
+
+  return res.data;
 };
 
 export const getShowById = async (id: string): Promise<ShowDetail> => {
-  const data = await apiClient<ShowDetail>(`/api/v1/shows/${id}`);
-  return data;
+  const res = await fetchApi<ApiResponse<ShowDetail>>(`/api/v1/shows/${id}`);
+
+  if (!res?.data) {
+    throw new Error('API 응답이 비어있습니다.');
+  }
+
+  return res.data;
 };

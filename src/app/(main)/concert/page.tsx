@@ -3,8 +3,8 @@ import { Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import { getLatestShows, getUpcomingShowsPreview } from '@/features/shows/api';
-import { createQueryClient } from '@/lib/react-query/queryClient';
-import { queryKeys } from '@/lib/react-query/queryKeys';
+import { createQueryClient } from '@/lib/queryClient';
+import { queryKeys } from '@/lib/queryKeys';
 
 import ShowPageClient from '../../../features/shows/components/page/ShowPageClient';
 
