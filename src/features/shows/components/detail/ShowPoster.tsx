@@ -20,8 +20,6 @@ interface ShowPosterProps {
   item: ShowDetail;
 }
 
-// const LIKE_COUNT_FORMATTER = new Intl.NumberFormat('ko-KR');
-
 const ShowPoster = ({ item }: ShowPosterProps) => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -33,7 +31,7 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
   );
 
   const isLiked = like.data?.liked ?? false;
-  // const likeCount = like.data?.count ?? 0;
+  const likeCount = like.data?.likeCount ?? item.likeCount;
 
   const handleToggleLike = async () => {
     if (!accessToken) {
@@ -105,12 +103,12 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
           <Typography component="span" sx={{ fontSize: 15 }}>
             티켓캐스트
           </Typography>
-          {/* <Typography
+          <Typography
             component="strong"
             sx={{ ml: 0.6, fontSize: 15, fontWeight: 600, lineHeight: 1 }}
           >
-            {LIKE_COUNT_FORMATTER.format(likeCount)}
-          </Typography> */}
+            {likeCount}
+          </Typography>
         </Button>
         <ShareButton
           size="small"

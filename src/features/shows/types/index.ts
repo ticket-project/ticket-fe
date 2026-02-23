@@ -118,6 +118,12 @@ export interface Performances {
   performances: PerformanceSession[];
 }
 
+export interface ShowLike {
+  showId?: number;
+  liked: boolean;
+  likeCount: number;
+}
+
 export interface ShowDetail {
   id: number;
   title: string;
@@ -135,11 +141,7 @@ export interface ShowDetail {
   grades: ShowGrade[];
   performanceDates: Performances[];
   viewCount: number;
-}
-
-export interface ShowLike {
-  // showId: number;
-  liked: boolean;
+  likeCount: number;
 }
 
 export interface LikedShowItem {

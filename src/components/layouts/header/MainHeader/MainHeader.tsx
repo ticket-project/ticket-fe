@@ -65,6 +65,7 @@ const MainHeader = () => {
         <HeaderContainer>
           <GnbNav pathname={pathname} />
           <SearchBar sx={{ ml: 1 }} />
+          <Box sx={{ flexGrow: 1 }} />
           <AuthButtons />
         </HeaderContainer>
       </StickyHeader>

@@ -129,7 +129,7 @@ export const getShowLike = async (
   );
 
   if (!res?.data) {
-    throw new Error('공연 찜 상태를 불러오지 못했습니다.');
+    throw new Error('찜 상태를 불러오지 못했습니다.');
   }
 
   return res.data;
@@ -139,22 +139,36 @@ export const getShowLike = async (
 export const addShowLike = async (
   showId: string | number,
   token?: string | null
-) => {
-  await fetchApi(`/api/v1/shows/${showId}/likes`, {
-    method: 'POST',
-    token,
-  });
+): Promise<ShowLike> => {
+  const res = await fetchApi<ApiResponse<ShowLike>>(
+    `/api/v1/shows/${showId}/likes`,
+    { method: 'POST', token }
+  );
+
+  if (!res?.data) {
+    throw new Error('찜하기 처리에 실패했습니다.');
+  }
+  return res.data;
 };
 
 // 공연 찜취소
 export const removeShowLike = async (
   showId: string | number,
   token?: string | null
-) => {
-  await fetchApi(`/api/v1/shows/${showId}/likes`, {
-    method: 'DELETE',
-    token,
-  });
+): Promise<ShowLike> => {
+  const res = await fetchApi<ApiResponse<ShowLike>>(
+    `/api/v1/shows/${showId}/likes`,
+    {
+      method: 'DELETE',
+      token,
+    }
+  );
+
+  if (!res?.data) {
+    throw new Error('찜취소 처리에 실패했습니다.');
+  }
+
+  return res.data;
 };
 
 // 내 찜 목록
