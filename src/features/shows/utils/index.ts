@@ -50,3 +50,7 @@ export const getInitialDateState = (performanceDates: Performances[]) => {
     initialSelectedSessionId,
   };
 };
+
+// 회차 라벨
+export const getSessionLabel = (index: number, startTime: string) =>
+  `${index + 1}회 ${dayjs(startTime).format('HH:mm')}`;

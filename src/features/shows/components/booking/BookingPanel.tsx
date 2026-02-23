@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 
 import { Performances } from '../../types';
 
@@ -16,6 +16,7 @@ import {
   getFirstSessionId,
   toDateKey,
   getSessionsByDateKey,
+  getSessionLabel,
 } from '../../utils';
 import CalendarDay from './CalendarDay';
 import CollapsibleSection from './CollapsibleSection';
@@ -58,8 +59,8 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
   const selectedSessionItem = sessions[selectedSessionIndex];
 
   const selectedSessionLabel = selectedSessionItem
-    ? `${selectedSessionIndex + 1}회 ${dayjs(selectedSessionItem.startTime).format('HH:mm')}`
-    : '';
+    ? getSessionLabel(selectedSessionIndex, selectedSessionItem.startTime)
+    : '회차를 선택하세요.';
 
   const handleDateChange = (newValue: Dayjs | null) => {
     if (!newValue) return;
@@ -124,7 +125,7 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
             }
           >
             <SessionGrid>
-              {sessions.map((session) => {
+              {sessions.map((session, index) => {
                 const isSelected = selectedSession === session.id;
 
                 return (
@@ -134,7 +135,7 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
                     onClick={() => setSelectedSession(session.id)}
                     $selected={isSelected}
                   >
-                    {selectedSessionLabel}
+                    {getSessionLabel(index, session.startTime)}
                   </SessionButton>
                 );
               })}
