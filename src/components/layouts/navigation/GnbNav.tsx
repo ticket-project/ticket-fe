@@ -24,10 +24,7 @@ const GnbNav = ({ pathname }: GnbNavProps) => {
         {NAV_ITEMS.map((item) => (
           <NavItem key={item.name}>
             <NavButton
-              {...{
-                component: Link,
-                href: item.href,
-              }}
+              href={item.href}
               aria-current={pathname === item.href ? 'page' : undefined}
             >
               {item.name}

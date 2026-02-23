@@ -141,10 +141,7 @@ const MyPage = () => {
                         key={`${show.showId}-${show.likedAt}`}
                       >
                         <Button
-                          {...{
-                            component: Link,
-                            href: `/concert/${show.showId}`,
-                          }}
+                          href={`/concert/${show.showId}`}
                           sx={{
                             justifyContent: 'flex-start',
                             px: 0,
