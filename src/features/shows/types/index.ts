@@ -118,6 +118,15 @@ export interface Performances {
   performances: PerformanceSession[];
 }
 
+export interface SeatGrade {
+  gradeCode: string;
+  gradeName: string;
+  price: number;
+  totalSeats: number;
+  availableSeats: number;
+  sortOrder: number;
+}
+
 export interface ShowLike {
   showId?: number;
   liked: boolean;

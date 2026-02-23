@@ -10,6 +10,7 @@ import {
   UpcomingShowItem,
   GetShowsPageParams,
   Genre,
+  SeatGrade,
 } from '../types';
 
 type ApiResponse<T> = {
@@ -192,4 +193,15 @@ export const getMyLikedShows = async (
   }
 
   return res.data;
+};
+
+// 회차 잔여석
+export const getSeatGrades = async (
+  performanceId: string | number
+): Promise<SeatGrade[]> => {
+  const res = await fetchApi<ApiResponse<{ grades: SeatGrade[] }>>(
+    `/api/v1/performances/${performanceId}/seats/availability`
+  );
+
+  return res?.data?.grades ?? [];
 };

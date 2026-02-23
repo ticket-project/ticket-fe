@@ -11,12 +11,13 @@ import { Dayjs } from 'dayjs';
 
 import { Performances } from '../../types';
 
+import { useSeatGrades } from '../../hooks/useShowQueries';
 import {
-  getInitialDateState,
   getFirstSessionId,
-  toDateKey,
-  getSessionsByDateKey,
+  getInitialDateState,
   getSessionLabel,
+  getSessionsByDateKey,
+  toDateKey,
 } from '../../utils';
 import CalendarDay from './CalendarDay';
 import CollapsibleSection from './CollapsibleSection';
@@ -61,6 +62,12 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
   const selectedSessionLabel = selectedSessionItem
     ? getSessionLabel(selectedSessionIndex, selectedSessionItem.startTime)
     : '회차를 선택하세요.';
+
+  const seatGradesQuery = useSeatGrades(selectedSession);
+  const totalAvailable = seatGradesQuery.data?.reduce(
+    (total, grade) => total + grade.availableSeats,
+    0
+  );
 
   const handleDateChange = (newValue: Dayjs | null) => {
     if (!newValue) return;
@@ -140,9 +147,14 @@ const BookingPanel = ({ performances }: BookingPanelProps) => {
                 );
               })}
             </SessionGrid>
-            <Typography sx={{ mt: 1, fontSize: '1.3rem', color: 'grey.600' }}>
+            {/* <Typography sx={{ mt: 1, fontSize: '1.3rem', color: 'grey.600' }}>
               잔여석 안내 서비스를 제공하지 않습니다.
-            </Typography>
+            </Typography> */}
+            {selectedSession && seatGradesQuery.isSuccess && (
+              <Typography sx={{ mt: 1, fontSize: '1.3rem', fontWeight: 700 }}>
+                잔여석: {(totalAvailable ?? 0).toLocaleString()}석
+              </Typography>
+            )}
           </CollapsibleSection>
           <Stack spacing={1} sx={{ mt: 1 }}>
             <BookButton

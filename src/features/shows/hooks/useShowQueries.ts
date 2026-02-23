@@ -6,6 +6,7 @@ import {
   getGenres,
   getLatestShows,
   getMyLikedShows,
+  getSeatGrades,
   getShowById,
   getShowLike,
   getShowsPage,
@@ -113,6 +114,16 @@ export const useMyLikedShows = (token?: string | null, size = 20) => {
     queryKey: [...queryKeys.show.likes(size), token ?? null],
     queryFn: () => getMyLikedShows(token, size),
     enabled: Boolean(token),
+    staleTime: 0,
+    gcTime: SHOW_QUERY_CONFIG.gcTime,
+  });
+};
+
+export const useSeatGrades = (performanceId: number | null) => {
+  return useQuery({
+    queryKey: queryKeys.booking.seats(performanceId ?? 'none'),
+    queryFn: () => getSeatGrades(performanceId as number),
+    enabled: performanceId !== null,
     staleTime: 0,
     gcTime: SHOW_QUERY_CONFIG.gcTime,
   });

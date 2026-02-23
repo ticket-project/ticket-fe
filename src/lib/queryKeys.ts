@@ -38,5 +38,7 @@ export const queryKeys = {
 
   booking: {
     all: ['booking'] as const,
+    seats: (performanceId: string | number) =>
+      [...queryKeys.booking.all, 'seats', String(performanceId)] as const,
   },
 } as const;
