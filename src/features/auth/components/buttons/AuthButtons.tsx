@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
 
 import { logout } from '@/features/auth/api';
+import EmailAuthButton from '@/features/auth/components/emailAuth/EmailAuthButton';
 import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
@@ -63,6 +64,7 @@ const AuthButtons = () => {
         </>
       ) : (
         <>
+          <EmailAuthButton />
           <StyledButton href="/login" startIcon={<LoginIcon />}>
             로그인
           </StyledButton>
