@@ -96,11 +96,6 @@ export interface ShowPerformer {
   profileImageUrl: string;
 }
 
-export interface ShowLike {
-  isLiked: boolean;
-  count: number;
-}
-
 export interface ShowGrade {
   id: number;
   gradeName: string;
@@ -139,6 +134,10 @@ export interface ShowDetail {
   genreNames: Record<number, string>;
   grades: ShowGrade[];
   performanceDates: Performances[];
-  like: ShowLike;
   viewCount: number;
+}
+
+export interface ShowLike {
+  // showId: number;
+  liked: boolean;
 }

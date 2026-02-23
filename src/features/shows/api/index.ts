@@ -4,6 +4,7 @@ import {
   ShowBase,
   ShowCarouselItem,
   ShowDetail,
+  ShowLike,
   PaginatedResponse,
   UpcomingShowItem,
   GetShowsPageParams,
@@ -16,6 +17,7 @@ type ApiResponse<T> = {
   error: unknown | null;
 };
 
+// 최신 공연
 export const getLatestShows = async (): Promise<ShowCarouselItem[]> => {
   const res = await fetchApi<ApiResponse<{ shows: ShowCarouselItem[] }>>(
     '/api/v1/shows/latest'
@@ -24,6 +26,7 @@ export const getLatestShows = async (): Promise<ShowCarouselItem[]> => {
   return res?.data.shows ?? [];
 };
 
+// 오픈예정 공연
 export const getUpcomingShowsPreview = async (): Promise<
   UpcomingShowItem[]
 > => {
@@ -34,6 +37,7 @@ export const getUpcomingShowsPreview = async (): Promise<
   return res?.data.shows ?? [];
 };
 
+// 오픈예정 공연 페이지네이션
 export const getUpcomingShowsPage = async (
   params: GetShowsPageParams
 ): Promise<PaginatedResponse<UpcomingShowItem>> => {
@@ -58,6 +62,7 @@ export const getUpcomingShowsPage = async (
   return res.data;
 };
 
+// 공연 장르
 export const getGenres = async (category?: string): Promise<Genre[]> => {
   const searchParams = new URLSearchParams();
   if (category) searchParams.set('category', category);
@@ -71,6 +76,7 @@ export const getGenres = async (category?: string): Promise<Genre[]> => {
   return res?.data ?? [];
 };
 
+// 공연 페이지네이션
 export const getShowsPage = async (
   params: GetShowsPageParams
 ): Promise<PaginatedResponse<ShowBase>> => {
@@ -97,6 +103,7 @@ export const getShowsPage = async (
   return res.data;
 };
 
+// 공연 상세
 export const getShowById = async (id: string): Promise<ShowDetail> => {
   const res = await fetchApi<ApiResponse<ShowDetail>>(`/api/v1/shows/${id}`);
 
@@ -105,4 +112,46 @@ export const getShowById = async (id: string): Promise<ShowDetail> => {
   }
 
   return res.data;
+};
+
+// 공연 찜 상태
+export const getShowLike = async (
+  showId: string | number,
+  token?: string | null
+): Promise<ShowLike> => {
+  const res = await fetchApi<ApiResponse<ShowLike>>(
+    `/api/v1/shows/${showId}/likes`,
+    {
+      method: 'GET',
+      token,
+    }
+  );
+
+  if (!res?.data) {
+    throw new Error('공연 찜 상태를 불러오지 못했습니다.');
+  }
+
+  return res.data;
+};
+
+// 공연 찜하기
+export const addShowLike = async (
+  showId: string | number,
+  token?: string | null
+) => {
+  await fetchApi(`/api/v1/shows/${showId}/likes`, {
+    method: 'POST',
+    token,
+  });
+};
+
+// 공연 찜취소
+export const removeShowLike = async (
+  showId: string | number,
+  token?: string | null
+) => {
+  await fetchApi(`/api/v1/shows/${showId}/likes`, {
+    method: 'DELETE',
+    token,
+  });
 };

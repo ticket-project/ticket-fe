@@ -6,6 +6,7 @@ import {
   getGenres,
   getLatestShows,
   getShowById,
+  getShowLike,
   getShowsPage,
   getUpcomingShowsPage,
   getUpcomingShowsPreview,
@@ -93,5 +94,15 @@ export const useShowById = (id: string) => {
     queryKey: queryKeys.show.detail(id),
     queryFn: () => getShowById(id),
     ...SHOW_QUERY_CONFIG,
+  });
+};
+
+export const useShowLike = (showId: string | number, token?: string | null) => {
+  return useQuery({
+    queryKey: queryKeys.show.like(showId),
+    queryFn: () => getShowLike(showId, token),
+    enabled: Boolean(token),
+    staleTime: 0,
+    gcTime: SHOW_QUERY_CONFIG.gcTime,
   });
 };

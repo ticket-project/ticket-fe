@@ -29,6 +29,9 @@ export const queryKeys = {
 
     detail: (showId: string | number) =>
       [...queryKeys.show.all, 'detail', String(showId)] as const,
+
+    like: (showId: string | number) =>
+      [...queryKeys.show.all, 'like', String(showId)] as const,
   },
 
   booking: {

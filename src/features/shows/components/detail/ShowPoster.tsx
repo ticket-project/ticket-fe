@@ -1,13 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-import { FavoriteBorder, Share } from '@mui/icons-material';
+import { Favorite, FavoriteBorder, Share } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
-import { enqueueSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 
 import { ShowDetail } from '../../types';
+
+import { useShowLike } from '@/features/shows/hooks/useShowQueries';
+import { useAuthStore } from '@/store/authStore';
+
+import useShowLikeMutation from '../../hooks/useShowLikeActions';
 
 import { ActionArea, PosterArea, ShareButton } from './ShowDetail.styles';
 
@@ -15,21 +20,61 @@ interface ShowPosterProps {
   item: ShowDetail;
 }
 
-const ShowPoster = ({ item }: ShowPosterProps) => {
-  const [liked, setLiked] = useState(false);
+// const LIKE_COUNT_FORMATTER = new Intl.NumberFormat('ko-KR');
 
-  const handleToggleLike = () => {
-    setLiked((prev) => !prev);
-    // enqueueSnackbar(liked ? '찜 취소되었습니다.' : '찜하기가 추가되었습니다.', {
-    //   variant: 'success',
-    // });
+const ShowPoster = ({ item }: ShowPosterProps) => {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const like = useShowLike(item.id, accessToken);
+  const { addLike, isPending, removeLike } = useShowLikeMutation(
+    item.id,
+    accessToken
+  );
+
+  const isLiked = like.data?.liked ?? false;
+  // const likeCount = like.data?.count ?? 0;
+
+  const handleToggleLike = async () => {
+    if (!accessToken) {
+      enqueueSnackbar('로그인 후 이용해 주세요.', {
+        variant: 'info',
+      });
+      router.push('/login');
+
+      return;
+    }
+
+    try {
+      if (isLiked) {
+        await removeLike();
+        enqueueSnackbar('찜이 취소되었습니다.', {
+          variant: 'success',
+        });
+      } else {
+        await addLike();
+        enqueueSnackbar('찜 목록에 추가되었습니다.', {
+          variant: 'success',
+        });
+      }
+    } catch {
+      enqueueSnackbar('찜 처리 중 오류가 발생했습니다.', {
+        variant: 'error',
+      });
+    }
   };
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    enqueueSnackbar('공유 링크가 복사되었습니다.', {
-      variant: 'success',
-    });
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      enqueueSnackbar('공유 링크가 복사되었습니다.', {
+        variant: 'success',
+      });
+    } catch {
+      enqueueSnackbar('공유 링크 복사에 실패했습니다.', {
+        variant: 'error',
+      });
+    }
   };
 
   return (
@@ -46,21 +91,26 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
       </PosterArea>
       <ActionArea>
         <Button
+          disabled={isPending}
           onClick={handleToggleLike}
-          aria-pressed={liked}
-          aria-label={liked ? '찜 취소' : '찜하기'}
+          aria-pressed={isLiked}
+          aria-label={isLiked ? '찜 취소' : '찜하기'}
           sx={{ p: 0 }}
         >
-          <FavoriteBorder sx={{ mr: 0.6, fontSize: 23, color: 'grey.500' }} />
+          {isLiked ? (
+            <Favorite sx={{ mr: 0.6, fontSize: 23, color: 'error.main' }} />
+          ) : (
+            <FavoriteBorder sx={{ mr: 0.6, fontSize: 23, color: 'grey.500' }} />
+          )}
           <Typography component="span" sx={{ fontSize: 15 }}>
             티켓캐스트
           </Typography>
-          <Typography
+          {/* <Typography
             component="strong"
             sx={{ ml: 0.6, fontSize: 15, fontWeight: 600, lineHeight: 1 }}
           >
-            2,198
-          </Typography>
+            {LIKE_COUNT_FORMATTER.format(likeCount)}
+          </Typography> */}
         </Button>
         <ShareButton
           size="small"
