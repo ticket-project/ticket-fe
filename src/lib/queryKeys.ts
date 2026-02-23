@@ -32,6 +32,8 @@ export const queryKeys = {
 
     like: (showId: string | number) =>
       [...queryKeys.show.all, 'like', String(showId)] as const,
+
+    likes: (size: number) => [...queryKeys.show.all, 'likes', size] as const,
   },
 
   booking: {

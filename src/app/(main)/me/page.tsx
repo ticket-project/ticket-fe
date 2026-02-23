@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -9,6 +10,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -21,6 +23,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
 
 import { deleteMember } from '@/features/auth/api';
+import { useMyLikedShows } from '@/features/shows/hooks/useShowQueries';
 import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
@@ -31,6 +34,7 @@ const MyPage = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const accessToken = useAuthStore((state) => state.accessToken);
   const clearAuth = useAuthStore((state) => state.clearAuth);
+  const likedShowsQuery = useMyLikedShows(accessToken, 5);
 
   const handleOpenDeleteDialog = () => {
     setIsDeleteDialogOpen(true);
@@ -65,6 +69,7 @@ const MyPage = () => {
   });
 
   const isDeleting = deleteMemberMutation.isPending;
+  const likedShows = likedShowsQuery.data?.items ?? [];
 
   const handleDeleteAccount = () => {
     deleteMemberMutation.mutate();
@@ -79,6 +84,85 @@ const MyPage = () => {
         >
           마이페이지
         </Typography>
+
+        <Card variant="outlined" sx={{ borderRadius: 3, mb: 2 }}>
+          <CardContent sx={{ p: { md: 3.5, xs: 2.5 } }}>
+            <Stack spacing={1.2}>
+              <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
+                내가 찜한 공연
+              </Typography>
+
+              {!accessToken && (
+                <Typography sx={{ color: 'grey.600', fontSize: 14 }}>
+                  로그인 후 찜한 공연을 확인할 수 있습니다.
+                </Typography>
+              )}
+
+              {accessToken && likedShowsQuery.isLoading && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
+                  <CircularProgress size={22} />
+                </Box>
+              )}
+
+              {accessToken && likedShowsQuery.isError && (
+                <Stack spacing={1}>
+                  <Typography sx={{ color: 'grey.600', fontSize: 14 }}>
+                    찜 목록을 불러오지 못했습니다.
+                  </Typography>
+                  <Box>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => likedShowsQuery.refetch()}
+                    >
+                      다시 시도
+                    </Button>
+                  </Box>
+                </Stack>
+              )}
+
+              {accessToken &&
+                !likedShowsQuery.isLoading &&
+                !likedShowsQuery.isError &&
+                likedShows.length === 0 && (
+                  <Typography sx={{ color: 'grey.600', fontSize: 14 }}>
+                    아직 찜한 공연이 없습니다.
+                  </Typography>
+                )}
+
+              {accessToken &&
+                !likedShowsQuery.isLoading &&
+                !likedShowsQuery.isError &&
+                likedShows.length > 0 && (
+                  <Stack component="ul" spacing={0.5}>
+                    {likedShows.map((show) => (
+                      <Box
+                        component="li"
+                        key={`${show.showId}-${show.likedAt}`}
+                      >
+                        <Button
+                          {...{
+                            component: Link,
+                            href: `/concert/${show.showId}`,
+                          }}
+                          sx={{
+                            justifyContent: 'flex-start',
+                            px: 0,
+                            textTransform: 'none',
+                            fontSize: 15,
+                            fontWeight: 600,
+                          }}
+                          variant="text"
+                        >
+                          {show.title}
+                        </Button>
+                      </Box>
+                    ))}
+                  </Stack>
+                )}
+            </Stack>
+          </CardContent>
+        </Card>
 
         <Card variant="outlined" sx={{ borderRadius: 3 }}>
           <CardContent sx={{ p: { md: 3.5, xs: 2.5 } }}>

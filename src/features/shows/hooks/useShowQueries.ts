@@ -5,6 +5,7 @@ import { queryKeys } from '@/lib/queryKeys';
 import {
   getGenres,
   getLatestShows,
+  getMyLikedShows,
   getShowById,
   getShowLike,
   getShowsPage,
@@ -101,6 +102,16 @@ export const useShowLike = (showId: string | number, token?: string | null) => {
   return useQuery({
     queryKey: queryKeys.show.like(showId),
     queryFn: () => getShowLike(showId, token),
+    enabled: Boolean(token),
+    staleTime: 0,
+    gcTime: SHOW_QUERY_CONFIG.gcTime,
+  });
+};
+
+export const useMyLikedShows = (token?: string | null, size = 20) => {
+  return useQuery({
+    queryKey: [...queryKeys.show.likes(size), token ?? null],
+    queryFn: () => getMyLikedShows(token, size),
     enabled: Boolean(token),
     staleTime: 0,
     gcTime: SHOW_QUERY_CONFIG.gcTime,

@@ -5,6 +5,7 @@ import {
   ShowCarouselItem,
   ShowDetail,
   ShowLike,
+  LikedShowItem,
   PaginatedResponse,
   UpcomingShowItem,
   GetShowsPageParams,
@@ -154,4 +155,27 @@ export const removeShowLike = async (
     method: 'DELETE',
     token,
   });
+};
+
+// 내 찜 목록
+export const getMyLikedShows = async (
+  token?: string | null,
+  size = 20
+): Promise<PaginatedResponse<LikedShowItem>> => {
+  const searchParams = new URLSearchParams();
+  searchParams.set('size', size.toString());
+
+  const res = await fetchApi<ApiResponse<PaginatedResponse<LikedShowItem>>>(
+    `/api/v1/shows/likes?${searchParams.toString()}`,
+    {
+      method: 'GET',
+      token,
+    }
+  );
+
+  if (!res?.data) {
+    throw new Error('찜 목록을 불러오지 못했습니다.');
+  }
+
+  return res.data;
 };

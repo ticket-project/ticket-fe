@@ -141,3 +141,13 @@ export interface ShowLike {
   // showId: number;
   liked: boolean;
 }
+
+export interface LikedShowItem {
+  showId: number;
+  title: string;
+  image: string;
+  startDate: string;
+  endDate: string;
+  venue: string;
+  likedAt: string;
+}
