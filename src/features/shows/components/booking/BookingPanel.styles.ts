@@ -27,6 +27,9 @@ export const Calendar = styled(DateCalendar)({
     fontWeight: 600,
     color: 'inherit',
   },
+  '& .MuiPickersCalendarHeader-switchViewButton': {
+    display: 'none',
+  },
   '& .MuiPickersSlideTransition-root': {
     minHeight: '230px',
   },
