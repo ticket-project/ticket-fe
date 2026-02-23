@@ -50,16 +50,16 @@ export default tseslint.config(
             'motion',
             'interaction',
 
+            // Nested selectors / pseudos (MUI 포함)
+            'nested-selector',
+            'media-query',
+
             // Breakpoints
             'breakpoint-xs',
             'breakpoint-sm',
             'breakpoint-md',
             'breakpoint-lg',
             'breakpoint-xl',
-
-            // Nested selectors / pseudos (MUI 포함)
-            'nested-selector',
-            'media-query',
             'unknown',
           ],
 
