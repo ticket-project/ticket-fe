@@ -13,10 +13,29 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+
+import { SocialProvider } from '@/features/auth/types';
 
 import { GoogleIcon, KakaoIcon } from '@/components/icons';
+import { getSocialLoginUrl } from '@/features/auth/api';
 
 const Signup = () => {
+  const socialSignupMutation = useMutation({
+    mutationFn: (provider: SocialProvider) => getSocialLoginUrl(provider),
+    onSuccess: (redirectUrl) => {
+      window.location.href = redirectUrl;
+    },
+  });
+
+  const errorMessage =
+    socialSignupMutation.error?.message ??
+    '소셜 회원가입 URL 조회에 실패했습니다.';
+
+  const handleSocialSignup = (provider: SocialProvider) => {
+    socialSignupMutation.mutate(provider);
+  };
+
   return (
     <Box
       sx={{
@@ -81,6 +100,8 @@ const Signup = () => {
                   fullWidth
                   variant="contained"
                   startIcon={<KakaoIcon size={24} />}
+                  disabled={socialSignupMutation.isPending}
+                  onClick={() => handleSocialSignup('kakao')}
                   sx={{
                     backgroundColor: '#fee500',
                     boxShadow: 'none',
@@ -94,12 +115,14 @@ const Signup = () => {
                     },
                   }}
                 >
-                  카카오로 가입하기
+                    : '카카오로 가입하기'}
                 </Button>
-                {/* <Button
+                <Button
                   fullWidth
                   variant="outlined"
                   startIcon={<GoogleIcon size={24} />}
+                  disabled={socialSignupMutation.isPending}
+                  onClick={() => handleSocialSignup('google')}
                   sx={{
                     border: '1px solid #d1d5db',
                     borderRadius: 2.5,
@@ -113,8 +136,20 @@ const Signup = () => {
                   }}
                 >
                   Google로 가입하기
-                </Button> */}
+                </Button>
               </Stack>
+              {errorMessage ? (
+                <Typography
+                  sx={{
+                    color: 'error.main',
+                    fontSize: 14,
+                    lineHeight: 1.4,
+                    textAlign: 'center',
+                  }}
+                >
+                  {errorMessage}
+                </Typography>
+              ) : null}
             </Stack>
 
             <Divider sx={{ borderColor: 'grey.200', my: 3.8 }} />

@@ -3,12 +3,15 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 
+import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
 const CallbackPage = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
@@ -17,12 +20,13 @@ const CallbackPage = () => {
 
     if (accessToken) {
       setAccessToken(accessToken);
+      queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
       router.replace('/');
       return;
     }
 
     router.replace('/login');
-  }, [router, searchParams, setAccessToken]);
+  }, [queryClient, router, searchParams, setAccessToken]);
 
   return (
     <Box

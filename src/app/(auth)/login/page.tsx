@@ -13,10 +13,29 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+
+import { SocialProvider } from '@/features/auth/types';
 
 import { GoogleIcon, KakaoIcon } from '@/components/icons';
+import { getSocialLoginUrl } from '@/features/auth/api';
 
-const Login = () => {
+const LoginPage = () => {
+  const socialLoginMutation = useMutation({
+    mutationFn: (provider: SocialProvider) => getSocialLoginUrl(provider),
+    onSuccess: (redirectUrl) => {
+      window.location.href = redirectUrl;
+    },
+  });
+
+  const errorMessage =
+    socialLoginMutation.error?.message ??
+    '소셜 로그인 URL 조회에 실패했습니다.';
+
+  const handleSocialLogin = (provider: SocialProvider) => {
+    socialLoginMutation.mutate(provider);
+  };
+
   return (
     <Box
       sx={{
@@ -81,6 +100,8 @@ const Login = () => {
                   fullWidth
                   variant="contained"
                   startIcon={<KakaoIcon size={24} />}
+                  disabled={socialLoginMutation.isPending}
+                  onClick={() => handleSocialLogin('kakao')}
                   sx={{
                     backgroundColor: '#fee500',
                     boxShadow: 'none',
@@ -96,10 +117,12 @@ const Login = () => {
                 >
                   카카오로 로그인하기
                 </Button>
-                {/* <Button
+                <Button
                   fullWidth
                   variant="outlined"
                   startIcon={<GoogleIcon size={24} />}
+                  disabled={socialLoginMutation.isPending}
+                  onClick={() => handleSocialLogin('google')}
                   sx={{
                     border: '1px solid #d1d5db',
                     borderRadius: 2.5,
@@ -113,8 +136,20 @@ const Login = () => {
                   }}
                 >
                   Google로 로그인하기
-                </Button> */}
+                </Button>
               </Stack>
+              {errorMessage ? (
+                <Typography
+                  sx={{
+                    color: 'error.main',
+                    fontSize: 14,
+                    lineHeight: 1.4,
+                    textAlign: 'center',
+                  }}
+                >
+                  {errorMessage}
+                </Typography>
+              ) : null}
             </Stack>
 
             <Divider sx={{ borderColor: 'grey.200', my: 3.8 }} />
@@ -168,4 +203,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

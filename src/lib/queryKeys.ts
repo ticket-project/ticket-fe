@@ -8,6 +8,11 @@ import type {
 } from '@/features/shows/types';
 
 export const queryKeys = {
+  auth: {
+    all: ['auth'] as const,
+    me: () => [...queryKeys.auth.all, 'me'] as const,
+  },
+
   show: {
     all: ['show'] as const,
     latest: () => [...queryKeys.show.all, 'latest'] as const,
@@ -28,9 +33,5 @@ export const queryKeys = {
 
   booking: {
     all: ['booking'] as const,
-  },
-
-  auth: {
-    user: ['auth', 'user'] as const,
   },
 } as const;

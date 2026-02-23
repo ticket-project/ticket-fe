@@ -1,6 +1,6 @@
 import { fetchApi } from '@/lib/api';
 
-type SocialProvider = 'kakao' | 'google';
+import { SocialProvider } from '../types';
 
 interface SocialUrlsResponse {
   result: string;
