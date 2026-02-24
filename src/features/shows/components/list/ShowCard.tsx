@@ -8,6 +8,7 @@ import { ShowBase, UpcomingShowItem } from '../../types';
 import Tag from '@/components/ui/Tag';
 
 import { SALE_TYPES } from '../../constants';
+import { getOpenDateLabel } from '../../utils';
 
 import {
   PosterBox,
@@ -24,11 +25,6 @@ interface ShowCardProps {
   item: ShowBase | UpcomingShowItem;
   variant?: 'upcoming' | 'all';
 }
-
-// const SALE_TYPE_LABEL: Record<ConcertBase['saleType'], string> = {
-//   EXCLUSIVE: '단독판매',
-//   GENERAL: '일반판매',
-// };
 
 const isShowBase = (item: ShowBase | UpcomingShowItem): item is ShowBase => {
   return 'startDate' in item && 'endDate' in item;
@@ -56,7 +52,9 @@ const ShowCard = ({ item, variant = 'all' }: ShowCardProps) => {
           </PosterBox>
           <CardContent sx={{ padding: 0 }}>
             {isUpcoming && (
-              <ShowTicketDate as="span">{item.saleStartDate}</ShowTicketDate>
+              <ShowTicketDate as="span">
+                {getOpenDateLabel(item.saleStartDate, false)}
+              </ShowTicketDate>
             )}
             <ShowTitle as="strong">{item.title}</ShowTitle>
             <ShowVenue as="span">{item.venue}</ShowVenue>

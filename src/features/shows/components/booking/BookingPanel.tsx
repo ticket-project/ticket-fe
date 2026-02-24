@@ -1,7 +1,5 @@
 'use client';
 
-import 'dayjs/locale/ko';
-
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 

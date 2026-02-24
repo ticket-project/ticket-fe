@@ -110,7 +110,7 @@ const Footer = () => {
         </ContentWrapper>
         <FooterDivider />
         <Copyright as="small">
-          © 2024 ONE TICKET CORP. ALL RIGHTS RESERVED.
+          © 2026 ONE TICKET CORP. ALL RIGHTS RESERVED.
         </Copyright>
       </Container>
     </Root>

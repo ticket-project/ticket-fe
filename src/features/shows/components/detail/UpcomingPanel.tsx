@@ -1,7 +1,5 @@
 'use client';
 
-import 'dayjs/locale/ko';
-
 import { ErrorOutlineRounded, IosShare } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';

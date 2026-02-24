@@ -133,6 +133,8 @@ export interface ShowLike {
   likeCount: number;
 }
 
+export type BookingStatus = 'BEFORE_OPEN' | 'ON_SALE' | 'CLOSED';
+
 export interface ShowDetail {
   id: number;
   title: string;
@@ -151,6 +153,7 @@ export interface ShowDetail {
   performanceDates: Performances[];
   viewCount: number;
   likeCount: number;
+  bookingStatus: BookingStatus;
 }
 
 export interface LikedShowItem {

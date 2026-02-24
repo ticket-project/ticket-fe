@@ -1,5 +1,3 @@
-import 'dayjs/locale/ko';
-
 /// 파일 위치 및 분리 다시 확읺하기
 import { Box } from '@mui/material';
 
@@ -19,10 +17,9 @@ interface ShowDetailViewProps {
 }
 
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
-  const isUpcoming = false;
-  const isSaleEnded = false;
+  const isUpcoming = item.bookingStatus === 'BEFORE_OPEN';
+  const isSaleEnded = item.bookingStatus === 'CLOSED';
 
-  //SummaryBody, Panel 부분 컴포넌트로 만들어서 분기처리하기
   return (
     <Root isUpcoming={isUpcoming}>
       <Box>

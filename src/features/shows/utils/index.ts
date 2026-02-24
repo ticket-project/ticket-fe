@@ -1,3 +1,5 @@
+import 'dayjs/locale/ko';
+
 import dayjs, { Dayjs } from 'dayjs';
 
 import { Performances } from '../types';
@@ -56,12 +58,12 @@ export const getSessionLabel = (index: number, startTime: string) =>
   `${index + 1}회 ${dayjs(startTime).format('HH:mm')}`;
 
 // 예매 시작일 라벨
-export const getOpenDateLabel = (saleStartDate: string) => {
+export const getOpenDateLabel = (saleStartDate: string, time = true) => {
   const openDate = dayjs(saleStartDate);
-
   if (!openDate.isValid()) {
     return saleStartDate;
   }
+  const format = time ? 'MM.DD(ddd) HH:mm' : 'MM.DD(ddd)';
 
-  return openDate.locale('ko').format('MM.DD(ddd) HH:mm');
+  return openDate.locale('ko').format(format);
 };
