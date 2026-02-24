@@ -14,6 +14,7 @@ export const Root = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'center',
   minHeight: '100vh',
+  marginTop: 'calc(var(--simple-header-height) * -1)',
   paddingBottom: theme.spacing(6),
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
