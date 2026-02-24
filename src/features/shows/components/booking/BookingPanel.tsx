@@ -88,7 +88,7 @@ const BookingPanel = ({ performances, isSaleEnded }: BookingPanelProps) => {
 
   const handleBookClick = () => {
     if (!selectedSession) return;
-    router.push('/main/onestop/seat');
+    router.push('/onestop/seat');
   };
 
   return (

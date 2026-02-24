@@ -21,11 +21,11 @@ const CallbackPage = () => {
     if (accessToken) {
       setAccessToken(accessToken);
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-      router.replace('/main');
+      router.replace('/');
       return;
     }
 
-    router.replace('/auth/login');
+    router.replace('/login');
   }, [queryClient, router, searchParams, setAccessToken]);
 
   return (

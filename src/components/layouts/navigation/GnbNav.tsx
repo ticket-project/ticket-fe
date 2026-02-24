@@ -10,9 +10,9 @@ interface NavItem {
 }
 
 const NAV_ITEMS: readonly NavItem[] = [
-  { href: '/main/concert', name: '콘서트' },
-  { href: '/main/musical', name: '뮤지컬' },
-  { href: '/main/theater', name: '연극' },
+  { href: '/concert', name: '콘서트' },
+  { href: '/musical', name: '뮤지컬' },
+  { href: '/theater', name: '연극' },
 ] as const;
 
 const GnbNav = ({ pathname }: GnbNavProps) => {

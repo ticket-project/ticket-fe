@@ -92,7 +92,7 @@ const AuthCard = ({
           </Box>
         </StyledCardContent>
       </StyledCard>
-      <BackHomeLink href="/main">
+      <BackHomeLink href="/">
         <ArrowBackRoundedIcon sx={{ fontSize: 20 }} />
         홈으로 돌아가기
       </BackHomeLink>

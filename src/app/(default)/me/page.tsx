@@ -52,7 +52,7 @@ const MyPage = () => {
     onSuccess: () => {
       clearAuth();
       enqueueSnackbar('회원탈퇴가 완료되었습니다.', { variant: 'success' });
-      router.replace('/main');
+      router.replace('/');
       router.refresh();
     },
     onError: (error) => {
@@ -147,7 +147,7 @@ const MyPage = () => {
                         key={`${show.showId}-${show.likedAt}`}
                       >
                         <Button
-                          href={`/main/concert/${show.showId}`}
+                          href={`/concert/${show.showId}`}
                           sx={{
                             justifyContent: 'flex-start',
                             px: 0,

@@ -22,7 +22,7 @@ const OneStopSeatPage = () => {
           }}
         >
           <Typography sx={{ fontSize: '1.8rem', fontWeight: 700 }}>
-            /main/onestop/seat
+            /onestop/seat
           </Typography>
         </Stack>
       </SectionFrame>

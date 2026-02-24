@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 const Homepage = () => {
-  redirect('/main/concert');
+  redirect('/concert');
 };
 
 export default Homepage;

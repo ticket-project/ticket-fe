@@ -65,7 +65,7 @@ const Footer = () => {
                 </Box>
                 <Box component="li">
                   <NavLink
-                    href="/main"
+                    href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
                   >
@@ -79,7 +79,7 @@ const Footer = () => {
               <NavList as="ul">
                 <Box component="li">
                   <NavLink
-                    href="/main"
+                    href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
                   >
@@ -88,7 +88,7 @@ const Footer = () => {
                 </Box>
                 <Box component="li">
                   <NavLink
-                    href="/main"
+                    href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
                   >
@@ -97,7 +97,7 @@ const Footer = () => {
                 </Box>
                 <Box component="li">
                   <NavLink
-                    href="/main"
+                    href="/"
                     onClick={preventNav}
                     onKeyDown={preventNavKeyDown}
                   >

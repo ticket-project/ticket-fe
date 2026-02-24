@@ -18,7 +18,7 @@ const SimpleHeader = () => {
       <Header elevation={0}>
         <TopArea sx={{ height: 'var(--simple-header-height)' }}>
           <HeaderContainer>
-            <Box component={Link} href="/main" aria-label="홈으로 이동">
+            <Box component={Link} href="/" aria-label="홈으로 이동">
               <LogoText variant="h1" sx={{ fontSize: '3.2rem' }}>
                 <span>ONE</span>&nbsp;티켓
               </LogoText>
