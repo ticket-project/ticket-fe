@@ -2,6 +2,7 @@
 
 import 'dayjs/locale/ko';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { Box, Divider, Stack, Typography } from '@mui/material';
@@ -38,6 +39,7 @@ interface BookingPanelProps {
 }
 
 const BookingPanel = ({ performances, isSaleEnded }: BookingPanelProps) => {
+  const router = useRouter();
   const { availableDateSet, initialSelectedDate, initialSelectedSessionId } =
     getInitialDateState(performances);
 
@@ -82,6 +84,11 @@ const BookingPanel = ({ performances, isSaleEnded }: BookingPanelProps) => {
 
   const handleForeignBookClick = () => {
     alert('해외예매는 준비중입니다.');
+  };
+
+  const handleBookClick = () => {
+    if (!selectedSession) return;
+    router.push('/main/onestop/seat');
   };
 
   return (
@@ -177,6 +184,7 @@ const BookingPanel = ({ performances, isSaleEnded }: BookingPanelProps) => {
                 fullWidth
                 variant="contained"
                 disabled={!selectedSession}
+                onClick={handleBookClick}
               >
                 예매하기
               </BookButton>

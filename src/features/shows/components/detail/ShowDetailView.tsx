@@ -20,7 +20,7 @@ interface ShowDetailViewProps {
 
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
   const isUpcoming = false;
-  const isSaleEnded = true;
+  const isSaleEnded = false;
 
   //SummaryBody, Panel 부분 컴포넌트로 만들어서 분기처리하기
   return (

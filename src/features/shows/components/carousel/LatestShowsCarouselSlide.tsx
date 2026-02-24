@@ -39,7 +39,7 @@ const LatestShowsCarouselSlide = ({
       <StyledCardActionArea
         {...{
           component: Link,
-          href: `/concert/${item.id}`,
+          href: `/main/concert/${item.id}`,
         }}
         aria-label={`${item.title} 상세로 이동`}
       >

@@ -38,7 +38,7 @@ const AuthButtons = () => {
     onSettled: async () => {
       clearAuth();
       await queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-      router.push('/');
+      router.push('/main');
       // router.refresh();
     },
   });
@@ -51,7 +51,7 @@ const AuthButtons = () => {
     <Root>
       {isAuthenticated ? (
         <>
-          <StyledButton href="/me" startIcon={<PersonRoundedIcon />}>
+          <StyledButton href="/main/me" startIcon={<PersonRoundedIcon />}>
             마이페이지
           </StyledButton>
           <StyledButton
@@ -65,10 +65,10 @@ const AuthButtons = () => {
       ) : (
         <>
           <EmailAuthButton />
-          <StyledButton href="/login" startIcon={<LoginIcon />}>
+          <StyledButton href="/auth/login" startIcon={<LoginIcon />}>
             로그인
           </StyledButton>
-          <StyledButton href="/signup" startIcon={<PersonOutlineIcon />}>
+          <StyledButton href="/auth/signup" startIcon={<PersonOutlineIcon />}>
             회원가입
           </StyledButton>
         </>

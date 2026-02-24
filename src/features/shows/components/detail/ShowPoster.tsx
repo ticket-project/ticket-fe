@@ -38,7 +38,7 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
       enqueueSnackbar('로그인 후 이용해 주세요.', {
         variant: 'info',
       });
-      router.push('/login');
+      router.push('/auth/login');
 
       return;
     }

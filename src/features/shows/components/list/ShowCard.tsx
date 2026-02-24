@@ -42,7 +42,7 @@ const ShowCard = ({ item, variant = 'all' }: ShowCardProps) => {
     <>
       <ShowCardWrapper as="li" elevation={0}>
         <ShowCardLinkArea
-          {...{ component: Link, href: `/concert/${item.id}` }}
+          {...{ component: Link, href: `/main/concert/${item.id}` }}
           variant={variant}
         >
           <PosterBox>

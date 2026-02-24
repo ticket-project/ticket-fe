@@ -43,7 +43,7 @@ const MainHeader = () => {
       <DefaultHeader elevation={0} isScrolled={isScrolled}>
         <TopArea>
           <HeaderContainer>
-            <Box component={Link} href="/" aria-label="홈으로 이동">
+            <Box component={Link} href="/main" aria-label="홈으로 이동">
               <LogoText variant="h1">
                 <span>ONE</span> 티켓
               </LogoText>
