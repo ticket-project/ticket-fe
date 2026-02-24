@@ -51,7 +51,7 @@ const AuthButtons = () => {
     <Root>
       {isAuthenticated ? (
         <>
-          <StyledButton href="/main/me" startIcon={<PersonRoundedIcon />}>
+          <StyledButton href="/auth/me" startIcon={<PersonRoundedIcon />}>
             마이페이지
           </StyledButton>
           <StyledButton

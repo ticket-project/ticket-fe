@@ -9,21 +9,21 @@ import { Box } from '@mui/material';
 import AuthButtons from '@/features/auth/components/buttons/AuthButtons';
 import SearchBar from '@/features/search/components/searchBar/SearchBar';
 
-import GnbNav from '../../navigation/GnbNav';
+import GnbNav from '../navigation/GnbNav';
 
 import {
   Root,
-  DefaultHeader,
+  BaseHeader,
   StickyHeader,
   TopArea,
   BottomArea,
   LogoText,
   HeaderContainer,
-} from './MainHeader.styles';
+} from './Header.styles';
 
 const SCROLL_TRIGGER = 100;
 
-const MainHeader = () => {
+const DefaultHeader = () => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -40,12 +40,12 @@ const MainHeader = () => {
 
   return (
     <Root>
-      <DefaultHeader elevation={0} isScrolled={isScrolled}>
+      <BaseHeader elevation={0} isScrolled={isScrolled}>
         <TopArea>
           <HeaderContainer>
             <Box component={Link} href="/main" aria-label="홈으로 이동">
               <LogoText variant="h1">
-                <span>ONE</span> 티켓
+                <span>ONE</span>&nbsp;티켓
               </LogoText>
             </Box>
             <SearchBar sx={{ ml: 2 }} />
@@ -59,7 +59,7 @@ const MainHeader = () => {
             <GnbNav pathname={pathname} />
           </HeaderContainer>
         </BottomArea>
-      </DefaultHeader>
+      </BaseHeader>
 
       <StickyHeader elevation={0} isScrolled={isScrolled}>
         <HeaderContainer>
@@ -73,4 +73,4 @@ const MainHeader = () => {
   );
 };
 
-export default MainHeader;
+export default DefaultHeader;

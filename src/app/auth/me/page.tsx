@@ -75,8 +75,15 @@ const MyPage = () => {
   };
 
   return (
-    <Container sx={{ py: { md: 8, xs: 4 } }}>
-      <Box sx={{ maxWidth: 720, mx: 'auto' }}>
+    <Container
+      sx={{
+        py: { md: 8, xs: 4 },
+        minHeight: 'calc(100dvh - var(--simple-header-height))',
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <Box sx={{ width: '100%', maxWidth: 720, mx: 'auto' }}>
         <Typography
           variant="h2"
           sx={{ fontSize: { md: 30, xs: 24 }, fontWeight: 800, mb: 3 }}

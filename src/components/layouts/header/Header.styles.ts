@@ -7,15 +7,15 @@ export const Root = styled(Box)(() => ({
   '--header-height': '130px',
   '--header-top-height': '85px',
 
+  zIndex: 999,
   '& .MuiToolbar-root': {
     height: '100%',
-    minHeight: 'var(--header-bottom-height)',
   },
 }));
 
-export const DefaultHeader = styled(AppBar, {
+export const BaseHeader = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'isScrolled',
-})<{ isScrolled: boolean }>(({ isScrolled, theme }) => ({
+})<{ isScrolled?: boolean }>(({ isScrolled, theme }) => ({
   position: 'static',
   visibility: isScrolled ? 'hidden' : 'visible',
   opacity: isScrolled ? 0 : 1,
@@ -71,9 +71,15 @@ export const LogoText = styled(Typography)(({ theme }) => ({
   fontWeight: 900,
   color: theme.palette.text.primary,
   span: {
-    marginRight: theme.spacing(0.5),
-    fontSize: '2.8rem',
+    fontSize: 'calc(1em + 0.2rem)',
     fontWeight: 800,
     color: theme.palette.primary.main,
   },
+}));
+
+// 심플 헤더
+export const Header = styled(AppBar)(({ theme }) => ({
+  position: 'static',
+  background: theme.palette.common.white,
+  borderBottom: `1px solid ${theme.palette.grey[200]}`,
 }));
