@@ -1,0 +1,42 @@
+'use client';
+
+import Image from 'next/image';
+
+import { Box } from '@mui/material';
+
+import {
+  GradientOverlay,
+  PosterBackground,
+  PosterCard,
+  PosterContent,
+  Root,
+} from './UpcomingPoster.styles';
+
+interface UpcomingPosterProps {
+  title: string;
+  posterUrl: string;
+}
+
+const UpcomingPoster = ({ title, posterUrl }: UpcomingPosterProps) => {
+  return (
+    <Root>
+      <PosterBackground aria-hidden />
+      <GradientOverlay aria-hidden />
+      <PosterContent>
+        <PosterCard>
+          <Image
+            // src={posterUrl}
+            src={'/images/dummy-poster.jpeg'}
+            alt={`${title} 포스터`}
+            fill
+            priority
+            sizes="(max-width: 600px) 70vw, (max-width: 900px) 46vw, 368px"
+            style={{ objectFit: 'cover' }}
+          />
+        </PosterCard>
+      </PosterContent>
+    </Root>
+  );
+};
+
+export default UpcomingPoster;

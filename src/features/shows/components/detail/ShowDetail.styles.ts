@@ -1,38 +1,26 @@
-import { Box, IconButton, Stack, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
-export const Root = styled(Box)(({ theme }) => ({
+export const Root = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isUpcoming',
+})<{ isUpcoming: boolean }>(({ isUpcoming, theme }) => ({
   display: 'grid',
   alignItems: 'start',
-  gap: theme.spacing(10),
-
+  gap: isUpcoming ? theme.spacing(6) : theme.spacing(10),
   [theme.breakpoints.up('md')]: {
-    gridTemplateColumns: 'minmax(0, 1fr) 340px',
+    gridTemplateColumns: isUpcoming
+      ? '2.2fr minmax(320px, 1fr)'
+      : '3fr minmax(350px, 1fr)',
   },
 }));
 
-export const SummaryBody = styled(Box)(({ theme }) => ({
-  display: 'grid',
+export const SummaryBody = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isUpcoming',
+})<{ isUpcoming: boolean }>(({ isUpcoming, theme }) => ({
+  display: isUpcoming ? 'block' : 'grid',
   gap: theme.spacing(6),
   gridTemplateColumns: '300px minmax(0,1fr)',
   // [theme.breakpoints.up('sm')]: {},
   // [theme.breakpoints.up('md')]: {},
-}));
-
-export const PosterArea = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  aspectRatio: '1/1.32',
-}));
-
-export const ActionArea = styled(Stack)(({ theme }) => ({
-  alignItems: 'center',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  marginTop: theme.spacing(1.2),
-}));
-
-export const ShareButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[200],
-  '&:hover': { backgroundColor: theme.palette.grey[300] },
 }));
 
 export const BenefitBadge = styled(Box)({

@@ -1,3 +1,5 @@
+import { ShowDetail } from '../types';
+
 export const SORT_OPTIONS = {
   show: [
     { label: '인기순', value: 'popular' },
@@ -30,6 +32,11 @@ export const SALE_TYPES = {
   EXCLUSIVE: { label: '단독판매' },
 } as const;
 
+export const OPEN_TYPE_LABEL: Record<ShowDetail['saleType'], string> = {
+  GENERAL: '일반 예매일',
+  EXCLUSIVE: '단독 예매일',
+};
+
 // 상세페이지
 export const INSTALLMENT_DATA = [
   {
@@ -48,9 +55,9 @@ export const INSTALLMENT_DATA = [
 ];
 
 export const PERFORMANCE_TIMES = [
-  '2026년 2월 13일(금) 7PM(KST)',
-  '2026년 2월 14일(토) 6PM(KST)',
-  '2026년 2월 15일(일) 5PM(KST)',
+  '2026년 4월 13일(금) 7PM(KST)',
+  '2026년 4월 14일(토) 6PM(KST)',
+  '2026년 4월 15일(일) 5PM(KST)',
 ];
 
 export const NOTICE_HIGHLIGHTS = [

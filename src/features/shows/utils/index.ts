@@ -54,3 +54,14 @@ export const getInitialDateState = (performanceDates: Performances[]) => {
 // 회차 라벨
 export const getSessionLabel = (index: number, startTime: string) =>
   `${index + 1}회 ${dayjs(startTime).format('HH:mm')}`;
+
+// 예매 시작일 라벨
+export const getOpenDateLabel = (saleStartDate: string) => {
+  const openDate = dayjs(saleStartDate);
+
+  if (!openDate.isValid()) {
+    return saleStartDate;
+  }
+
+  return openDate.locale('ko').format('MM.DD(ddd) HH:mm');
+};

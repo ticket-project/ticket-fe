@@ -10,6 +10,8 @@ import ShowDetailTabs from '../tabs/ShowDetailTabs';
 import ShowInfoRow from './ShowInfoRow';
 import ShowPoster from './ShowPoster';
 import SummaryTop from './SummaryTop';
+import UpcomingPanel from './UpcomingPanel';
+import UpcomingPoster from './UpcomingPoster';
 
 import { SummaryBody, Root } from './ShowDetail.styles';
 interface ShowDetailViewProps {
@@ -17,19 +19,30 @@ interface ShowDetailViewProps {
 }
 
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
+  const isUpcoming = true;
+
+  //SummaryBody, Panel 부분 컴포넌트로 만들어서 분기처리하기
   return (
-    <Root>
+    <Root isUpcoming={isUpcoming}>
       <Box>
         <SummaryTop item={item} />
-        <SummaryBody>
-          <ShowPoster item={item} />
-          <ShowInfoRow item={item} />
+        <SummaryBody isUpcoming={isUpcoming}>
+          {isUpcoming ? (
+            <UpcomingPoster title={item.title} posterUrl={item.image} />
+          ) : (
+            <>
+              <ShowPoster item={item} />
+              <ShowInfoRow item={item} />
+            </>
+          )}
         </SummaryBody>
-
         <ShowDetailTabs />
       </Box>
-
-      <BookingPanel performances={item.performanceDates} />
+      {isUpcoming ? (
+        <UpcomingPanel item={item} />
+      ) : (
+        <BookingPanel performances={item.performanceDates} />
+      )}
     </Root>
   );
 };
