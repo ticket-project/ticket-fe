@@ -19,7 +19,8 @@ interface ShowDetailViewProps {
 }
 
 const ShowDetailView = ({ item }: ShowDetailViewProps) => {
-  const isUpcoming = true;
+  const isUpcoming = false;
+  const isSaleEnded = true;
 
   //SummaryBody, Panel 부분 컴포넌트로 만들어서 분기처리하기
   return (
@@ -41,7 +42,10 @@ const ShowDetailView = ({ item }: ShowDetailViewProps) => {
       {isUpcoming ? (
         <UpcomingPanel item={item} />
       ) : (
-        <BookingPanel performances={item.performanceDates} />
+        <BookingPanel
+          performances={item.performanceDates}
+          isSaleEnded={isSaleEnded}
+        />
       )}
     </Root>
   );

@@ -14,7 +14,7 @@ import { useAuthStore } from '@/store/authStore';
 
 import useShowLikeMutation from '../../hooks/useShowLikeActions';
 
-import { ActionArea, PosterArea, ShareButton } from './Poster.styles';
+import { ActionArea, PosterArea, ShareButton } from './ShowPoster.styles';
 
 interface ShowPosterProps {
   item: ShowDetail;
