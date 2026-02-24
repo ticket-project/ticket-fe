@@ -103,6 +103,10 @@ const theme = createTheme({
           '@media (min-width: 1280px)': {
             paddingLeft: '33px',
             paddingRight: '33px',
+          },
+        },
+        maxWidthLg: {
+          '@media (min-width: 1280px)': {
             maxWidth: '1346px',
           },
         },
