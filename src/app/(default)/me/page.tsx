@@ -52,7 +52,7 @@ const MyPage = () => {
     onSuccess: () => {
       clearAuth();
       enqueueSnackbar('회원탈퇴가 완료되었습니다.', { variant: 'success' });
-      router.replace('/');
+      router.replace('/concert');
       router.refresh();
     },
     onError: (error) => {

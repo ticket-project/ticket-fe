@@ -21,7 +21,7 @@ const CallbackPage = () => {
     if (accessToken) {
       setAccessToken(accessToken);
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-      router.replace('/');
+      router.replace('/concert');
       return;
     }
 
