@@ -1,28 +1,40 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Metadata } from 'next';
 
-import PageContainer from '@/components/layouts/PageContainer';
-import SectionFrame from '@/components/layouts/SectionFrame';
+import SeatPageClient from '@/features/booking/components/page/SeatPageClient';
 
-const OneStopSeatPage = () => {
+export const metadata: Metadata = {
+  // description: '최신 콘서트 정보를 확인하세요.',
+  // title: '콘서트 예매 | 티켓팅',
+};
+
+// app/(simple)/onestop/seat/page.tsx (Server Component)
+// searchParams(공연id/회차id/bookingKey 등) 파싱
+// (가능하면) 초기 레이아웃/공연정보 fetch → Client에 주기
+
+interface Props {
+  searchParams: { performanceId: string };
+}
+
+const SeatPage = async ({ searchParams }: Props) => {
+  const performanceId = searchParams.performanceId ?? '1';
+  // const queryClient = createQueryClient();
+
+  // await Promise.all([
+  //   queryClient.prefetchQuery({
+  //     queryKey: queryKeys.show.latest(),
+  //     queryFn: getLatestShows,
+  //   }),
+  //   queryClient.prefetchQuery({
+  //     queryKey: queryKeys.show.upcomingPreview(),
+  //     queryFn: getUpcomingShowsPreview,
+  //   }),
+  // ]);
+
   return (
-    <Container maxWidth={false}>
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        sx={{
-          minHeight: '30rem',
-          border: '1px solid',
-          borderColor: 'grey.200',
-          borderRadius: 2,
-          bgcolor: 'grey.50',
-        }}
-      >
-        <Typography sx={{ fontSize: '1.8rem', fontWeight: 700 }}>
-          /onestop/seat
-        </Typography>
-      </Stack>
-    </Container>
+    // <HydrationBoundary state={dehydrate(queryClient)}>
+    // </HydrationBoundary>
+    <SeatPageClient performanceId={performanceId} />
   );
 };
 
-export default OneStopSeatPage;
+export default SeatPage;

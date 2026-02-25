@@ -121,7 +121,7 @@ export const useMyLikedShows = (token?: string | null, size = 20) => {
 
 export const useSeatGrades = (performanceId: number | null) => {
   return useQuery({
-    queryKey: queryKeys.booking.seats(performanceId ?? 'none'),
+    queryKey: queryKeys.booking.seatGrades(performanceId ?? 'none'),
     queryFn: () => getSeatGrades(performanceId as number),
     enabled: performanceId !== null,
     staleTime: 0,
