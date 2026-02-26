@@ -70,7 +70,6 @@ const SeatMap = ({ item }: SeatMapProps) => {
             state={state}
           />
         </TransformComponent>
-
         <ZoomButtons />
       </TransformWrapper>
     </Root>

@@ -52,7 +52,7 @@ export const SvgContainer = styled(Box)(({ theme }) => ({
       stroke: '#7969e6',
     },
     '&.is-selected': {
-      transform: 'scale(1.12)',
+      transform: 'scale(1.2)',
       fill: '#7969e6',
       stroke: '#afa5f0',
       strokeWidth: 0.7,
