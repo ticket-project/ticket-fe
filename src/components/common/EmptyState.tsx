@@ -1,21 +1,23 @@
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Box, Typography, SxProps, Theme, IconButton } from '@mui/material';
-
 export interface EmptyStateProps {
-  icon?: boolean;
   title: string;
   description?: string;
+  variant?: 'empty' | 'error';
+  icon?: boolean;
   sx?: SxProps<Theme>;
   onRetry?: () => void;
 }
 
 export const EmptyState = ({
+  title,
   description,
+  variant = 'empty',
   icon = true,
   onRetry,
   sx,
-  title,
 }: EmptyStateProps) => {
   return (
     <Box
@@ -42,7 +44,7 @@ export const EmptyState = ({
             opacity: 0.6,
           }}
         >
-          <ArticleOutlinedIcon />
+          {variant === 'error' ? <ErrorOutlineIcon /> : <ArticleOutlinedIcon />}
         </Box>
       )}
 

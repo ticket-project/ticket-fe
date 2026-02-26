@@ -9,7 +9,7 @@ const SEAT_QUERY_CONFIG = {
   staleTime: 0,
 } as const;
 
-export const useSeatMapQuery = (performanceId: string) => {
+export const useSeatMap = (performanceId: string) => {
   return useQuery({
     queryKey: queryKeys.booking.seatMap(performanceId),
     queryFn: () => getSeatMap(performanceId),

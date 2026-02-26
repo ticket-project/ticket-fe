@@ -19,7 +19,12 @@ const ShowDetailPageClient = ({ showId }: ShowDetailPageClientProps) => {
   return (
     <PageContainer>
       <SectionFrame>
-        <QueryBoundary query={detail}>
+        <QueryBoundary
+          query={detail}
+          errorMessage="공연 정보를 불러오는데 실패했습니다."
+          emptyTitle="등록된 공연이 없습니다"
+          emptyDescription="공연이 등록되면 여기에 표시됩니다"
+        >
           {(item) => <ShowDetailView item={item} />}
         </QueryBoundary>
       </SectionFrame>

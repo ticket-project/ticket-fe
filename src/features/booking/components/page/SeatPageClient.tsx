@@ -4,21 +4,25 @@ import { useEffect } from 'react';
 
 import { Box } from '@mui/material';
 
+import QueryBoundary from '@/components/common/QueryBoundary';
 import BookingSidebar from '@/features/booking/components/BookingSidebar';
 import SeatMap from '@/features/booking/components/SeatMap';
 import TopInfoBar from '@/features/booking/components/TopInfoBar';
 import { useBookingStore } from '@/store/bookingStore';
 
-interface Props {
+import { useSeatMap } from '../../hooks/useSeatQueries';
+
+interface SeatPageClientProps {
   performanceId: string;
 }
 
-const SeatPageClient = ({ performanceId }: Props) => {
-  const syncPerformance = useBookingStore((state) => state.syncPerformance);
+const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
+  const setPerformance = useBookingStore((state) => state.setPerformance);
+  const seatMap = useSeatMap(performanceId);
 
   useEffect(() => {
-    syncPerformance(performanceId);
-  }, [performanceId, syncPerformance]);
+    setPerformance(performanceId);
+  }, [performanceId, setPerformance]);
 
   return (
     <Box
@@ -27,7 +31,6 @@ const SeatPageClient = ({ performanceId }: Props) => {
         minHeight: 0,
         display: 'grid',
         gridTemplateRows: '60px minmax(0,1fr)',
-        overflow: 'hidden',
       }}
     >
       <TopInfoBar />
@@ -39,7 +42,15 @@ const SeatPageClient = ({ performanceId }: Props) => {
           gridTemplateColumns: '1fr 480px',
         }}
       >
-        <SeatMap performanceId={performanceId} />
+        <QueryBoundary
+          query={seatMap}
+          isEmpty={(data) => !data?.geometry}
+          errorMessage="좌석 정보를 불러오는데 실패했습니다."
+          emptyTitle="좌석 정보 없음"
+          emptyDescription="좌석 정보가 등록되지 않았습니다."
+        >
+          {(item) => <SeatMap item={item} />}
+        </QueryBoundary>
         <BookingSidebar />
       </Box>
     </Box>

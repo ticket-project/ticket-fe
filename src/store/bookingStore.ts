@@ -1,30 +1,25 @@
 import { create } from 'zustand';
 
 type BookingState = {
-  activePerformanceId: string | null;
+  performanceId: string | null;
   selectedSeatIds: string[];
-  clearSeatSelection: () => void;
-  syncPerformance: (performanceId: string) => void;
+  setPerformance: (performanceId: string) => void;
   toggleSeatSelection: (seatId: string) => void;
+  resetSeatSelection: () => void;
 };
 
 export const useBookingStore = create<BookingState>((set) => ({
-  activePerformanceId: null,
+  performanceId: null,
   selectedSeatIds: [],
 
-  clearSeatSelection: () =>
-    set({
-      selectedSeatIds: [],
-    }),
-
-  syncPerformance: (performanceId: string) =>
+  setPerformance: (performanceId: string) =>
     set((state) => {
-      if (state.activePerformanceId === performanceId) {
+      if (state.performanceId === performanceId) {
         return state;
       }
 
       return {
-        activePerformanceId: performanceId,
+        performanceId: performanceId,
         selectedSeatIds: [],
       };
     }),
@@ -38,5 +33,10 @@ export const useBookingStore = create<BookingState>((set) => ({
           ? state.selectedSeatIds.filter((id) => id !== seatId)
           : [...state.selectedSeatIds, seatId],
       };
+    }),
+
+  resetSeatSelection: () =>
+    set({
+      selectedSeatIds: [],
     }),
 }));

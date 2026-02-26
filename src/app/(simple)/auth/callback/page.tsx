@@ -3,9 +3,9 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { Box, CircularProgress } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 
+import LoadingState from '@/components/common/LoadingState';
 import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
@@ -28,18 +28,7 @@ const CallbackPage = () => {
     router.replace('/login');
   }, [queryClient, router, searchParams, setAccessToken]);
 
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100dvh',
-      }}
-    >
-      <CircularProgress size={28} />
-    </Box>
-  );
+  return <LoadingState minHeight="100dvh" size={28} />;
 };
 
 export default CallbackPage;

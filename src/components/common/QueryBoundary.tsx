@@ -1,46 +1,51 @@
 'use client';
 
-import { Box, CircularProgress } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 
 import { EmptyState } from '@/components/common/EmptyState';
+import LoadingState from '@/components/common/LoadingState';
 
 interface QueryBoundaryProps<T> {
   query: UseQueryResult<T, Error>;
+  isEmpty?: (data: T | undefined) => boolean;
+  errorTitle?: string;
+  errorMessage?: string;
+  emptyTitle?: string;
+  emptyDescription?: string;
   children: (items: T) => React.ReactNode;
 }
 
-const QueryBoundary = <T,>({ children, query }: QueryBoundaryProps<T>) => {
-  const { data, error, isError, isLoading, refetch } = query;
+const QueryBoundary = <T,>({
+  query,
+  isEmpty = (data) => !data || (Array.isArray(data) && data.length === 0),
+  errorTitle = '데이터 로드 실패',
+  errorMessage = '잠시 후 다시 시도해주세요.',
+  emptyTitle = '데이터가 없습니다',
+  emptyDescription = '새로운 데이터가 등록되면 여기에 표시됩니다',
+  children,
+}: QueryBoundaryProps<T>) => {
+  const { data, error, isError, isPending, refetch } = query;
 
   // 로딩
-  if (isLoading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 10 }}>
-        <CircularProgress />
-      </Box>
-    );
+  if (isPending) {
+    return <LoadingState />;
   }
 
   // 에러
   if (isError) {
     return (
       <EmptyState
-        title="데이터를 불러오는데 실패했습니다."
-        description={`잠시 후 다시 시도해주세요. ${error.message}`}
+        title={errorTitle}
+        description={error?.message ?? errorMessage}
         onRetry={refetch}
+        variant="error"
       />
     );
   }
 
   // 빈 데이터
-  if (!data || (Array.isArray(data) && data.length === 0)) {
-    return (
-      <EmptyState
-        title="등록된 콘서트가 없습니다"
-        description="새로운 콘서트가 등록되면 여기에 표시됩니다"
-      />
-    );
+  if (!data || isEmpty(data)) {
+    return <EmptyState title={emptyTitle} description={emptyDescription} />;
   }
 
   return <>{children(data)}</>;

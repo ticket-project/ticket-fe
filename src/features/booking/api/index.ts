@@ -1,52 +1,8 @@
-// 목업
-
-// src/features/booking/api/seatmap.ts
 import { SeatMapData } from '../types';
+import { makeMock } from './seatmap.mock';
 
-const makeMock = (): SeatMapData => {
-  const seats = [];
-  const rows = 12;
-  const cols = 18;
-
-  const seatW = 18;
-  const seatH = 18;
-  const gap = 6;
-
-  let idCounter = 1;
-
-  for (let r = 0; r < rows; r += 1) {
-    for (let c = 0; c < cols; c += 1) {
-      const id = `S${idCounter++}`;
-      seats.push({
-        id,
-        x: c * (seatW + gap),
-        y: r * (seatH + gap),
-        w: seatW,
-        h: seatH,
-        label: `${String.fromCharCode(65 + r)}${c + 1}`, // A1...
-        sectionId: 'A',
-        row: String.fromCharCode(65 + r),
-      });
-    }
-  }
-
-  const state: SeatMapData['state'] = {};
-  for (const seat of seats) {
-    // 임시: 랜덤으로 sold/held 섞기
-    const rand = Math.random();
-    const status =
-      rand < 0.08 ? 'SOLD' : rand < 0.13 ? 'HELD_BY_OTHER' : 'AVAILABLE';
-    state[seat.id] = { id: seat.id, status };
-  }
-
-  return {
-    geometry: {
-      viewBox: [0, 0, cols * (seatW + gap), rows * (seatH + gap)],
-      seats,
-    },
-    state,
-  };
-};
+/** 개발용 네트워크 지연 시뮬레이터 (ms 단위) */
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getSeatMap = async (
   performanceId: string
@@ -56,6 +12,8 @@ export const getSeatMap = async (
   if (!performanceId) {
     throw new Error('performanceId가 필요합니다.');
   }
+
+  // await delay(1000); // 1초 지연 (개발용)
 
   return makeMock();
 };
