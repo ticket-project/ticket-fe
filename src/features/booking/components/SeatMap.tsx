@@ -1,11 +1,14 @@
 import { MouseEvent, useMemo } from 'react';
 
-import { Box } from '@mui/material';
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 import { useBookingStore } from '@/store/bookingStore';
 
 import { SeatMapData } from '../types';
 import SeatMapSvg from './seatmap/SeatMapSvg';
+import ZoomButtons from './ZoomButtons';
+
+import { Root } from './seatmap/Seat.styles';
 
 interface SeatMapProps {
   item: SeatMapData;
@@ -16,6 +19,7 @@ const SeatMap = ({ item }: SeatMapProps) => {
   const toggleSeatSelection = useBookingStore(
     (state) => state.toggleSeatSelection
   );
+
   const { geometry, state } = item;
 
   const selectedSeatIdSet = useMemo(
@@ -38,22 +42,38 @@ const SeatMap = ({ item }: SeatMapProps) => {
   };
 
   return (
-    <Box
-      onClick={handleClickSeat}
-      sx={{
-        height: '100%',
-        minHeight: 0,
-        // backgroundColor: '#eeeff3',
-        backgroundColor: '#777',
-        touchAction: 'none',
-      }}
-    >
-      <SeatMapSvg
-        selectedSeatIds={selectedSeatIdSet}
-        geometry={geometry}
-        state={state}
-      />
-    </Box>
+    <Root onClick={handleClickSeat}>
+      <TransformWrapper
+        initialScale={1}
+        centerOnInit
+        limitToBounds
+        minScale={0.3}
+        maxScale={7}
+        wheel={{ step: 0.08 }}
+        panning={{ velocityDisabled: true }}
+        doubleClick={{ disabled: true }}
+      >
+        <TransformComponent
+          wrapperStyle={{
+            width: '100%',
+            height: '100%',
+            touchAction: 'none',
+          }}
+          contentStyle={{
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <SeatMapSvg
+            selectedSeatIds={selectedSeatIdSet}
+            geometry={geometry}
+            state={state}
+          />
+        </TransformComponent>
+
+        <ZoomButtons />
+      </TransformWrapper>
+    </Root>
   );
 };
 

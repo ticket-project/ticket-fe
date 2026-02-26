@@ -1,4 +1,38 @@
-import { Box, styled } from '@mui/material';
+import { Box, IconButton, styled } from '@mui/material';
+
+export const Root = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  height: '100%',
+  minHeight: 0,
+  width: '100%',
+  overflow: 'hidden',
+  backgroundColor: '#eeeff3',
+  touchAction: 'none',
+}));
+
+export const ZoomControls = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  bottom: '2rem',
+  right: '2rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1px',
+  overflow: 'hidden',
+  borderRadius: '.8rem',
+  boxShadow: '0 .2rem .8rem 0 rgba(0, 0, 0, .1)',
+}));
+
+export const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  backgroundColor: 'white',
+  borderRadius: 0,
+  '&:hover': {
+    backgroundColor: 'white',
+  },
+  svg: {
+    fontSize: '3.2rem',
+    color: 'gray.900',
+  },
+}));
 
 export const SvgContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -18,10 +52,10 @@ export const SvgContainer = styled(Box)(({ theme }) => ({
       stroke: '#7969e6',
     },
     '&.is-selected': {
-      transform: 'scale(1.1)',
+      transform: 'scale(1.12)',
       fill: '#7969e6',
       stroke: '#afa5f0',
-      strokeWidth: 1,
+      strokeWidth: 0.7,
     },
 
     '&.is-unavailable': {
@@ -29,7 +63,7 @@ export const SvgContainer = styled(Box)(({ theme }) => ({
       fill: '#eeeff3',
       stroke: '#eeeff3',
     },
-    strokeWidth: 0.7,
+    strokeWidth: 0.6,
     transformBox: 'fill-box',
     transformOrigin: 'center',
   },
