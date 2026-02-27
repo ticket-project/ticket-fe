@@ -34,13 +34,23 @@ export const queryKeys = {
       [...queryKeys.show.all, 'like', String(showId)] as const,
 
     likes: (size: number) => [...queryKeys.show.all, 'likes', size] as const,
+
+    seatGrades: (performanceId: string | number) =>
+      [...queryKeys.show.all, 'seatGrades', String(performanceId)] as const,
   },
 
   booking: {
     all: ['booking'] as const,
-    seatGrades: (performanceId: string | number) =>
-      [...queryKeys.booking.all, 'seatGrades', String(performanceId)] as const,
+    show: (performanceId: string | number) =>
+      [...queryKeys.booking.all, 'show', String(performanceId)] as const,
+
+    summary: (performanceId: string | number) =>
+      [...queryKeys.booking.all, 'summary', String(performanceId)] as const,
+
     seatMap: (performanceId: string | number) =>
       [...queryKeys.booking.all, 'seatMap', String(performanceId)] as const,
+
+    seatState: (performanceId: string | number) =>
+      [...queryKeys.booking.all, 'seatState', String(performanceId)] as const,
   },
 } as const;

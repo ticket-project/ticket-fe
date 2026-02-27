@@ -10,7 +10,11 @@ import SeatMap from '@/features/booking/components/SeatMap';
 import TopInfoBar from '@/features/booking/components/TopInfoBar';
 import { useBookingStore } from '@/store/bookingStore';
 
-import { useSeatMap } from '../../hooks/useSeatQueries';
+import {
+  usePerformanceSummary,
+  useSeatMap,
+  useSeatState,
+} from '../../hooks/useSeatQueries';
 
 interface SeatPageClientProps {
   performanceId: string;
@@ -18,7 +22,11 @@ interface SeatPageClientProps {
 
 const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
   const setPerformance = useBookingStore((state) => state.setPerformance);
+
+  // 프리페치로 바꾸나??
   const seatMap = useSeatMap(performanceId);
+  const seatState = useSeatState(performanceId);
+  const performanceSummary = usePerformanceSummary(performanceId);
 
   useEffect(() => {
     setPerformance(performanceId);
@@ -33,7 +41,15 @@ const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
         gridTemplateRows: '60px minmax(0,1fr)',
       }}
     >
-      <TopInfoBar />
+      <QueryBoundary
+        query={performanceSummary}
+        isEmpty={(data) => !data?.performanceId}
+        errorMessage="공연 정보를 불러오는데 실패했습니다."
+        emptyTitle="공연 정보 없음"
+        emptyDescription="공연 정보가 등록되지 않았습니다."
+      >
+        {(item) => <TopInfoBar item={item} />}
+      </QueryBoundary>
       <Box
         sx={{
           height: '100%',
@@ -44,14 +60,17 @@ const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
       >
         <QueryBoundary
           query={seatMap}
-          isEmpty={(data) => !data?.geometry}
+          isEmpty={(data) => !data?.seats}
           errorMessage="좌석 정보를 불러오는데 실패했습니다."
           emptyTitle="좌석 정보 없음"
           emptyDescription="좌석 정보가 등록되지 않았습니다."
         >
           {(item) => <SeatMap item={item} />}
         </QueryBoundary>
-        <BookingSidebar />
+        <BookingSidebar
+          seats={seatMap.data?.seats}
+          seatState={seatState.data}
+        />
       </Box>
     </Box>
   );

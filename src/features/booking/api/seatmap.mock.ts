@@ -1,4 +1,4 @@
-import { SeatGradeCode, SeatMapData, SeatMapGeometry } from '../types';
+import { SeatGrade, SeatMap, ViewBox } from '../types';
 
 type SectionLayout = {
   id: string;
@@ -14,12 +14,8 @@ const SEAT_H = 4.8;
 const GAP_X = 2.5;
 const GAP_Y = 2.5;
 
-// 상태 비율 (누적 확률)
-const SOLD_RATE = 0.08;
-const HELD_BY_OTHER_RATE = 0.13;
-
 //  뷰박스
-const BASE_VIEW_BOX: SeatMapGeometry['viewBox'] = [0, 0, 500, 356];
+const BASE_VIEW_BOX: ViewBox = [0, 0, 500, 356];
 
 // 섹션 레이아웃
 const SECTION_LAYOUTS: SectionLayout[] = [
@@ -33,32 +29,21 @@ const SECTION_LAYOUTS: SectionLayout[] = [
 
 const getRowLabel = (row: number) => String.fromCharCode(97 + row);
 
-// 랜덤 상태 결정
-const randomStatus = () => {
-  const rand = Math.random();
-
-  if (rand < SOLD_RATE) {
-    return 'SOLD';
-  }
-  if (rand < HELD_BY_OTHER_RATE) {
-    return 'HELD_BY_OTHER';
-  }
-  return 'AVAILABLE';
-};
-
 // 좌석 등급 결정
-const getSeatGrade = (sectionId: string): SeatGradeCode => {
-  if (sectionId === '가' || sectionId === '다') return 'S';
-  if (sectionId === '나') return 'VIP';
-  if (sectionId === '마') return 'A';
-  if (sectionId === '라' || sectionId === '바') return 'R';
+const getSeatGradeId = (sectionId: string): SeatGrade => {
+  if (sectionId === '가' || sectionId === '다')
+    return { id: 'R', name: 'R', price: 10000 };
+  if (sectionId === '나') return { id: 'VIP', name: 'VIP', price: 20000 };
+  if (sectionId === '마') return { id: 'A', name: 'A', price: 30000 };
+  if (sectionId === '라' || sectionId === '바')
+    return { id: 'S', name: 'S', price: 40000 };
 
-  return 'R';
+  return { id: 'R', name: 'R', price: 10000 };
 };
 
-// 목업 데이터 생성 (모듈 로드 시 1회만 실행)
-export const makeMock = (): SeatMapData => {
-  const seats: SeatMapData['geometry']['seats'] = [];
+// 좌석 배치도(geometry) 목업 생성
+export const makeSeatMapMock = (performanceId = '1'): SeatMap => {
+  const seats: SeatMap['seats'] = [];
 
   for (const section of SECTION_LAYOUTS) {
     for (let row = 0; row < section.rows; row += 1) {
@@ -69,10 +54,10 @@ export const makeMock = (): SeatMapData => {
 
         seats.push({
           id,
+          grade: getSeatGradeId(section.id),
           section: section.id,
-          gradeCode: getSeatGrade(section.id),
           row: rowLabel,
-          column: colLabel,
+          col: colLabel,
           x: section.startX + col * (SEAT_W + GAP_X),
           y: section.startY + row * (SEAT_H + GAP_Y),
           w: SEAT_W,
@@ -82,12 +67,12 @@ export const makeMock = (): SeatMapData => {
     }
   }
 
-  const state: SeatMapData['state'] = Object.fromEntries(
-    seats.map((seat) => [seat.id, { id: seat.id, status: randomStatus() }])
-  );
-
   return {
-    geometry: { viewBox: BASE_VIEW_BOX, seats },
-    state,
+    performanceId,
+    seats,
+    viewBox: BASE_VIEW_BOX,
   };
 };
+
+// 기존 사용처 호환용
+export const makeMock = makeSeatMapMock;

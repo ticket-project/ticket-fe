@@ -1,19 +1,69 @@
-import { SeatMapData } from '../types';
-import { makeMock } from './seatmap.mock';
+import { SeatMap } from '../types';
+import { PerformanceSummary } from '../types';
+import { makePerformanceSummaryMock } from './performanceSummary.mock';
+import { makeSeatMapMock } from './seatmap.mock';
+import { makeSeatStateMock } from './seatState.mock';
 
-/** 개발용 네트워크 지연 시뮬레이터 (ms 단위) */
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const getSeatMap = async (
+export const getPerformanceSummary = async (
   performanceId: string
-): Promise<SeatMapData> => {
-  // TODO: 실제 API 붙일 때:
-  // return apiClient.get(`/performances/${performanceId}/seatmap`).then(res => res.data);
-  if (!performanceId) {
-    throw new Error('performanceId가 필요합니다.');
-  }
-
-  // await delay(1000); // 1초 지연 (개발용)
-
-  return makeMock();
+): Promise<PerformanceSummary> => {
+  // const res = await fetchApi<ApiResponse<ShowInfo>>(`/api/v1/shows/${showId}`);
+  // if (!res?.data) {
+  //   throw new Error('공연 정보를 불러오지 못했습니다.');
+  // }
+  return makePerformanceSummaryMock(performanceId);
 };
+
+export const getSeatMap = async (performanceId: string): Promise<SeatMap> => {
+  // const res = await fetchApi<ApiResponse<SeatMapData>>(
+  //   `/api/v1/shows/${showId}/seatmap`
+  // );
+
+  // if (!res?.data) {
+  //   throw new Error('좌석 배치도를 불러오지 못했습니다.');
+  // }
+
+  // return res.data;
+
+  return makeSeatMapMock(performanceId);
+};
+
+export const getSeatState = async (performanceId: string, since?: string) => {
+  // const qs = since ? `?since=${encodeURIComponent(since)}` : '';
+
+  // const res = await fetchApi<ApiResponse<{}>>(
+  //   `/api/v1/shows/${showId}/seats/state${qs}`
+  // );
+
+  return makeSeatStateMock(performanceId);
+};
+
+// export const holdSeats = async (showId: string, seatIds: string[]) => {
+//   const res = await fetchApi<ApiResponse<{}>>(`/api/v1/shows/${showId}/holds`, {
+//     method: 'POST',
+//     body: JSON.stringify({ seatIds }),
+//   });
+
+//   return res?.data;
+// };
+
+// export const releaseSeats = async (showId: string, seatIds: string[]) => {
+//   const res = await fetchApi<ApiResponse<{}>>(`/api/v1/shows/${showId}/holds`, {
+//     method: 'DELETE',
+//     body: JSON.stringify({ seatIds }),
+//   });
+
+//   return res?.data;
+// };
+
+// export const extendHolds = async (showId: string, seatIds?: string[]) => {
+//   const res = await fetchApi<ApiResponse<{}>>(
+//     `/api/v1/shows/${showId}/holds/extend`,
+//     {
+//       method: 'POST',
+//       body: JSON.stringify({ seatIds }),
+//     }
+//   );
+
+//   return res?.data;
+// };

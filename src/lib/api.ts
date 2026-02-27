@@ -20,6 +20,12 @@
 
 import { API_BASE_URL } from './env';
 
+export type ApiResponse<T> = {
+  result: string;
+  data: T;
+  error: unknown | null;
+};
+
 type ApiMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 type FetchApiOptions = {

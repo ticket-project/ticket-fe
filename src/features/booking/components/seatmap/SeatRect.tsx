@@ -4,15 +4,15 @@ import { getIconRect } from '../../utils';
 
 interface SeatRectProps {
   seat: SeatGeometry;
-  status: SeatStatus;
+  // status: SeatStatus;
   isSelected: boolean;
 }
 
-const SeatRect = ({ seat, status, isSelected }: SeatRectProps) => {
-  const isAvailable = status === 'AVAILABLE';
+const SeatRect = ({ seat, isSelected }: SeatRectProps) => {
+  // const isAvailable = status === 'AVAILABLE';
   const className = [
     'seat',
-    isAvailable ? 'is-available' : 'is-unavailable',
+    // isAvailable ? 'is-available' : 'is-unavailable',
     isSelected && 'is-selected',
   ]
     .filter(Boolean)

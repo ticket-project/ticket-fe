@@ -1,106 +1,29 @@
+import { useMemo } from 'react';
+
 import { Clear } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 
 import { useBookingStore } from '@/store/bookingStore';
 
+import { SeatGeometry, SeatMap } from '../types';
 import { formatKRW } from '../utils';
 
-const BookingSidebar = () => {
+interface BookingSidebarProps {
+  seats?: SeatMap['seats'];
+  // seatStateMap?: Record<string, SeatState>;
+}
+
+const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
   const { selectedSeatIds, toggleSeatSelection, resetSeatSelection } =
     useBookingStore();
 
-  const testData = [
-    {
-      id: '나-a1',
-      gradeCode: 'VIP',
-      floor: 1,
-      section: '가',
-      row: 'A',
-      col: 1,
-      price: 100000,
-    },
-    {
-      id: '나-a2',
-      gradeCode: 'VIP',
-      floor: 1,
-      section: '가',
-      row: 'A',
-      col: 2,
-      price: 100000,
-    },
-    {
-      id: '나-a3',
-      gradeCode: 'VIP',
-      floor: 1,
-      section: '가',
-      row: 'A',
-      col: 3,
-      price: 100000,
-    },
-    {
-      id: '가-a4',
-      gradeCode: 'R',
-      floor: 1,
-      section: '가',
-      row: 'S',
-      col: 4,
-      price: 100000,
-    },
-    {
-      id: '가-a5',
-      gradeCode: 'R',
-      floor: 1,
-      section: '가',
-      row: 'S',
-      col: 5,
-      price: 100000,
-    },
-    {
-      id: '다-a6',
-      gradeCode: 'R',
-      floor: 1,
-      section: '가',
-      row: 'S',
-      col: 6,
-      price: 100000,
-    },
-    {
-      id: '다-a7',
-      gradeCode: 'VIP',
-      floor: 1,
-      section: '가',
-      row: 'S',
-      col: 7,
-      price: 100000,
-    },
-    {
-      id: '라-a8',
-      gradeCode: 'VIP',
-      floor: 2,
-      section: '가',
-      row: 'R',
-      col: 8,
-      price: 100000,
-    },
-    {
-      id: '라-a9',
-      gradeCode: 'VIP',
-      floor: 2,
-      section: '가',
-      row: 'R',
-      col: 9,
-      price: 100000,
-    },
-    {
-      id: '마-a10',
-      gradeCode: 'VIP',
-      floor: 2,
-      section: '가',
-      row: 'A',
-      col: 10,
-      price: 100000,
-    },
-  ];
+  const selectedSeats = useMemo(() => {
+    const seatMap = new Map(seats.map((seat) => [seat.id, seat]));
+
+    return selectedSeatIds
+      .map((id) => seatMap.get(id))
+      .filter((seat): seat is SeatGeometry => Boolean(seat));
+  }, [seats, selectedSeatIds]);
 
   return (
     <Box
@@ -145,13 +68,29 @@ const BookingSidebar = () => {
         </Button>
       </Box>
       <Box sx={{ flex: 1, minHeight: 0, px: '2rem', overflowY: 'auto' }}>
-        <Box>
-          {testData.map((seat) => (
+        {selectedSeats.length === 0 ? (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+            }}
+          >
+            <Typography
+              sx={{ fontSize: '2rem', fontWeight: 500, color: 'grey.400' }}
+            >
+              선택한 좌석이 없습니다.
+            </Typography>
+          </Box>
+        ) : (
+          selectedSeats.map((seat) => (
             <Box
               key={seat.id}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                borderTop: '1px solid #e0e0e0',
               }}
             >
               <Stack
@@ -165,17 +104,16 @@ const BookingSidebar = () => {
               >
                 <Box>
                   <Typography sx={{ fontSize: '1.7rem', fontWeight: 800 }}>
-                    {seat.gradeCode}석
+                    {seat.grade.name}석
                   </Typography>
                   <Box sx={{ mt: '.1rem', color: 'grey.600' }}>
                     <Typography sx={{ fontSize: '1.6rem' }}>
-                      {seat.floor}층 {seat.section}구역 {seat.row}열 {seat.col}
-                      번
+                      1층 {seat.section}구역 {seat.row}열 {seat.col}번
                     </Typography>
                   </Box>
                 </Box>
                 <Typography sx={{ fontSize: '2rem', fontWeight: 800 }}>
-                  {formatKRW(seat.price)}
+                  {formatKRW(seat.grade.price)}
                 </Typography>
               </Stack>
               <IconButton
@@ -190,9 +128,8 @@ const BookingSidebar = () => {
                 <Clear sx={{ fontSize: '2rem', color: 'grey.400' }} />
               </IconButton>
             </Box>
-          ))}
-        </Box>
-        {/* <Typography>선택한 좌석이 없습니다.</Typography> */}
+          ))
+        )}
       </Box>
       <Box sx={{ py: '3.6rem', px: '2rem' }}>
         <Button

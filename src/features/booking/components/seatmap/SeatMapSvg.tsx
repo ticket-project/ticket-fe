@@ -1,19 +1,19 @@
 import { Box } from '@mui/material';
 
-import { SeatMapGeometry, SeatMapState } from '../../types';
+import { SeatMap } from '../../types';
 
 import SeatRect from './SeatRect';
 
 import { SvgContainer } from './Seat.styles';
 
 interface SeatMapSvgProps {
-  geometry: SeatMapGeometry;
-  state: SeatMapState;
+  data: SeatMap;
+  // state: SeatMapState;
   selectedSeatIds: Set<string>;
 }
 
-const SeatMapSvg = ({ geometry, state, selectedSeatIds }: SeatMapSvgProps) => {
-  const [minX, minY, vbW, vbH] = geometry.viewBox;
+const SeatMapSvg = ({ data, state, selectedSeatIds }: SeatMapSvgProps) => {
+  const [minX, minY, vbW, vbH] = data.viewBox;
 
   return (
     <SvgContainer>
@@ -33,12 +33,12 @@ const SeatMapSvg = ({ geometry, state, selectedSeatIds }: SeatMapSvgProps) => {
           pointerEvents="none"
         />
         <g>
-          {geometry.seats.map((seat) => {
+          {data.seats.map((seat) => {
             return (
               <SeatRect
                 key={seat.id}
                 seat={seat}
-                status={state[seat.id]?.status ?? 'AVAILABLE'}
+                // status={state[seat.id]?.status ?? 'AVAILABLE'}
                 isSelected={selectedSeatIds.has(seat.id)}
               />
             );

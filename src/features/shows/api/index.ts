@@ -1,4 +1,4 @@
-import { fetchApi } from '@/lib/api';
+import { ApiResponse, fetchApi } from '@/lib/api';
 
 import {
   ShowBase,
@@ -12,12 +12,6 @@ import {
   Genre,
   SeatGrade,
 } from '../types';
-
-type ApiResponse<T> = {
-  result: string;
-  data: T;
-  error: unknown | null;
-};
 
 // 최신 공연
 export const getLatestShows = async (): Promise<ShowCarouselItem[]> => {
@@ -197,10 +191,10 @@ export const getMyLikedShows = async (
 
 // 회차 잔여석
 export const getSeatGrades = async (
-  performanceId: string | number
+  showId: string | number
 ): Promise<SeatGrade[]> => {
   const res = await fetchApi<ApiResponse<{ grades: SeatGrade[] }>>(
-    `/api/v1/performances/${performanceId}/seats/availability`
+    `/api/v1/performances/${showId}/seats/availability`
   );
 
   return res?.data?.grades ?? [];
