@@ -10,3 +10,6 @@ export const getIconRect = (seat: SeatGeometry, scale = 0.5) => {
     height: h,
   };
 };
+
+export const formatKRW = (price: number) =>
+  `${price.toLocaleString('ko-KR')}원`;

@@ -15,11 +15,7 @@ interface SeatMapProps {
 }
 
 const SeatMap = ({ item }: SeatMapProps) => {
-  const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
-  const toggleSeatSelection = useBookingStore(
-    (state) => state.toggleSeatSelection
-  );
-
+  const { selectedSeatIds, toggleSeatSelection } = useBookingStore();
   const { geometry, state } = item;
 
   const selectedSeatIdSet = useMemo(

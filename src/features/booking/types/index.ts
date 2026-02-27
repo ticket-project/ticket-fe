@@ -5,14 +5,16 @@ export type SeatStatus =
   | 'HELD_BY_OTHER'
   | 'DISABLED';
 
+export type SeatGradeCode = 'VIP' | 'R' | 'S' | 'A';
+
 export interface SeatGeometry {
   id: string;
-  gradeId?: string;
-  h: number;
-  label: string;
+  gradeCode: SeatGradeCode;
+  section: string;
   row: string;
-  sectionId: string;
+  column: number;
   w: number;
+  h: number;
   x: number;
   y: number;
 }

@@ -38,6 +38,7 @@ const SeatRect = ({ seat, status, isSelected }: SeatRectProps) => {
           y={checkIcon.y}
           width={checkIcon.width}
           height={checkIcon.height}
+          style={{ pointerEvents: 'none' }}
         />
       )}
     </>
