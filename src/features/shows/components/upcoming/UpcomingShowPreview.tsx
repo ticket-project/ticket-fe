@@ -1,15 +1,20 @@
 import { UpcomingShowItem } from '../../types';
 
+import { CategorySlug } from '../../constants/categories';
 import ShowCard from '../list/ShowCard';
 import UpcomingShowMoreButton from './UpcomingShowMoreButton';
 
 import { UpcomingShowPreviewList } from './UpcomingShowPreview.styles';
 
 interface UpcomingShowPreviewProps {
+  categorySlug: CategorySlug;
   items: UpcomingShowItem[];
 }
 
-const UpcomingShowPreview = ({ items }: UpcomingShowPreviewProps) => {
+const UpcomingShowPreview = ({
+  items,
+  categorySlug,
+}: UpcomingShowPreviewProps) => {
   return (
     <>
       <UpcomingShowPreviewList
@@ -19,10 +24,15 @@ const UpcomingShowPreview = ({ items }: UpcomingShowPreviewProps) => {
         aria-label="오픈 예정 공연 목록"
       >
         {items.map((item) => (
-          <ShowCard key={item.id} item={item} variant="upcoming" />
+          <ShowCard
+            key={item.id}
+            item={item}
+            variant="upcoming"
+            categorySlug={categorySlug}
+          />
         ))}
       </UpcomingShowPreviewList>
-      <UpcomingShowMoreButton />
+      <UpcomingShowMoreButton categorySlug={categorySlug} />
     </>
   );
 };

@@ -1,75 +1,65 @@
-/**
- * @file 공통 API 요청 유틸(fetch 래퍼)
- * @description
- *  - 상대 경로는 API_BASE_URL 기준으로 절대 URL로 변환합니다. (중복 슬래시 방지)
- *  - JSON 요청/응답을 기본으로 처리합니다. (body가 있으면 Content-Type 자동 설정)
- *  - token이 있으면 Authorization: Bearer <token> 헤더를 추가합니다.
- *  - 응답 본문이 비어있는 경우를 고려해 안전하게 JSON 파싱합니다.
- *  - 실패 시(status >= 400) status를 포함한 Error를 throw 합니다.
- *
- * @function fetchApi
- * @template T
- * @param {string} path 요청 경로(상대/절대 URL)
- * @param {FetchApiOptions} [options] fetch 옵션(메서드/헤더/body/token 등)
- * @returns {Promise<T | null>} JSON 응답(본문이 없으면 null)
- * @throws {Error & { status: number }} 요청 실패 시(status 포함)
- *
- * @example
- * const data = await fetchApi<User>('/api/v1/users/me', { token });
- */
+import { FetchApiOptions, QueryParamValue } from '@/types/api';
 
 import { API_BASE_URL } from './env';
 
-const ACCESS_TOKEN_STORAGE_KEY = 'accessToken';
+const ACCESS_TOKEN_KEY = 'accessToken';
 const AUTH_UNAUTHORIZED_EVENT = 'auth:unauthorized';
 
-export type ApiResponse<T> = {
-  result: string;
-  data: T;
-  error: unknown | null;
-};
+// path와 query params를 조합해 최종 URL을 반환
+const buildUrl = (
+  path: string,
+  params?: Record<string, QueryParamValue>
+): string => {
+  const base = path.startsWith('http')
+    ? path
+    : API_BASE_URL
+      ? `${API_BASE_URL.replace(/\/$/, '')}/${path.replace(/^\//, '')}`
+      : path;
 
-type ApiMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  if (!params) return base;
 
-type FetchApiOptions = {
-  body?: unknown;
-  credentials?: RequestCredentials;
-  headers?: HeadersInit;
-  method?: ApiMethod;
-  token?: string | null;
-};
+  const [pathname, existingQuery = ''] = base.split('?');
+  const searchParams = new URLSearchParams(existingQuery);
 
-const withBaseUrl = (path: string) => {
-  if (path.startsWith('http://') || path.startsWith('https://')) {
-    return path;
+  for (const [key, value] of Object.entries(params)) {
+    if (value == null) continue;
+
+    if (Array.isArray(value)) {
+      value.forEach((v) => searchParams.append(key, String(v)));
+    } else {
+      searchParams.set(key, String(value));
+    }
   }
-  if (!API_BASE_URL) {
-    return path;
-  }
 
-  // 슬래시 중복 방지 - base 끝, path 앞 슬래시 제거
-  return `${API_BASE_URL.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+  const qs = searchParams.toString();
+  return qs ? `${pathname}?${qs}` : pathname;
 };
 
+// response body를 JSON으로 파싱
 const safeParseJson = async <T>(response: Response): Promise<T | null> => {
   const text = await response.text();
-
-  if (!text) {
-    return null;
-  }
-
+  if (!text) return null;
   return JSON.parse(text) as T;
 };
 
+// 인증되지 않은 상태일 때 localStorage에서 토큰 제거하고 이벤트 발생
+const handleUnauthorized = (): void => {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  window.dispatchEvent(new Event(AUTH_UNAUTHORIZED_EVENT));
+};
+
+// 공통 fetch 래퍼. 헤더 설정, 에러 처리, 401 감지를 담당
 export const fetchApi = async <T>(
   path: string,
   options: FetchApiOptions = {}
-) => {
+): Promise<T | null> => {
   const {
     body,
     credentials = 'include',
     headers,
     method = 'GET',
+    params,
     token,
   } = options;
 
@@ -85,7 +75,7 @@ export const fetchApi = async <T>(
     requestHeaders.set('Authorization', `Bearer ${token}`);
   }
 
-  const response = await fetch(withBaseUrl(path), {
+  const response = await fetch(buildUrl(path, params), {
     method,
     credentials,
     headers: requestHeaders,
@@ -95,17 +85,16 @@ export const fetchApi = async <T>(
   const data = await safeParseJson<T>(response).catch(() => null);
 
   if (!response.ok) {
-    if (response.status === 401 && token && typeof window !== 'undefined') {
-      localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
-      window.dispatchEvent(new Event(AUTH_UNAUTHORIZED_EVENT));
+    if (response.status === 401 && token) {
+      handleUnauthorized();
     }
 
     const message =
       (data as { message?: string } | null)?.message ??
       'API 요청에 실패했습니다.';
-    const error = new Error(message) as Error & { status: number };
-    error.status = response.status;
-
+    const error = Object.assign(new Error(message), {
+      status: response.status,
+    });
     throw error;
   }
 

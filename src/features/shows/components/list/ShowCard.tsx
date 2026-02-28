@@ -8,6 +8,7 @@ import { ShowBase, UpcomingShowItem } from '../../types';
 import Tag from '@/components/ui/Tag';
 
 import { SALE_TYPES } from '../../constants';
+import { CategorySlug } from '../../constants/categories';
 import { getOpenDateLabel } from '../../utils';
 
 import {
@@ -22,6 +23,7 @@ import {
 } from './ShowCardList.styles';
 
 interface ShowCardProps {
+  categorySlug: CategorySlug;
   item: ShowBase | UpcomingShowItem;
   variant?: 'upcoming' | 'all';
 }
@@ -30,7 +32,7 @@ const isShowBase = (item: ShowBase | UpcomingShowItem): item is ShowBase => {
   return 'startDate' in item && 'endDate' in item;
 };
 
-const ShowCard = ({ item, variant = 'all' }: ShowCardProps) => {
+const ShowCard = ({ item, categorySlug, variant = 'all' }: ShowCardProps) => {
   const isExclusive = item.saleType === 'EXCLUSIVE';
   const isUpcoming = variant === 'upcoming';
 
@@ -38,7 +40,7 @@ const ShowCard = ({ item, variant = 'all' }: ShowCardProps) => {
     <>
       <ShowCardWrapper as="li" elevation={0}>
         <ShowCardLinkArea
-          {...{ component: Link, href: `/concert/${item.id}` }}
+          {...{ component: Link, href: `/${categorySlug}/${item.id}` }}
           variant={variant}
         >
           <PosterBox>

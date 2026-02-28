@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { ShowCarouselItem } from '../../types';
 
+import { CategorySlug } from '../../constants/categories';
+
 import {
   Root,
   StyledCardActionArea,
@@ -14,6 +16,7 @@ import {
 } from './LatestShowsCarousel.styles';
 
 interface LatestShowsCarouselSlideProps {
+  categorySlug: CategorySlug;
   idx: number;
   item: ShowCarouselItem;
   total: number;
@@ -26,6 +29,7 @@ const LatestShowsCarouselSlide = ({
   idx,
   item,
   total,
+  categorySlug,
 }: LatestShowsCarouselSlideProps) => {
   const badge = pickBadge(item.id ?? idx);
 
@@ -39,7 +43,7 @@ const LatestShowsCarouselSlide = ({
       <StyledCardActionArea
         {...{
           component: Link,
-          href: `/concert/${item.id}`,
+          href: `/${categorySlug}/${item.id}`,
         }}
         aria-label={`${item.title} 상세로 이동`}
       >

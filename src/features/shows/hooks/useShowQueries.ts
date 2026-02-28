@@ -14,6 +14,7 @@ import {
   getUpcomingShowsPreview,
 } from '../api';
 import { PAGE_SIZE } from '../constants';
+import { CategoryCode } from '../constants/categories';
 import { ShowsFilterState, UpcomingShowsFilterState } from '../types';
 
 export const SHOW_QUERY_CONFIG = {
@@ -21,39 +22,43 @@ export const SHOW_QUERY_CONFIG = {
   gcTime: 1000 * 60 * 10,
 } as const;
 
-export const useLatestShows = () => {
+export const useLatestShows = (category: CategoryCode) => {
   return useQuery({
-    queryKey: queryKeys.show.latest(),
-    queryFn: getLatestShows,
+    queryKey: queryKeys.show.latest(category),
+    queryFn: () => getLatestShows(category),
     ...SHOW_QUERY_CONFIG,
   });
 };
 
-export const useUpcomingShowsPreview = () => {
+export const useUpcomingShowsPreview = (category: CategoryCode) => {
   return useQuery({
-    queryKey: queryKeys.show.upcomingPreview(),
-    queryFn: getUpcomingShowsPreview,
+    queryKey: queryKeys.show.upcomingPreview(category),
+    queryFn: () => getUpcomingShowsPreview(category),
     ...SHOW_QUERY_CONFIG,
   });
 };
 
-export const useShowGenres = (category: string) => {
+export const useShowGenres = (category: CategoryCode, enabled = true) => {
   return useQuery({
     queryKey: queryKeys.show.genres(category),
     queryFn: () => getGenres(category),
     select: (data) =>
       data.map((genre) => ({ label: genre.name, value: genre.code })),
+    enabled,
     ...SHOW_QUERY_CONFIG,
   });
 };
 
-export const useUpcomingShowsInfinite = (filters: UpcomingShowsFilterState) => {
+export const useUpcomingShowsInfinite = (
+  category: CategoryCode,
+  filters: UpcomingShowsFilterState
+) => {
   return useInfiniteQuery({
-    queryKey: queryKeys.show.upcomingList(filters),
+    queryKey: queryKeys.show.upcomingList(category, filters),
     queryFn: ({ pageParam }: { pageParam: string | null }) =>
       getUpcomingShowsPage({
         cursor: pageParam,
-        category: 'CONCERT',
+        category,
         size: PAGE_SIZE,
         ...filters,
       }),
@@ -64,13 +69,16 @@ export const useUpcomingShowsInfinite = (filters: UpcomingShowsFilterState) => {
   });
 };
 
-export const useShowsInfinite = (filters: ShowsFilterState) => {
+export const useShowsInfinite = (
+  category: CategoryCode,
+  filters: ShowsFilterState
+) => {
   return useInfiniteQuery({
-    queryKey: queryKeys.show.list(filters),
+    queryKey: queryKeys.show.list(category, filters),
     queryFn: ({ pageParam }: { pageParam: string | null }) =>
       getShowsPage({
         cursor: pageParam,
-        category: 'CONCERT',
+        category,
         size: PAGE_SIZE,
         ...filters,
       }),

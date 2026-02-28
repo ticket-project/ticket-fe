@@ -23,7 +23,11 @@ const GnbNav = ({ pathname }: GnbNavProps) => {
           <NavItem key={item.name}>
             <NavButton
               href={item.href}
-              aria-current={pathname === item.href ? 'page' : undefined}
+              aria-current={
+                pathname === item.href || pathname.startsWith(`${item.href}/`)
+                  ? 'page'
+                  : undefined
+              }
             >
               {item.name}
             </NavButton>

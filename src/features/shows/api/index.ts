@@ -1,4 +1,5 @@
-import { ApiResponse, fetchApi } from '@/lib/api';
+import { fetchApi } from '@/lib/api';
+import { ApiResponse } from '@/types/api';
 
 import {
   ShowBase,
@@ -14,20 +15,24 @@ import {
 } from '../types';
 
 // 최신 공연
-export const getLatestShows = async (): Promise<ShowCarouselItem[]> => {
+export const getLatestShows = async (
+  category?: string
+): Promise<ShowCarouselItem[]> => {
   const res = await fetchApi<ApiResponse<{ shows: ShowCarouselItem[] }>>(
-    '/api/v1/shows/latest'
+    '/api/v1/shows/latest',
+    { params: { category } }
   );
-
   return res?.data.shows ?? [];
 };
 
 // 오픈예정 공연
-export const getUpcomingShowsPreview = async (): Promise<
-  UpcomingShowItem[]
-> => {
+
+export const getUpcomingShowsPreview = async (
+  category?: string
+): Promise<UpcomingShowItem[]> => {
   const res = await fetchApi<ApiResponse<{ shows: UpcomingShowItem[] }>>(
-    '/api/v1/shows/sale-opening-soon'
+    '/api/v1/shows/sale-opening-soon',
+    { params: { category } }
   );
 
   return res?.data.shows ?? [];
@@ -37,18 +42,17 @@ export const getUpcomingShowsPreview = async (): Promise<
 export const getUpcomingShowsPage = async (
   params: GetShowsPageParams
 ): Promise<PaginatedResponse<UpcomingShowItem>> => {
-  const searchParams = new URLSearchParams();
-  if (params.category) searchParams.set('category', params.category);
-  if (params.region && params.region !== 'ALL')
-    searchParams.set('region', params.region);
-  if (params.cursor) searchParams.set('cursor', params.cursor);
-  if (params.size) searchParams.set('size', params.size.toString());
-  if (params.sort) searchParams.set('sort', params.sort);
-
-  const queryString = searchParams.toString();
-
   const res = await fetchApi<ApiResponse<PaginatedResponse<UpcomingShowItem>>>(
-    `/api/v1/shows/sale-opening-soon/page?${queryString}`
+    '/api/v1/shows/sale-opening-soon/page',
+    {
+      params: {
+        category: params.category,
+        region: params.region !== 'ALL' ? params.region : undefined,
+        cursor: params.cursor ?? undefined,
+        size: params.size,
+        sort: params.sort,
+      },
+    }
   );
 
   if (!res?.data) {
@@ -60,14 +64,9 @@ export const getUpcomingShowsPage = async (
 
 // 공연 장르
 export const getGenres = async (category?: string): Promise<Genre[]> => {
-  const searchParams = new URLSearchParams();
-  if (category) searchParams.set('category', category);
-
-  const queryString = searchParams.toString();
-
-  const res = await fetchApi<ApiResponse<Genre[]>>(
-    `/api/v1/genres?${queryString}`
-  );
+  const res = await fetchApi<ApiResponse<Genre[]>>('/api/v1/genres', {
+    params: { category },
+  });
 
   return res?.data ?? [];
 };
@@ -76,20 +75,18 @@ export const getGenres = async (category?: string): Promise<Genre[]> => {
 export const getShowsPage = async (
   params: GetShowsPageParams
 ): Promise<PaginatedResponse<ShowBase>> => {
-  const searchParams = new URLSearchParams();
-  if (params.category) searchParams.set('category', params.category);
-  if (params.region && params.region !== 'ALL')
-    searchParams.set('region', params.region);
-  if (params.genre && params.genre !== 'ALL')
-    searchParams.set('genre', params.genre);
-  if (params.cursor) searchParams.set('cursor', params.cursor);
-  if (params.size) searchParams.set('size', params.size.toString());
-  if (params.sort) searchParams.set('sort', params.sort);
-
-  const queryString = searchParams.toString();
-
   const res = await fetchApi<ApiResponse<PaginatedResponse<ShowBase>>>(
-    `/api/v1/shows?${queryString}`
+    '/api/v1/shows',
+    {
+      params: {
+        category: params.category,
+        region: params.region !== 'ALL' ? params.region : undefined,
+        genre: params.genre !== 'ALL' ? params.genre : undefined,
+        cursor: params.cursor ?? undefined,
+        size: params.size,
+        sort: params.sort,
+      },
+    }
   );
 
   if (!res?.data) {
@@ -171,13 +168,11 @@ export const getMyLikedShows = async (
   token?: string | null,
   size = 20
 ): Promise<PaginatedResponse<LikedShowItem>> => {
-  const searchParams = new URLSearchParams();
-  searchParams.set('size', size.toString());
-
   const res = await fetchApi<ApiResponse<PaginatedResponse<LikedShowItem>>>(
-    `/api/v1/shows/likes?${searchParams.toString()}`,
+    '/api/v1/shows/likes',
     {
       method: 'GET',
+      params: { size },
       token,
     }
   );

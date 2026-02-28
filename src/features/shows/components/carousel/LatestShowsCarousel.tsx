@@ -13,6 +13,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 import { ShowCarouselItem } from '../../types';
 
+import { CategorySlug } from '../../constants/categories';
 import CarouselNavButton from './CarouselNavButton';
 import LatestShowsCarouselSlide from './LatestShowsCarouselSlide';
 
@@ -21,10 +22,16 @@ import { LatestShowsCarouselContainer } from './LatestShowsCarousel.styles';
 const AUTOPLAY_DELAY = 5000;
 
 interface LatestShowsCarouselProps {
+  categoryLabel: string;
+  categorySlug: CategorySlug;
   items: ShowCarouselItem[];
 }
 
-const LatestShowsCarousel = ({ items }: LatestShowsCarouselProps) => {
+const LatestShowsCarousel = ({
+  items,
+  categorySlug,
+  categoryLabel,
+}: LatestShowsCarouselProps) => {
   const autoplay = useMemo(
     () => Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: true }),
     []
@@ -80,7 +87,7 @@ const LatestShowsCarousel = ({ items }: LatestShowsCarouselProps) => {
       <Box
         ref={emblaRef}
         role="region"
-        aria-label="최신 콘서트 배너"
+        aria-label={`최신 ${categoryLabel} 배너`}
         onKeyDown={handleKeyDown}
         tabIndex={0}
         sx={{ overflow: 'hidden' }}
@@ -92,6 +99,7 @@ const LatestShowsCarousel = ({ items }: LatestShowsCarouselProps) => {
               item={item}
               idx={idx}
               total={items.length}
+              categorySlug={categorySlug}
             />
           ))}
         </LatestShowsCarouselContainer>

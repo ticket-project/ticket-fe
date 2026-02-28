@@ -12,6 +12,7 @@ import {
 } from '../../types';
 
 import { REGION_OPTIONS, SORT_OPTIONS } from '../../constants';
+import { CategoryCode } from '../../constants/categories';
 import { useShowGenres } from '../../hooks/useShowQueries';
 
 import {
@@ -23,6 +24,7 @@ import {
 } from './ShowListFilter.styles';
 
 interface ShowListFilterProps {
+  category: CategoryCode;
   filters: ShowsFilterState | UpcomingShowsFilterState;
   onGenreChange?: (genre: GenreCode) => void;
   onRegionChange?: (region: Region) => void;
@@ -31,13 +33,14 @@ interface ShowListFilterProps {
 }
 
 const ShowListFilter = ({
+  category,
   filters,
   sortType = 'show',
   onGenreChange,
   onRegionChange,
   onSortChange,
 }: ShowListFilterProps) => {
-  const { data: genres } = useShowGenres('CONCERT');
+  const { data: genres } = useShowGenres(category, sortType === 'show');
   const genreOptions = [{ label: '전체', value: 'ALL' }, ...(genres ?? [])];
   const sortOptions = SORT_OPTIONS[sortType];
 

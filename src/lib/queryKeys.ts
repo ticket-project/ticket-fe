@@ -15,17 +15,19 @@ export const queryKeys = {
 
   show: {
     all: ['show'] as const,
-    latest: () => [...queryKeys.show.all, 'latest'] as const,
-    upcomingPreview: () => [...queryKeys.show.all, 'upcomingPreview'] as const,
+    latest: (category: string) =>
+      [...queryKeys.show.all, 'latest', category] as const,
+    upcomingPreview: (category: string) =>
+      [...queryKeys.show.all, 'upcomingPreview', category] as const,
 
-    upcomingList: (filters: UpcomingShowsFilterState) =>
-      [...queryKeys.show.all, 'upcoming', 'list', filters] as const,
+    upcomingList: (category: string, filters: UpcomingShowsFilterState) =>
+      [...queryKeys.show.all, 'upcoming', 'list', category, filters] as const,
 
     genres: (category: string) =>
       [...queryKeys.show.all, 'genres', category] as const,
 
-    list: (filters: ShowsFilterState) =>
-      [...queryKeys.show.all, 'list', filters] as const,
+    list: (category: string, filters: ShowsFilterState) =>
+      [...queryKeys.show.all, 'list', category, filters] as const,
 
     detail: (showId: string | number) =>
       [...queryKeys.show.all, 'detail', String(showId)] as const,
