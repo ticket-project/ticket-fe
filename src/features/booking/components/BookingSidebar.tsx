@@ -5,12 +5,11 @@ import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 
 import { useBookingStore } from '@/store/bookingStore';
 
-import { SeatGeometry, SeatMap } from '../types';
+import { SeatGeometry } from '../types';
 import { formatKRW } from '../utils';
 
 interface BookingSidebarProps {
-  seats?: SeatMap['seats'];
-  // seatStateMap?: Record<string, SeatState>;
+  seats?: SeatGeometry[];
 }
 
 const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {

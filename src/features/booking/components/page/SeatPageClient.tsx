@@ -65,12 +65,9 @@ const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
           emptyTitle="좌석 정보 없음"
           emptyDescription="좌석 정보가 등록되지 않았습니다."
         >
-          {(item) => <SeatMap item={item} />}
+          {(item) => <SeatMap item={item} seatState={seatState.data} />}
         </QueryBoundary>
-        <BookingSidebar
-          seats={seatMap.data?.seats}
-          seatState={seatState.data}
-        />
+        <BookingSidebar seats={seatMap.data?.seats} />
       </Box>
     </Box>
   );

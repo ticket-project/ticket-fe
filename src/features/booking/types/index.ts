@@ -31,7 +31,7 @@ export interface SeatGeometry {
 
 export type ViewBox = [number, number, number, number];
 
-export interface SeatMap {
+export interface PerformanceSeatMap {
   performanceId: string;
   viewBox: ViewBox;
   seats: SeatGeometry[];
@@ -43,7 +43,9 @@ export type SeatStatus =
   | 'SOLD'
   | 'HELD_BY_ME'
   | 'HELD_BY_OTHER'
-  | 'DISABLED';
+  | 'DISABLED'
+  | 'SOFT_HELD_BY_ME'
+  | 'SOFT_HELD_BY_OTHER';
 
 export interface SeatState {
   id: string;

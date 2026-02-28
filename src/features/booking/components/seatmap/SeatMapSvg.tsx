@@ -1,18 +1,16 @@
-import { Box } from '@mui/material';
-
-import { SeatMap } from '../../types';
+import { PerformanceSeatMap, SeatState } from '../../types';
 
 import SeatRect from './SeatRect';
 
 import { SvgContainer } from './Seat.styles';
 
 interface SeatMapSvgProps {
-  data: SeatMap;
-  // state: SeatMapState;
+  data: PerformanceSeatMap;
+  seatState: SeatState[];
   selectedSeatIds: Set<string>;
 }
 
-const SeatMapSvg = ({ data, state, selectedSeatIds }: SeatMapSvgProps) => {
+const SeatMapSvg = ({ data, seatState, selectedSeatIds }: SeatMapSvgProps) => {
   const [minX, minY, vbW, vbH] = data.viewBox;
 
   return (
@@ -38,6 +36,7 @@ const SeatMapSvg = ({ data, state, selectedSeatIds }: SeatMapSvgProps) => {
               <SeatRect
                 key={seat.id}
                 seat={seat}
+                state={seatState[seat.id]?.state ?? 'AVAILABLE'}
                 // status={state[seat.id]?.status ?? 'AVAILABLE'}
                 isSelected={selectedSeatIds.has(seat.id)}
               />

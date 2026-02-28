@@ -1,4 +1,4 @@
-import { SeatGrade, SeatMap, ViewBox } from '../types';
+import { SeatGrade, PerformanceSeatMap, ViewBox } from '../types';
 
 type SectionLayout = {
   id: string;
@@ -42,8 +42,8 @@ const getSeatGradeId = (sectionId: string): SeatGrade => {
 };
 
 // 좌석 배치도(geometry) 목업 생성
-export const makeSeatMapMock = (performanceId = '1'): SeatMap => {
-  const seats: SeatMap['seats'] = [];
+export const makeSeatMapMock = (performanceId = '1'): PerformanceSeatMap => {
+  const seats: PerformanceSeatMap['seats'] = [];
 
   for (const section of SECTION_LAYOUTS) {
     for (let row = 0; row < section.rows; row += 1) {

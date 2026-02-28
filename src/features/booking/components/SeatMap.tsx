@@ -4,17 +4,18 @@ import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 import { useBookingStore } from '@/store/bookingStore';
 
-import { SeatMap } from '../types';
+import { PerformanceSeatMap, SeatState } from '../types';
 import SeatMapSvg from './seatmap/SeatMapSvg';
 import ZoomButtons from './ZoomButtons';
 
 import { Root } from './seatmap/Seat.styles';
 
 interface SeatMapProps {
-  item: SeatMap;
+  item: PerformanceSeatMap;
+  seatState: SeatState[];
 }
 
-const SeatMap = ({ item }: SeatMapProps) => {
+const SeatMap = ({ item, seatState }: SeatMapProps) => {
   const { selectedSeatIds, toggleSeatSelection } = useBookingStore();
 
   const selectedSeatIdSet = useMemo(
@@ -30,8 +31,8 @@ const SeatMap = ({ item }: SeatMapProps) => {
     const seatId = seatEl?.dataset.seatId;
     if (!seatId) return;
 
-    // const status = state[seatId]?.status ?? 'AVAILABLE';
-    // if (status !== 'AVAILABLE') return;
+    const status = seatState[seatId]?.state ?? 'AVAILABLE';
+    if (status !== 'AVAILABLE') return;
 
     toggleSeatSelection(seatId);
   };
@@ -62,7 +63,7 @@ const SeatMap = ({ item }: SeatMapProps) => {
           <SeatMapSvg
             data={item}
             selectedSeatIds={selectedSeatIdSet}
-            // state={state}
+            seatState={seatState}
           />
         </TransformComponent>
         <ZoomButtons />
