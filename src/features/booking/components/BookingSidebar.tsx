@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useMemo } from 'react';
 
 import { Clear } from '@mui/icons-material';
@@ -161,6 +162,8 @@ const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
             </Typography>
           </Box>
           <Button
+            component={Link}
+            href="/onestop/payment"
             fullWidth
             variant="contained"
             disabled={isEmpty}

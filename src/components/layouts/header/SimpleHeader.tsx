@@ -15,7 +15,7 @@ import {
 
 const SimpleHeader = () => {
   const pathname = usePathname();
-  const isSeatPage = pathname.startsWith('/onestop/seat');
+  const isSeatPage = pathname.startsWith('/onestop');
 
   return (
     <Root>
