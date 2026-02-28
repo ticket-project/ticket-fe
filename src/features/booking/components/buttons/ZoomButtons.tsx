@@ -3,7 +3,7 @@ import FitScreen from '@mui/icons-material/FitScreen';
 import Remove from '@mui/icons-material/Remove';
 import { useControls } from 'react-zoom-pan-pinch';
 
-import { StyledIconButton, ZoomControls } from './seatmap/Seat.styles';
+import { StyledIconButton, ZoomControls } from '../seatmap/Seat.styles';
 
 const ZoomButtons = () => {
   const { zoomIn, zoomOut, resetTransform } = useControls();

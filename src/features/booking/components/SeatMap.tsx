@@ -5,8 +5,8 @@ import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useBookingStore } from '@/store/bookingStore';
 
 import { PerformanceSeatMap, SeatState } from '../types';
+import ZoomButtons from './buttons/ZoomButtons';
 import SeatMapSvg from './seatmap/SeatMapSvg';
-import ZoomButtons from './ZoomButtons';
 
 import { Root } from './seatmap/Seat.styles';
 

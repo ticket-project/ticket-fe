@@ -24,6 +24,15 @@ const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
       .filter((seat): seat is SeatGeometry => Boolean(seat));
   }, [seats, selectedSeatIds]);
 
+  const selectedCount = selectedSeats.length;
+
+  const totalPrice = selectedSeats.reduce(
+    (sum, seat) => sum + seat.grade.price,
+    0
+  );
+
+  const isEmpty = selectedCount === 0;
+
   return (
     <Box
       sx={{
@@ -38,7 +47,7 @@ const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          p: '2rem',
+          p: '2.3rem 2rem',
         }}
       >
         <Typography sx={{ fontSize: '2rem', fontWeight: 800, lineHeight: 1 }}>
@@ -53,21 +62,25 @@ const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
               ml: '.8rem',
             }}
           >
-            {selectedSeatIds.length}
+            {!isEmpty && selectedCount}
           </Typography>
         </Typography>
-        <Button
-          onClick={resetSeatSelection}
-          sx={{
-            color: 'grey.500',
-            fontSize: '1.8rem',
-          }}
-        >
-          전체삭제
-        </Button>
+        {!isEmpty && (
+          <Button
+            variant="text"
+            onClick={resetSeatSelection}
+            sx={{
+              color: 'grey.500',
+              fontSize: '1.8rem',
+              lineHeight: 1,
+            }}
+          >
+            전체삭제
+          </Button>
+        )}
       </Box>
       <Box sx={{ flex: 1, minHeight: 0, px: '2rem', overflowY: 'auto' }}>
-        {selectedSeats.length === 0 ? (
+        {isEmpty ? (
           <Box
             sx={{
               display: 'flex',
@@ -130,22 +143,39 @@ const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
           ))
         )}
       </Box>
-      <Box sx={{ py: '3.6rem', px: '2rem' }}>
-        <Button
-          fullWidth
-          variant="contained"
-          size="large"
-          disabled={selectedSeatIds.length === 0}
-          sx={{
-            borderRadius: '1rem',
-            color: 'white',
-            fontSize: '2rem',
-            fontWeight: 800,
-            py: '1.2rem',
-          }}
-        >
-          선택 완료
-        </Button>
+      <Box sx={{ py: '3.2rem', px: '2rem' }}>
+        <Stack direction="row" alignItems="center" spacing="2rem">
+          <Box sx={{ flexShrink: 0 }}>
+            <Typography sx={{ color: 'grey.600', fontSize: '1.6rem' }}>
+              티켓 금액
+            </Typography>
+            <Typography
+              sx={{
+                mt: '.2rem',
+                fontSize: '2rem',
+                fontWeight: 800,
+                lineHeight: 1,
+              }}
+            >
+              {formatKRW(totalPrice)}
+            </Typography>
+          </Box>
+          <Button
+            fullWidth
+            variant="contained"
+            disabled={isEmpty}
+            sx={{
+              borderRadius: '1rem',
+              color: 'white',
+              fontSize: '2rem',
+              fontWeight: 800,
+              py: '1.2rem',
+            }}
+          >
+            {/* {isEmpty ? '좌석 선택하기' : `${selectedCount}매 예매하기`} */}
+            예매하기
+          </Button>
+        </Stack>
       </Box>
     </Box>
   );
