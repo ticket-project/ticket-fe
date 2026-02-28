@@ -12,7 +12,7 @@ import { useAuthStore } from '@/store/authStore';
 import theme from '@/styles/theme';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-  const initializeAuth = useAuthStore((state) => state.initializeAuth);
+  const { initializeAuth, clearAuth } = useAuthStore();
 
   const [queryClient] = useState(
     () =>
@@ -24,6 +24,16 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     initializeAuth();
   }, [initializeAuth]);
+
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      clearAuth();
+    };
+
+    window.addEventListener('auth:unauthorized', handleUnauthorized);
+    return () =>
+      window.removeEventListener('auth:unauthorized', handleUnauthorized);
+  }, [clearAuth]);
 
   return (
     <QueryClientProvider client={queryClient}>

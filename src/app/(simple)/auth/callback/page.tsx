@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingState from '@/components/common/LoadingState';
+import { normalizeAccessToken } from '@/features/auth/utils/tokenStorage';
 import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
@@ -13,10 +14,10 @@ const CallbackPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const { setAccessToken, clearAuth } = useAuthStore();
 
   useEffect(() => {
-    const accessToken = searchParams.get('accessToken');
+    const accessToken = normalizeAccessToken(searchParams.get('accessToken'));
 
     if (accessToken) {
       setAccessToken(accessToken);
@@ -25,8 +26,9 @@ const CallbackPage = () => {
       return;
     }
 
+    clearAuth();
     router.replace('/login');
-  }, [queryClient, router, searchParams, setAccessToken]);
+  }, [clearAuth, queryClient, router, searchParams, setAccessToken]);
 
   return <LoadingState minHeight="100dvh" size={28} />;
 };

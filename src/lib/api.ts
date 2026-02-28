@@ -20,6 +20,9 @@
 
 import { API_BASE_URL } from './env';
 
+const ACCESS_TOKEN_STORAGE_KEY = 'accessToken';
+const AUTH_UNAUTHORIZED_EVENT = 'auth:unauthorized';
+
 export type ApiResponse<T> = {
   result: string;
   data: T;
@@ -92,6 +95,11 @@ export const fetchApi = async <T>(
   const data = await safeParseJson<T>(response).catch(() => null);
 
   if (!response.ok) {
+    if (response.status === 401 && token && typeof window !== 'undefined') {
+      localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+      window.dispatchEvent(new Event(AUTH_UNAUTHORIZED_EVENT));
+    }
+
     const message =
       (data as { message?: string } | null)?.message ??
       'API 요청에 실패했습니다.';
