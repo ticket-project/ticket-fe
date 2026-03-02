@@ -145,12 +145,15 @@ const EmailAuthButton = () => {
 
   return (
     <>
-      <StyledButton
-        startIcon={<MailOutlineRoundedIcon />}
+      <Box
         onClick={handleOpenDialog}
-      >
-        이메일 로그인
-      </StyledButton>
+        sx={{
+          width: '2px',
+          height: '5px',
+          background: 'red',
+          overflow: 'hidden',
+        }}
+      ></Box>
 
       <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
         <DialogTitle>{dialogTitle}</DialogTitle>

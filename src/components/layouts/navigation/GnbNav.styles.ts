@@ -4,7 +4,7 @@ export const Nav = styled('nav')(() => ({
   height: '100%',
 }));
 
-export const NavList = styled(Box)(() => ({
+export const NavList = styled('ul')(() => ({
   display: 'flex',
   alignItems: 'stretch',
   height: '100%',

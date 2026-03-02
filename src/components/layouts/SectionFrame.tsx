@@ -13,6 +13,7 @@ interface SectionFrameProps {
   maxWidth?: ContainerProps['maxWidth'];
   spacing?: number;
   sx?: SxProps<Theme>;
+  containerSx?: SxProps<Theme>;
 }
 
 const SectionFrame = ({
@@ -24,6 +25,7 @@ const SectionFrame = ({
   maxWidth = 'lg',
   spacing = 16,
   sx,
+  containerSx,
 }: SectionFrameProps) => {
   const content = (
     <>
@@ -72,7 +74,9 @@ const SectionFrame = ({
 
   return (
     <Box component="section" sx={{ mb: spacing, ...sx }}>
-      <Container maxWidth={maxWidth}>{content}</Container>
+      <Container maxWidth={maxWidth} sx={containerSx}>
+        {content}
+      </Container>
     </Box>
   );
 };

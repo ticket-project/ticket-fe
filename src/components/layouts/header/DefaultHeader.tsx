@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
 
 import AuthButtons from '@/features/auth/components/buttons/AuthButtons';
@@ -19,7 +20,11 @@ import {
   BottomArea,
   LogoText,
   HeaderContainer,
+  MobileHeader,
+  Wrapper,
+  MobileWrapper,
 } from './Header.styles';
+import { MobileSearchButton } from '@/features/search/components/searchBar/SearchBar.styles';
 
 const SCROLL_TRIGGER = 100;
 
@@ -40,35 +45,55 @@ const DefaultHeader = () => {
 
   return (
     <Root>
-      <BaseHeader elevation={0} isScrolled={isScrolled}>
-        <TopArea>
+      <Wrapper>
+        <BaseHeader elevation={0} isScrolled={isScrolled}>
+          <TopArea>
+            <HeaderContainer>
+              <Box component={Link} href="/" aria-label="홈으로 이동">
+                <LogoText variant="h1">
+                  <span>ONE</span>&nbsp;티켓
+                </LogoText>
+              </Box>
+              <SearchBar sx={{ ml: 2 }} />
+              <Box sx={{ flexGrow: 1 }} />
+              <AuthButtons />
+            </HeaderContainer>
+          </TopArea>
+          <BottomArea>
+            <HeaderContainer>
+              <GnbNav pathname={pathname} />
+            </HeaderContainer>
+          </BottomArea>
+        </BaseHeader>
+
+        <StickyHeader elevation={0} isScrolled={isScrolled}>
           <HeaderContainer>
-            <Box component={Link} href="/" aria-label="홈으로 이동">
-              <LogoText variant="h1">
-                <span>ONE</span>&nbsp;티켓
-              </LogoText>
-            </Box>
-            <SearchBar sx={{ ml: 2 }} />
+            <GnbNav pathname={pathname} />
+            <SearchBar sx={{ ml: 1 }} />
             <Box sx={{ flexGrow: 1 }} />
             <AuthButtons />
           </HeaderContainer>
-        </TopArea>
+        </StickyHeader>
+      </Wrapper>
 
-        <BottomArea>
+      <MobileWrapper>
+        <MobileHeader elevation={0}>
           <HeaderContainer>
-            <GnbNav pathname={pathname} />
+            <Box component={Link} href="/" aria-label="홈으로 이동">
+              <LogoText variant="h1" sx={{ fontSize: '2.2rem' }}>
+                <span>ONE</span>&nbsp;티켓
+              </LogoText>
+            </Box>
+            <MobileSearchButton href="/search" aria-label="검색 페이지로 이동">
+              <SearchIcon />
+            </MobileSearchButton>
           </HeaderContainer>
-        </BottomArea>
-      </BaseHeader>
-
-      <StickyHeader elevation={0} isScrolled={isScrolled}>
-        <HeaderContainer>
-          <GnbNav pathname={pathname} />
-          <SearchBar sx={{ ml: 1 }} />
-          <Box sx={{ flexGrow: 1 }} />
-          <AuthButtons />
-        </HeaderContainer>
-      </StickyHeader>
+        </MobileHeader>
+        <Box
+          sx={{ height: 'var(--mobile-header-height)' }}
+          aria-hidden="true"
+        />
+      </MobileWrapper>
     </Root>
   );
 };

@@ -6,10 +6,17 @@ export const Root = styled(Box)(() => ({
   '--header-bottom-height': '45px',
   '--header-height': '130px',
   '--header-top-height': '85px',
+  '--mobile-header-height': '56px',
 
   zIndex: 999,
   '& .MuiToolbar-root': {
     height: '100%',
+  },
+}));
+
+export const Wrapper = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
   },
 }));
 
@@ -44,10 +51,13 @@ export const StickyHeader = styled(AppBar, {
   pointerEvents: isScrolled ? 'auto' : 'none',
 }));
 
-export const HeaderContainer = styled(Container)(() => ({
+export const HeaderContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   height: '100%',
+  [theme.breakpoints.down('md')]: {
+    justifyContent: 'space-between',
+  },
 }));
 
 export const TopArea = styled(Box)(({ theme }) => ({
@@ -58,7 +68,7 @@ export const TopArea = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.grey[100]}`,
 }));
 
-export const BottomArea = styled(Box)(() => ({
+export const BottomArea = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   height: 'var(--header-bottom-height)',
@@ -80,6 +90,20 @@ export const LogoText = styled(Typography)(({ theme }) => ({
 // 심플 헤더
 export const Header = styled(AppBar)(({ theme }) => ({
   position: 'static',
+  background: theme.palette.common.white,
+  borderBottom: `1px solid ${theme.palette.grey[200]}`,
+}));
+
+// 모바일 헤더
+export const MobileWrapper = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
+  },
+}));
+
+export const MobileHeader = styled(AppBar)(({ theme }) => ({
+  position: 'fixed',
+  height: 'var(--mobile-header-height)',
   background: theme.palette.common.white,
   borderBottom: `1px solid ${theme.palette.grey[200]}`,
 }));

@@ -25,7 +25,7 @@ const ShowPageClient = ({ categoryMeta }: ShowPageClientProps) => {
   // QueryBoundary 메시지 상수 분리하기
   return (
     <PageContainer>
-      <SectionFrame>
+      <SectionFrame containerSx={{ pr: { xs: 0, md: '33px' } }}>
         <QueryBoundary
           query={carousel}
           errorMessage="최신 공연 정보를 불러오는데 실패했습니다."
@@ -45,6 +45,7 @@ const ShowPageClient = ({ categoryMeta }: ShowPageClientProps) => {
       <SectionFrame
         title="오픈 예정"
         description="곧 시작되는 예매 정보를 확인하세요."
+        containerSx={{ pr: { xs: 0, md: '33px' } }}
       >
         <QueryBoundary
           query={upcomingPreview}

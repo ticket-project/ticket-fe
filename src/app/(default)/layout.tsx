@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 
 import Footer from '@/components/layouts/footer/Footer';
 import DefaultHeader from '@/components/layouts/header/DefaultHeader';
+import MobileNav from '@/components/layouts/navigation/MobileNav';
 import SkipLink from '@/components/layouts/SkipLink';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
@@ -13,6 +14,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </Box>
       <Footer />
+      <MobileNav />
     </Box>
   );
 };

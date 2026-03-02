@@ -93,23 +93,19 @@ const theme = createTheme({
         disableGutters: true,
       },
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           paddingLeft: '16px',
           paddingRight: '16px',
-          '@media (min-width: 768px)': {
-            paddingLeft: '24px',
-            paddingRight: '24px',
-          },
-          '@media (min-width: 1280px)': {
+          [theme.breakpoints.up('md')]: {
             paddingLeft: '33px',
             paddingRight: '33px',
           },
-        },
-        maxWidthLg: {
-          '@media (min-width: 1280px)': {
+        }),
+        maxWidthLg: ({ theme }) => ({
+          [theme.breakpoints.up('lg')]: {
             maxWidth: '1346px',
           },
-        },
+        }),
       },
     },
     MuiCardActionArea: {

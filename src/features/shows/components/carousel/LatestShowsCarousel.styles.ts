@@ -16,13 +16,16 @@ export const LatestShowsCarouselContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(2.8),
+  [theme.breakpoints.down('sm')]: {
+    gap: theme.spacing(1.4),
+  },
 }));
 
 export const Root = styled(Card)(({ theme }) => ({
-  flex: '0 0 100%',
+  flex: '0 0 32%',
   minWidth: 0,
-  [theme.breakpoints.up('md')]: {
-    flex: '0 0 32%',
+  [theme.breakpoints.down('md')]: {
+    flex: '0 0 70%',
   },
 }));
 
@@ -30,7 +33,7 @@ export const StyledCardActionArea = styled(CardActionArea)(() => ({
   height: '100%',
   overflow: 'hidden',
   borderRadius: '1.4rem',
-  aspectRatio: '1/1.2',
+  aspectRatio: '1/1.3',
 }));
 
 export const ContentBox = styled(CardContent)(() => ({
@@ -72,7 +75,7 @@ export const ShowDate = styled(Typography)(() => ({
 
 export const StyledIconButton = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== 'direction',
-})<StyledIconButtonProps>(({ direction }) => ({
+})<StyledIconButtonProps>(({ direction, theme }) => ({
   '--button-size': '56px',
   position: 'absolute',
   top: '50%',
@@ -86,5 +89,8 @@ export const StyledIconButton = styled(IconButton, {
     : { right: 'calc((var(--button-size) / 2) * -1)' }),
   '&:hover': {
     backgroundColor: 'rgba(255, 255, 255, 1)',
+  },
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
   },
 }));

@@ -1,6 +1,6 @@
 import { Button, styled } from '@mui/material';
 
-export const Root = styled('div')(() => ({
+export const Root = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: '0.8rem',
   ml: 'auto',

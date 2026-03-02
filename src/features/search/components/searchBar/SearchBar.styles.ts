@@ -1,4 +1,4 @@
-import { Button, InputBase, styled } from '@mui/material';
+import { Button, IconButton, InputBase, styled } from '@mui/material';
 
 export const Search = styled('form')(({ theme }) => ({
   position: 'relative',
@@ -27,6 +27,11 @@ export const SearchButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     color: theme.palette.primary.main,
   },
+
+  [theme.breakpoints.down('sm')]: {
+    position: 'static',
+    transform: 'none',
+  },
 }));
 
 export const StyledInputBase = styled(InputBase)({
@@ -38,3 +43,14 @@ export const StyledInputBase = styled(InputBase)({
     fontSize: '1.4rem',
   },
 });
+
+export const MobileSearchButton = styled(IconButton)(({ theme }) => ({
+  display: 'inline-flex',
+  marginRight: '-10px',
+  '& svg': {
+    fontSize: '2.8rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
+  },
+})) as typeof IconButton;
