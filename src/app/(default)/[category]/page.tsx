@@ -18,10 +18,7 @@ export const generateMetadata = async ({
 }: CategoryPageProps): Promise<Metadata> => {
   const { category } = await params;
   const categoryMeta = getCategoryMeta(category);
-
-  if (!categoryMeta) {
-    return {};
-  }
+  if (!categoryMeta) return {};
 
   return {
     description: `최신 ${categoryMeta.label} 정보를 확인하세요.`,
@@ -32,10 +29,7 @@ export const generateMetadata = async ({
 const CategoryPage = async ({ params }: CategoryPageProps) => {
   const { category } = await params;
   const categoryMeta = getCategoryMeta(category);
-
-  if (!categoryMeta) {
-    notFound();
-  }
+  if (!categoryMeta) return notFound();
 
   const queryClient = createQueryClient();
 
@@ -52,11 +46,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ShowPageClient
-        categoryCode={categoryMeta.code}
-        categoryLabel={categoryMeta.label}
-        categorySlug={categoryMeta.slug}
-      />
+      <ShowPageClient categoryMeta={categoryMeta} />
     </HydrationBoundary>
   );
 };

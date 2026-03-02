@@ -3,10 +3,7 @@
 import QueryBoundary from '@/components/common/QueryBoundary';
 import PageContainer from '@/components/layouts/PageContainer';
 import SectionFrame from '@/components/layouts/SectionFrame';
-import {
-  CategoryCode,
-  CategorySlug,
-} from '@/features/shows/constants/categories';
+import { CategoryMeta } from '@/features/shows/constants/categories';
 import {
   useLatestShows,
   useUpcomingShowsPreview,
@@ -17,18 +14,13 @@ import ShowInfiniteList from '../list/ShowInfiniteList';
 import UpcomingShowPreview from '../upcoming/UpcomingShowPreview';
 
 interface ShowPageClientProps {
-  categoryCode: CategoryCode;
-  categoryLabel: string;
-  categorySlug: CategorySlug;
+  categoryMeta: CategoryMeta;
 }
 
-const ShowPageClient = ({
-  categoryCode,
-  categoryLabel,
-  categorySlug,
-}: ShowPageClientProps) => {
-  const carousel = useLatestShows(categoryCode);
-  const upcomingPreview = useUpcomingShowsPreview(categoryCode);
+const ShowPageClient = ({ categoryMeta }: ShowPageClientProps) => {
+  const carousel = useLatestShows(categoryMeta.code);
+  const upcomingPreview = useUpcomingShowsPreview(categoryMeta.code);
+  const { slug, code, label } = categoryMeta;
 
   // QueryBoundary 메시지 상수 분리하기
   return (
@@ -43,8 +35,8 @@ const ShowPageClient = ({
           {(items) => (
             <LatestShowsCarousel
               items={items}
-              categorySlug={categorySlug}
-              categoryLabel={categoryLabel}
+              categorySlug={slug}
+              categoryLabel={label}
             />
           )}
         </QueryBoundary>
@@ -60,16 +52,11 @@ const ShowPageClient = ({
           emptyTitle="등록된 오픈 예정 공연이 없습니다"
           emptyDescription="새로운 오픈 예정 공연이 등록되면 여기에 표시됩니다"
         >
-          {(items) => (
-            <UpcomingShowPreview items={items} categorySlug={categorySlug} />
-          )}
+          {(items) => <UpcomingShowPreview items={items} categorySlug={slug} />}
         </QueryBoundary>
       </SectionFrame>
 
-      <ShowInfiniteList
-        categoryCode={categoryCode}
-        categorySlug={categorySlug}
-      />
+      <ShowInfiniteList categoryCode={code} categorySlug={slug} />
     </PageContainer>
   );
 };
