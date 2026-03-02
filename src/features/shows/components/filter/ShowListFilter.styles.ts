@@ -17,10 +17,20 @@ export const GenreStack = styled(Stack)(({ theme }) => ({
   flex: '1 1 0',
   rowGap: theme.spacing(1),
   minWidth: 0,
+  [theme.breakpoints.down('md')]: {
+    flex: 'none',
+    flexWrap: 'nowrap',
+    maxWidth: '100%',
+    width: '100%',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    WebkitOverflowScrolling: 'touch',
+  },
 }));
 
 export const GenreChip = styled(Chip)<{ selected?: boolean }>(
   ({ selected, theme }) => ({
+    flexShrink: 0,
     paddingBottom: theme.spacing(2.5),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
@@ -47,7 +57,9 @@ export const SelectStack = styled(Stack)(({ theme }) => ({
   rowGap: theme.spacing(1),
   minWidth: 0,
   [theme.breakpoints.down('md')]: {
+    flex: 'none',
     justifyContent: 'flex-start',
+    width: '100%',
   },
 }));
 
