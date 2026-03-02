@@ -20,13 +20,12 @@ interface UpcomingPosterProps {
 const UpcomingPoster = ({ title, posterUrl }: UpcomingPosterProps) => {
   return (
     <Root>
-      <PosterBackground aria-hidden />
+      <PosterBackground posterUrl={posterUrl} aria-hidden />
       <GradientOverlay aria-hidden />
       <PosterContent>
         <PosterCard>
           <Image
-            // src={posterUrl}
-            src={'/images/dummy-poster.jpeg'}
+            src={posterUrl}
             alt={`${title} 포스터`}
             fill
             priority

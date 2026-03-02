@@ -6,8 +6,14 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   // 이미지 도메인 설정
   images: {
-    // domains: ['localhost', 'your-image-cdn.com'],
-    // formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'kopis.or.kr',
+        pathname: '/upload/**',
+      },
+    ],
+    formats: ['image/avif', 'image/webp'],
   },
   // Emotion 설정
   compiler: {

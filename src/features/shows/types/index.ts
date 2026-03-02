@@ -142,6 +142,7 @@ export interface ShowDetail {
   info: string;
   startDate: string;
   endDate: string;
+  runningMinutes: number;
   saleType: SaleType;
   saleStartDate: string;
   saleEndDate: string;

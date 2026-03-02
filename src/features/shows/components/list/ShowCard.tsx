@@ -9,7 +9,7 @@ import Tag from '@/components/ui/Tag';
 
 import { SALE_TYPES } from '../../constants';
 import { CategorySlug } from '../../constants/categories';
-import { getOpenDateLabel } from '../../utils';
+import { formatDateRange, getOpenDateLabel } from '../../utils';
 
 import {
   PosterBox,
@@ -45,7 +45,7 @@ const ShowCard = ({ item, categorySlug, variant = 'all' }: ShowCardProps) => {
         >
           <PosterBox>
             <Image
-              src="/images/dummy-poster.jpeg"
+              src={isUpcoming ? item.image : '/images/dummy-poster.jpeg'}
               alt={`${item.title} 포스터`}
               fill
               sizes="(max-width: 767px) 80vw, (max-width: 1279px) 30vw, 20vw"
@@ -55,14 +55,14 @@ const ShowCard = ({ item, categorySlug, variant = 'all' }: ShowCardProps) => {
           <CardContent sx={{ padding: 0 }}>
             {isUpcoming && (
               <ShowTicketDate as="span">
-                {getOpenDateLabel(item.saleStartDate, false)}
+                {getOpenDateLabel(item.saleStartDate)}
               </ShowTicketDate>
             )}
             <ShowTitle as="strong">{item.title}</ShowTitle>
             <ShowVenue as="span">{item.venue}</ShowVenue>
             {!isUpcoming && isShowBase(item) && (
               <ShowDate as="span">
-                {item.startDate} ~ {item.endDate}
+                {formatDateRange(item.startDate, item.endDate)}
               </ShowDate>
             )}
             {isExclusive && (

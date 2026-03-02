@@ -8,15 +8,17 @@ export const Root = styled(Box)({
   borderRadius: '1.75rem',
 });
 
-export const PosterBackground = styled(Box)({
+export const PosterBackground = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'posterUrl',
+})<{ posterUrl: string }>(({ posterUrl }) => ({
   position: 'absolute',
   inset: 0,
-  backgroundImage: `url('/images/dummy-poster.jpeg')`,
+  backgroundImage: `url(${posterUrl})`,
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   filter: 'blur(24px)',
   transform: 'scale(1.12)',
-});
+}));
 
 export const GradientOverlay = styled(Box)({
   position: 'absolute',

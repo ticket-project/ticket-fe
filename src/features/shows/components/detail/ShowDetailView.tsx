@@ -34,7 +34,7 @@ const ShowDetailView = ({ item }: ShowDetailViewProps) => {
             </>
           )}
         </SummaryBody>
-        <ShowDetailTabs />
+        <ShowDetailTabs performanceDates={item.performanceDates} />
       </Box>
       {isUpcoming ? (
         <UpcomingPanel item={item} />

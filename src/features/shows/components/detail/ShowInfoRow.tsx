@@ -8,6 +8,7 @@ import { Box, Stack, Typography } from '@mui/material';
 
 import { ShowDetail } from '../../types';
 
+import { formatDateRange } from '../../utils';
 import InstallmentTooltip from '../tooltip/InstallmentTooltip';
 
 import { BenefitBadge } from './ShowDetail.styles';
@@ -55,11 +56,11 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
       </InfoRow>
       <InfoRow label="공연기간">
         <Typography variant="body2">
-          {item.startDate} ~ {item.endDate}
+          {formatDateRange(item.startDate, item.endDate)}
         </Typography>
       </InfoRow>
       <InfoRow label="공연시간">
-        <Typography variant="body2">150분</Typography>
+        <Typography variant="body2">{item.runningMinutes}분</Typography>
       </InfoRow>
       <InfoRow label="관람연령">
         <Typography variant="body2">8세 이상 관람가능</Typography>
@@ -82,7 +83,6 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
       </InfoRow>
       <InfoRow label="혜택">
         <InstallmentTooltip />
-
         <Stack spacing={0.8}>
           <Stack
             component={Link}
@@ -152,7 +152,7 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
       </InfoRow>
       <InfoRow label="유의사항">
         <Typography variant="body2">
-          2026년 01월 13일 20시 00분~2026년 01월 20일 20시 00분까지 무통장입금
+          2026년 04월 13일 20시 00분~2026년 04월 20일 20시 00분까지 무통장입금
           결제가 불가능합니다.
         </Typography>
       </InfoRow>

@@ -22,7 +22,7 @@ interface LatestShowsCarouselSlideProps {
   total: number;
 }
 
-const BADGES = ['WORLD TOUR', 'MEMBERSHOP', 'PRE-SALE'] as const;
+const BADGES = ['WORLD TOUR', 'MEMBERSHIP', 'PRE-SALE'] as const;
 const pickBadge = (seed: number) => BADGES[seed % BADGES.length];
 
 const LatestShowsCarouselSlide = ({
@@ -48,23 +48,21 @@ const LatestShowsCarouselSlide = ({
         aria-label={`${item.title} 상세로 이동`}
       >
         <Image
-          // src={item.image.src}
-          // alt={item.image.alt}
-          src="/images/dummy-poster.jpeg"
+          src={item.image}
           alt={`${item.title} 포스터`}
           fill
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 33.333vw, 25vw"
           style={{ objectFit: 'cover' }}
           priority={idx === 0}
         />
-        <ContentBox>
+        {/* <ContentBox>
           <MiniBadge>{badge}</MiniBadge>
           <ShowTitle as="strong">{item.title}</ShowTitle>
           <ShowVenue as="span">{item.venue}</ShowVenue>
           <ShowDate as="span">
             {item.startDate} ~ {item.endDate}
           </ShowDate>
-        </ContentBox>
+        </ContentBox> */}
       </StyledCardActionArea>
     </Root>
   );

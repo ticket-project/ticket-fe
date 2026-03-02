@@ -60,7 +60,7 @@ export const PosterBox = styled(Box)(({ theme }) => ({
   overflow: 'hidden',
   border: `1px solid ${theme.palette.grey[100]}`,
   borderRadius: '1.2rem',
-  aspectRatio: '3/3.8',
+  aspectRatio: '700/985',
 }));
 
 export const ShowTicketDate = styled(Typography)(({ theme }) => ({
@@ -72,9 +72,13 @@ export const ShowTicketDate = styled(Typography)(({ theme }) => ({
 }));
 
 export const ShowTitle = styled(Typography)(() => ({
-  display: 'block',
+  display: '-webkit-box',
+  overflow: 'hidden',
   fontSize: '1.7rem',
   fontWeight: 700,
+  textOverflow: 'ellipsis',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 2,
 }));
 
 export const ShowVenue = styled(Typography, {

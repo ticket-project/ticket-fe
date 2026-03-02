@@ -79,8 +79,8 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
     <Box>
       <PosterArea>
         <Image
-          src={'/images/dummy-poster.jpeg'}
-          alt={item.title}
+          src={item.image}
+          alt={`${item.title} 포스터`}
           style={{ objectFit: 'cover' }}
           fill
           priority

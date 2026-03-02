@@ -1,22 +1,42 @@
+import 'dayjs/locale/ko';
+
 import Image from 'next/image';
 
 import { Box, Stack, Typography } from '@mui/material';
+import dayjs from 'dayjs';
 
-import {
-  NOTICE_HIGHLIGHTS,
-  PERFORMANCE_TIMES,
-} from '@/features/shows/constants';
+import { Performances } from '@/features/shows/types';
+
+import { NOTICE_HIGHLIGHTS } from '@/features/shows/constants';
+
+import { formatDateTime } from '../../utils';
 
 import { InfoTitle } from './ShowDetailTabs.styles';
 
-const ShowInfoTab = () => {
+interface ShowInfoTabProps {
+  performanceDates: Performances[];
+}
+
+const ShowInfoTab = ({ performanceDates }: ShowInfoTabProps) => {
+  const performanceTimeLabels = performanceDates
+    .flatMap(({ performances }) => performances)
+    .sort((a, b) => {
+      const diff = dayjs(a.startTime).valueOf() - dayjs(b.startTime).valueOf();
+      return diff !== 0 ? diff : a.performanceNo - b.performanceNo;
+    })
+    .map(({ startTime }) => formatDateTime(startTime));
+
   return (
     <Stack spacing={8}>
       <Box>
         <InfoTitle variant="h6">공연시간 정보</InfoTitle>
         <Stack spacing={0.5}>
-          {PERFORMANCE_TIMES.map((time) => (
-            <Typography key={time} variant="body2" sx={{ fontWeight: 500 }}>
+          {performanceTimeLabels.map((time, index) => (
+            <Typography
+              key={`${time}-${index}`}
+              variant="body2"
+              sx={{ fontWeight: 500 }}
+            >
               {time}
             </Typography>
           ))}

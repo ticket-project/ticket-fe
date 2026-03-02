@@ -33,7 +33,7 @@ export const StyledCardActionArea = styled(CardActionArea)(() => ({
   height: '100%',
   overflow: 'hidden',
   borderRadius: '1.4rem',
-  aspectRatio: '1/1.3',
+  aspectRatio: '700/985',
 }));
 
 export const ContentBox = styled(CardContent)(() => ({

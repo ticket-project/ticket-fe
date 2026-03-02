@@ -2,7 +2,7 @@ import { Box, IconButton, Stack, styled } from '@mui/material';
 
 export const PosterArea = styled(Box)(({ theme }) => ({
   position: 'relative',
-  aspectRatio: '1/1.32',
+  aspectRatio: '640/850',
 }));
 
 export const ActionArea = styled(Stack)(({ theme }) => ({

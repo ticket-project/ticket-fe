@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import { Box, Tab } from '@mui/material';
 
+import { Performances } from '@/features/shows/types';
+
 import ShowInfoTab from './ShowInfoTab';
 import ShowSaleTab from './ShowSaleTab';
 
@@ -17,10 +19,9 @@ interface TabPanelProps {
   children: React.ReactNode;
 }
 
-const a11yProps = (name: TabValue) => ({
-  id: `show-tab-${name}`,
-  'aria-controls': `show-tabpanel-${name}`,
-});
+interface ShowDetailTabsProps {
+  performanceDates: Performances[];
+}
 
 const TabPanel = ({ value, activeTab, children }: TabPanelProps) => {
   const isActive = value === activeTab;
@@ -38,7 +39,12 @@ const TabPanel = ({ value, activeTab, children }: TabPanelProps) => {
   );
 };
 
-const ShowDetailTabs = () => {
+const a11yProps = (name: TabValue) => ({
+  id: `show-tab-${name}`,
+  'aria-controls': `show-tabpanel-${name}`,
+});
+
+const ShowDetailTabs = ({ performanceDates }: ShowDetailTabsProps) => {
   const [activeTab, setActiveTab] = useState<'info' | 'sale'>('info');
 
   const handleTabChange = (
@@ -60,7 +66,7 @@ const ShowDetailTabs = () => {
       </StyledTabs>
 
       <TabPanel value="info" activeTab={activeTab}>
-        <ShowInfoTab />
+        <ShowInfoTab performanceDates={performanceDates} />
       </TabPanel>
 
       <TabPanel value="sale" activeTab={activeTab}>

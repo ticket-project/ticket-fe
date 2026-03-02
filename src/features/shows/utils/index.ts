@@ -58,12 +58,30 @@ export const getSessionLabel = (index: number, startTime: string) =>
   `${index + 1}회 ${dayjs(startTime).format('HH:mm')}`;
 
 // 예매 시작일 라벨
-export const getOpenDateLabel = (saleStartDate: string, time = true) => {
+export const getOpenDateLabel = (saleStartDate: string) => {
   const openDate = dayjs(saleStartDate);
   if (!openDate.isValid()) {
     return saleStartDate;
   }
-  const format = time ? 'MM.DD(ddd) HH:mm' : 'MM.DD(ddd)';
+  const format = 'MM.DD(ddd) HH:mm';
 
   return openDate.locale('ko').format(format);
+};
+
+// 공연 기간 라벨
+export const formatDateRange = (startDate: string, endDate: string) => {
+  if (startDate === endDate) {
+    return startDate;
+  }
+
+  return `${startDate} ~ ${endDate}`;
+};
+
+// 날짜 시간 포맷
+export const formatDateTime = (startTime: string) => {
+  const dateTime = dayjs(startTime);
+
+  if (!dateTime.isValid()) return startTime;
+
+  return `${dateTime.locale('ko').format('YYYY년 M월 D일(ddd) HH:mm')}(KST)`;
 };

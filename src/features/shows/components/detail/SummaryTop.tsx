@@ -27,7 +27,7 @@ const SummaryTop = ({ item }: SummaryTopProps) => {
         size="small"
       />
       <Typography variant="h2" sx={{ fontSize: '2.6rem', fontWeight: 700 }}>
-        {item.title} {item.subTitle}
+        {item.title}
       </Typography>
     </Stack>
   );
