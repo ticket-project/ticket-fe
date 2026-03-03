@@ -1,9 +1,13 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 
-interface TopInfoBarProps {}
+import { PerformanceSummary } from '../types';
 
-const TopInfoBar = ({ item }: TopInfoBarProps) => {
-  const { title, region, performanceDate, grades } = item;
+interface TopInfoBarProps {
+  performanceSummary: PerformanceSummary;
+}
+
+const TopInfoBar = ({ performanceSummary }: TopInfoBarProps) => {
+  const { title, performanceDate } = performanceSummary;
 
   return (
     <Container
@@ -18,14 +22,10 @@ const TopInfoBar = ({ item }: TopInfoBarProps) => {
     >
       <Box sx={{ display: 'flex' }}>
         <Typography component="h3" sx={{ fontSize: '2rem', fontWeight: 800 }}>
-          {title} -
-        </Typography>
-        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 800 }}>
-          &nbsp;{region}
+          {title}
         </Typography>
         <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 800 }}>
           &nbsp;· {performanceDate}
-          {/* &nbsp;· 2026-03-29(토) 18:00 PM */}
         </Typography>
       </Box>
       <Button

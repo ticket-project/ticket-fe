@@ -96,7 +96,7 @@ export const getShowsPage = async (
 };
 
 // 공연 상세
-export const getShowById = async (id: string): Promise<ShowDetail> => {
+export const getShowById = async (id: number): Promise<ShowDetail> => {
   const res = await fetchApi<ApiResponse<ShowDetail>>(`/api/v1/shows/${id}`);
 
   if (!res?.data) {

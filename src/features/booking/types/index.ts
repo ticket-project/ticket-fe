@@ -9,6 +9,11 @@ export interface SeatGrade {
   price: MoneyKRW;
 }
 
+export interface PerformanceSummary {
+  title: string;
+  performanceDate: string;
+}
+
 export interface VenueLayout {
   name: string;
   viewBoxWidth: number;

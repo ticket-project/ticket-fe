@@ -110,7 +110,7 @@ const BookingSidebar = ({ selectedSeats }: BookingSidebarProps) => {
               >
                 <Box>
                   <Typography sx={{ fontSize: '1.7rem', fontWeight: 800 }}>
-                    {seat.grade.name}석
+                    {seat.grade.name}
                   </Typography>
                   <Box sx={{ mt: '.1rem', color: 'grey.600' }}>
                     <Typography sx={{ fontSize: '1.6rem' }}>

@@ -8,7 +8,7 @@ import { useShowById } from '@/features/shows/hooks/useShowQueries';
 import ShowDetailView from '../detail/ShowDetailView';
 
 interface ShowDetailPageClientProps {
-  showId: string;
+  showId: number;
 }
 
 const ShowDetailPageClient = ({ showId }: ShowDetailPageClientProps) => {

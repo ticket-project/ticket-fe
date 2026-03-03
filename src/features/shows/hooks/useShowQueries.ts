@@ -99,7 +99,7 @@ export const useShowsInfinite = (
   });
 };
 
-export const useShowById = (id: string) => {
+export const useShowById = (id: number) => {
   return useQuery({
     queryKey: queryKeys.show.detail(id),
     queryFn: () => getShowById(id),
