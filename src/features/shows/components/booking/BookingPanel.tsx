@@ -10,6 +10,8 @@ import { Dayjs } from 'dayjs';
 
 import { Performances } from '../../types';
 
+import { useAuthStore } from '@/store/authStore';
+
 import { useSeatGrades } from '../../hooks/useShowQueries';
 import {
   getFirstSessionId,
@@ -43,6 +45,7 @@ const BookingPanel = ({
   isSaleEnded,
 }: BookingPanelProps) => {
   const router = useRouter();
+  const accessToken = useAuthStore((state) => state.accessToken);
   const { availableDateSet, initialSelectedDate, initialSelectedSessionId } =
     getInitialDateState(performances);
 
@@ -87,6 +90,12 @@ const BookingPanel = ({
 
   const handleBookClick = () => {
     if (!selectedSession) return;
+
+    if (!accessToken) {
+      router.push('/login');
+      return;
+    }
+
     router.push(
       `/onestop/seat?showId=${showId}&performanceId=${selectedSession}`
     );
