@@ -4,11 +4,12 @@ import { getIconRect } from '../../utils';
 
 interface SeatRectProps {
   seat: SeatGeometry;
+  seatSize: number;
   state: SeatStatus;
   isSelected: boolean;
 }
 
-const SeatRect = ({ seat, state, isSelected }: SeatRectProps) => {
+const SeatRect = ({ seat, seatSize, state, isSelected }: SeatRectProps) => {
   const isAvailable = state === 'AVAILABLE';
   const className = [
     'seat',
@@ -18,7 +19,7 @@ const SeatRect = ({ seat, state, isSelected }: SeatRectProps) => {
     .filter(Boolean)
     .join(' ');
 
-  const checkIcon = getIconRect(seat, 0.5);
+  const checkIcon = getIconRect(seat, seatSize, 0.5);
   return (
     <>
       <rect
@@ -27,9 +28,9 @@ const SeatRect = ({ seat, state, isSelected }: SeatRectProps) => {
         data-seat-id={seat.id}
         x={seat.x}
         y={seat.y}
-        width={seat.w}
-        height={seat.h}
-        rx={seat.w / 2}
+        width={seatSize}
+        height={seatSize}
+        rx={seatSize / 2}
       />
       {isSelected && (
         <image

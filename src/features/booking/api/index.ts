@@ -60,6 +60,7 @@ export const getSeatMap = async (showId: number) => {
 
   const result: SeatMap = {
     viewBox: [0, 0, viewBoxWidth, viewBoxHeight],
+    seatSize: seatDiameter,
     seats: seats.map((seat) => ({
       id: seat.seatId,
       floor: seat.floor,
@@ -68,8 +69,6 @@ export const getSeatMap = async (showId: number) => {
       col: seat.col,
       x: seat.x,
       y: seat.y,
-      w: seatDiameter,
-      h: seatDiameter,
       grade: {
         id: seat.gradeCode,
         name: seat.gradeName,

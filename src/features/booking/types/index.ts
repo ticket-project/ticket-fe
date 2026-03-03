@@ -61,15 +61,14 @@ export interface SeatMapItem {
   col: string;
   x: number;
   y: number;
-  w: number;
-  h: number;
   grade: SeatGrade;
 }
 
-export type SeatGeometry = Pick<SeatMapItem, 'id' | 'x' | 'y' | 'w' | 'h'>;
+export type SeatGeometry = Pick<SeatMapItem, 'id' | 'x' | 'y'>;
 
 export interface SeatMap {
   viewBox: ViewBox;
+  seatSize: number;
   seats: SeatMapItem[];
 }
 
@@ -81,6 +80,7 @@ export interface SeatViewItem extends SeatMapItem {
 
 export interface SeatView {
   viewBox: ViewBox;
+  seatSize: number;
   seats: SeatViewItem[];
 }
 // export type SeatStateMap = Record<string, SeatStateItem>;

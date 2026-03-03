@@ -37,6 +37,7 @@ const SeatMapSvg = ({ seatView, selectedSeatIds }: SeatMapSvgProps) => {
               <SeatRect
                 key={seat.id}
                 seat={seat}
+                seatSize={seatView.seatSize}
                 state={seat.state}
                 isSelected={selectedSeatIds.has(seat.id)}
               />

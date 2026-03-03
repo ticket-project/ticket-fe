@@ -34,7 +34,10 @@ const ShowDetailView = ({ item }: ShowDetailViewProps) => {
             </>
           )}
         </SummaryBody>
-        <ShowDetailTabs performanceDates={item.performanceDates} />
+        <ShowDetailTabs
+          performanceDates={item.performanceDates}
+          posterUrl={item.image}
+        />
       </Box>
       {isUpcoming ? (
         <UpcomingPanel item={item} />

@@ -15,9 +15,10 @@ import { InfoTitle } from './ShowDetailTabs.styles';
 
 interface ShowInfoTabProps {
   performanceDates: Performances[];
+  posterUrl: string;
 }
 
-const ShowInfoTab = ({ performanceDates }: ShowInfoTabProps) => {
+const ShowInfoTab = ({ performanceDates, posterUrl }: ShowInfoTabProps) => {
   const performanceTimeLabels = performanceDates
     .flatMap(({ performances }) => performances)
     .sort((a, b) => {
@@ -76,8 +77,7 @@ const ShowInfoTab = ({ performanceDates }: ShowInfoTabProps) => {
         <InfoTitle variant="h6">공연상세 / 출연진정보</InfoTitle>
         <Box sx={{ pr: 13 }}>
           <Image
-            src="/images/dummy-poster.jpeg"
-            // alt={item.title}
+            src={posterUrl}
             alt="공연상세"
             width={0}
             height={0}

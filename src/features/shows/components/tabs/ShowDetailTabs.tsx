@@ -21,6 +21,7 @@ interface TabPanelProps {
 
 interface ShowDetailTabsProps {
   performanceDates: Performances[];
+  posterUrl: string;
 }
 
 const TabPanel = ({ value, activeTab, children }: TabPanelProps) => {
@@ -44,7 +45,10 @@ const a11yProps = (name: TabValue) => ({
   'aria-controls': `show-tabpanel-${name}`,
 });
 
-const ShowDetailTabs = ({ performanceDates }: ShowDetailTabsProps) => {
+const ShowDetailTabs = ({
+  performanceDates,
+  posterUrl,
+}: ShowDetailTabsProps) => {
   const [activeTab, setActiveTab] = useState<'info' | 'sale'>('info');
 
   const handleTabChange = (
@@ -66,7 +70,10 @@ const ShowDetailTabs = ({ performanceDates }: ShowDetailTabsProps) => {
       </StyledTabs>
 
       <TabPanel value="info" activeTab={activeTab}>
-        <ShowInfoTab performanceDates={performanceDates} />
+        <ShowInfoTab
+          performanceDates={performanceDates}
+          posterUrl={posterUrl}
+        />
       </TabPanel>
 
       <TabPanel value="sale" activeTab={activeTab}>
