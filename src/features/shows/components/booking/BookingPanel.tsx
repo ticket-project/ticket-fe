@@ -70,10 +70,6 @@ const BookingPanel = ({
     : '회차를 선택하세요.';
 
   const seatGradesQuery = useSeatGrades(selectedSession);
-  const totalAvailable = seatGradesQuery.data?.reduce(
-    (total, grade) => total + grade.availableSeats,
-    0
-  );
 
   const handleDateChange = (newValue: Dayjs | null) => {
     if (!newValue) return;
@@ -175,13 +171,39 @@ const BookingPanel = ({
                   );
                 })}
               </SessionGrid>
-              {/* <Typography sx={{ mt: 1, fontSize: '1.3rem', color: 'grey.600' }}>
-              잔여석 안내 서비스를 제공하지 않습니다.
-            </Typography> */}
-              {selectedSession && seatGradesQuery.isSuccess && (
-                <Typography sx={{ mt: 1, fontSize: '1.3rem', fontWeight: 700 }}>
-                  잔여석: {(totalAvailable ?? 0).toLocaleString()}석
-                </Typography>
+              {selectedSession && (
+                <Stack sx={{ mt: 1.8, minHeight: 24 }}>
+                  <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
+                    {seatGradesQuery.data?.length &&
+                      seatGradesQuery.data.map((grade, index) => (
+                        <Stack
+                          direction="row"
+                          spacing={0.5}
+                          alignItems="center"
+                          key={`${grade.gradeName}-${grade.sortOrder}`}
+                        >
+                          <Typography
+                            sx={{ fontSize: '1.2rem', fontWeight: 500 }}
+                          >
+                            {grade.gradeName}
+                          </Typography>
+                          <Typography
+                            sx={{ fontSize: '1.2rem', fontWeight: 700 }}
+                          >
+                            {grade.availableSeats}
+                          </Typography>
+                          {index < seatGradesQuery.data.length - 1 && (
+                            <Typography
+                              component="span"
+                              sx={{ fontSize: '1rem' }}
+                            >
+                              /
+                            </Typography>
+                          )}
+                        </Stack>
+                      ))}
+                  </Stack>
+                </Stack>
               )}
             </CollapsibleSection>
             <Stack spacing={1} sx={{ mt: 1 }}>

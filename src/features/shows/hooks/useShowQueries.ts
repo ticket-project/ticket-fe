@@ -1,4 +1,8 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+} from '@tanstack/react-query';
 
 import { queryKeys } from '@/lib/queryKeys';
 
@@ -127,12 +131,11 @@ export const useMyLikedShows = (token?: string | null, size = 20) => {
   });
 };
 
-export const useSeatGrades = (performanceId: number) => {
+export const useSeatGrades = (performanceId: number | null) => {
   return useQuery({
-    queryKey: queryKeys.show.seatGrades(performanceId),
-    queryFn: () => getSeatGrades(performanceId),
-    enabled: performanceId !== null,
-    staleTime: 0,
-    gcTime: SHOW_QUERY_CONFIG.gcTime,
+    queryKey: queryKeys.show.seatGrades(performanceId ?? 0),
+    queryFn: () => getSeatGrades(performanceId as number),
+    enabled: !!performanceId,
+    placeholderData: keepPreviousData,
   });
 };

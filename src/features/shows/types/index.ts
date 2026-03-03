@@ -119,10 +119,7 @@ export interface Performances {
 }
 
 export interface SeatGrade {
-  gradeCode: string;
   gradeName: string;
-  price: number;
-  totalSeats: number;
   availableSeats: number;
   sortOrder: number;
 }

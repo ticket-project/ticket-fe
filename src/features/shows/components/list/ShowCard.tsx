@@ -45,7 +45,7 @@ const ShowCard = ({ item, categorySlug, variant = 'all' }: ShowCardProps) => {
         >
           <PosterBox>
             <Image
-              src={isUpcoming ? item.image : '/images/dummy-poster.jpeg'}
+              src={item.image}
               alt={`${item.title} 포스터`}
               fill
               sizes="(max-width: 767px) 80vw, (max-width: 1279px) 30vw, 20vw"
