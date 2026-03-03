@@ -4,7 +4,12 @@ import { queryKeys } from '@/lib/queryKeys';
 
 import { getSeatMap, getSeatState, getVenueLayout } from '../api';
 
-const SEAT_QUERY_CONFIG = {
+const STATIC_SEAT_QUERY_CONFIG = {
+  staleTime: 1000 * 60,
+  gcTime: 1000 * 60 * 5,
+} as const;
+
+const DYNAMIC_SEAT_QUERY_CONFIG = {
   staleTime: 0,
   gcTime: 1000 * 60 * 5,
 } as const;
@@ -14,7 +19,7 @@ export const useVenueLayout = (showId: number) => {
     queryKey: queryKeys.booking.venueLayout(showId),
     queryFn: () => getVenueLayout(showId),
     enabled: Boolean(showId),
-    ...SEAT_QUERY_CONFIG,
+    ...STATIC_SEAT_QUERY_CONFIG,
   });
 };
 
@@ -23,7 +28,7 @@ export const useSeatMap = (showId: number) => {
     queryKey: queryKeys.booking.seatMap(showId),
     queryFn: () => getSeatMap(showId),
     enabled: Boolean(showId),
-    ...SEAT_QUERY_CONFIG,
+    ...STATIC_SEAT_QUERY_CONFIG,
   });
 };
 
@@ -32,6 +37,6 @@ export const useSeatState = (performanceId: number, token?: string | null) => {
     queryKey: queryKeys.booking.seatState(performanceId),
     queryFn: () => getSeatState(performanceId, token),
     enabled: Boolean(performanceId),
-    ...SEAT_QUERY_CONFIG,
+    ...DYNAMIC_SEAT_QUERY_CONFIG,
   });
 };

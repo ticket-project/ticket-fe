@@ -108,7 +108,7 @@ export const getShowById = async (id: number): Promise<ShowDetail> => {
 
 // 공연 찜 상태
 export const getShowLike = async (
-  showId: string | number,
+  showId: number,
   token?: string | null
 ): Promise<ShowLike> => {
   const res = await fetchApi<ApiResponse<ShowLike>>(
@@ -128,7 +128,7 @@ export const getShowLike = async (
 
 // 공연 찜하기
 export const addShowLike = async (
-  showId: string | number,
+  showId: number,
   token?: string | null
 ): Promise<ShowLike> => {
   const res = await fetchApi<ApiResponse<ShowLike>>(
@@ -145,7 +145,7 @@ export const addShowLike = async (
 
 // 공연 찜취소
 export const removeShowLike = async (
-  showId: string | number,
+  showId: number,
   token?: string | null
 ): Promise<ShowLike> => {
   const res = await fetchApi<ApiResponse<ShowLike>>(
@@ -186,7 +186,7 @@ export const getMyLikedShows = async (
 
 // 회차 잔여석
 export const getSeatGrades = async (
-  performanceId: string | number
+  performanceId: number
 ): Promise<SeatGrade[]> => {
   const res = await fetchApi<ApiResponse<{ grades: SeatGrade[] }>>(
     `/api/v1/performances/${performanceId}/seats/availability`

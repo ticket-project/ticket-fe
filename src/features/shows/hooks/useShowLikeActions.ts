@@ -5,7 +5,7 @@ import { queryKeys } from '@/lib/queryKeys';
 import { addShowLike, removeShowLike } from '../api';
 import { ShowDetail, ShowLike } from '../types';
 
-const useShowLikeActions = (showId: string | number, token?: string | null) => {
+const useShowLikeActions = (showId: number, token?: string | null) => {
   const queryClient = useQueryClient();
   const likeKey = queryKeys.show.like(showId);
   const detailKey = queryKeys.show.detail(showId);

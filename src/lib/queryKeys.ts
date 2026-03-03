@@ -29,30 +29,29 @@ export const queryKeys = {
     list: (category: string, filters: ShowsFilterState) =>
       [...queryKeys.show.all, 'list', category, filters] as const,
 
-    detail: (showId: string | number) =>
-      [...queryKeys.show.all, 'detail', String(showId)] as const,
+    detail: (showId: number) =>
+      [...queryKeys.show.all, 'detail', showId] as const,
 
-    like: (showId: string | number) =>
-      [...queryKeys.show.all, 'like', String(showId)] as const,
+    like: (showId: number) => [...queryKeys.show.all, 'like', showId] as const,
 
     likes: (size: number) => [...queryKeys.show.all, 'likes', size] as const,
 
-    seatGrades: (performanceId: string | number) =>
-      [...queryKeys.show.all, 'seatGrades', String(performanceId)] as const,
+    seatGrades: (performanceId: number) =>
+      [...queryKeys.show.all, 'seatGrades', performanceId] as const,
   },
 
   booking: {
     all: ['booking'] as const,
-    show: (performanceId: string | number) =>
-      [...queryKeys.booking.all, 'show', String(performanceId)] as const,
+    // show: (performanceId: number) =>
+    //   [...queryKeys.booking.all, 'show', performanceId] as const,
 
-    seatMap: (performanceId: string | number) =>
-      [...queryKeys.booking.all, 'seatMap', String(performanceId)] as const,
+    seatMap: (showId: number) =>
+      [...queryKeys.booking.all, 'seatMap', showId] as const,
 
-    seatState: (performanceId: string | number) =>
-      [...queryKeys.booking.all, 'seatState', String(performanceId)] as const,
+    seatState: (performanceId: number) =>
+      [...queryKeys.booking.all, 'seatState', performanceId] as const,
 
-    venueLayout: (showId: string | number) =>
-      [...queryKeys.booking.all, 'venueLayout', String(showId)] as const,
+    venueLayout: (showId: number) =>
+      [...queryKeys.booking.all, 'venueLayout', showId] as const,
   },
 } as const;

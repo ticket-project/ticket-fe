@@ -107,7 +107,7 @@ export const useShowById = (id: number) => {
   });
 };
 
-export const useShowLike = (showId: string | number, token?: string | null) => {
+export const useShowLike = (showId: number, token?: string | null) => {
   return useQuery({
     queryKey: queryKeys.show.like(showId),
     queryFn: () => getShowLike(showId, token),
@@ -127,10 +127,10 @@ export const useMyLikedShows = (token?: string | null, size = 20) => {
   });
 };
 
-export const useSeatGrades = (performanceId: number | null) => {
+export const useSeatGrades = (performanceId: number) => {
   return useQuery({
-    queryKey: queryKeys.show.seatGrades(performanceId ?? 'none'),
-    queryFn: () => getSeatGrades(performanceId as number),
+    queryKey: queryKeys.show.seatGrades(performanceId),
+    queryFn: () => getSeatGrades(performanceId),
     enabled: performanceId !== null,
     staleTime: 0,
     gcTime: SHOW_QUERY_CONFIG.gcTime,

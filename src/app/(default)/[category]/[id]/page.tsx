@@ -14,22 +14,23 @@ interface CategoryDetailPageProps {
 
 const CategoryDetailPage = async ({ params }: CategoryDetailPageProps) => {
   const { category, id } = await params;
+  const showId = Number(id);
   const categoryMeta = getCategoryMeta(category);
 
-  if (!categoryMeta) {
+  if (!categoryMeta || !Number.isFinite(showId)) {
     notFound();
   }
 
   const queryClient = createQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: queryKeys.show.detail(id),
-    queryFn: () => getShowById(id),
+    queryKey: queryKeys.show.detail(showId),
+    queryFn: () => getShowById(showId),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ShowDetailPageClient showId={id} />
+      <ShowDetailPageClient showId={showId} />
     </HydrationBoundary>
   );
 };
