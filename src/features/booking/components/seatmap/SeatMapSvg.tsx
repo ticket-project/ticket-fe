@@ -1,21 +1,22 @@
-import { PerformanceSeatMap, SeatState } from '../../types';
+import { SeatView } from '../../types';
 
 import SeatRect from './SeatRect';
 
 import { SvgContainer } from './Seat.styles';
 
 interface SeatMapSvgProps {
-  data: PerformanceSeatMap;
-  seatState: SeatState[];
-  selectedSeatIds: Set<string>;
+  seatView: SeatView;
+  selectedSeatIds: Set<number>;
 }
 
-const SeatMapSvg = ({ data, seatState, selectedSeatIds }: SeatMapSvgProps) => {
-  const [minX, minY, vbW, vbH] = data.viewBox;
+const SeatMapSvg = ({ seatView, selectedSeatIds }: SeatMapSvgProps) => {
+  const [minX, minY, vbW, vbH] = seatView.viewBox;
 
   return (
     <SvgContainer>
       <svg
+        width="100%"
+        height="100%"
         viewBox={`${minX} ${minY} ${vbW} ${vbH}`}
         preserveAspectRatio="xMidYMid meet"
         role="img"
@@ -31,13 +32,12 @@ const SeatMapSvg = ({ data, seatState, selectedSeatIds }: SeatMapSvgProps) => {
           pointerEvents="none"
         />
         <g>
-          {data.seats.map((seat) => {
+          {seatView.seats.map((seat) => {
             return (
               <SeatRect
                 key={seat.id}
                 seat={seat}
-                state={seatState[seat.id]?.state ?? 'AVAILABLE'}
-                // status={state[seat.id]?.status ?? 'AVAILABLE'}
+                state={seat.state}
                 isSelected={selectedSeatIds.has(seat.id)}
               />
             );

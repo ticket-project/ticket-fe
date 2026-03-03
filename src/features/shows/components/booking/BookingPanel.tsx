@@ -32,11 +32,16 @@ import {
 } from './BookingPanel.styles';
 
 interface BookingPanelProps {
+  showId: number;
   performances: Performances[];
   isSaleEnded: boolean;
 }
 
-const BookingPanel = ({ performances, isSaleEnded }: BookingPanelProps) => {
+const BookingPanel = ({
+  showId,
+  performances,
+  isSaleEnded,
+}: BookingPanelProps) => {
   const router = useRouter();
   const { availableDateSet, initialSelectedDate, initialSelectedSessionId } =
     getInitialDateState(performances);
@@ -86,7 +91,9 @@ const BookingPanel = ({ performances, isSaleEnded }: BookingPanelProps) => {
 
   const handleBookClick = () => {
     if (!selectedSession) return;
-    router.push('/onestop/seat');
+    router.push(
+      `/onestop/seat?showId=${showId}&performanceId=${selectedSession}`
+    );
   };
 
   return (

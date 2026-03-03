@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { Box } from '@mui/material';
 
@@ -10,23 +10,23 @@ import SeatMap from '@/features/booking/components/SeatMap';
 import TopInfoBar from '@/features/booking/components/TopInfoBar';
 import { useBookingStore } from '@/store/bookingStore';
 
-import {
-  usePerformanceSummary,
-  useSeatMap,
-  useSeatState,
-} from '../../hooks/useSeatQueries';
+import useSeatViewModel from '../../hooks/useSeatViewModel';
 
 interface SeatPageClientProps {
-  performanceId: string;
+  showId: number;
+  performanceId: number;
 }
 
-const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
+const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
+  const { seatViewQuery } = useSeatViewModel({ showId, performanceId });
+  const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
   const setPerformance = useBookingStore((state) => state.setPerformance);
 
-  // 프리페치로 바꾸나??
-  const seatMap = useSeatMap(performanceId);
-  const seatState = useSeatState(performanceId);
-  const performanceSummary = usePerformanceSummary(performanceId);
+  const selectedSeats = useMemo(() => {
+    const seats = seatViewQuery.data?.seats ?? [];
+
+    return seats.filter((seat) => selectedSeatIds.includes(seat.id));
+  }, [seatViewQuery.data?.seats, selectedSeatIds]);
 
   useEffect(() => {
     setPerformance(performanceId);
@@ -41,15 +41,7 @@ const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
         gridTemplateRows: '60px minmax(0,1fr)',
       }}
     >
-      <QueryBoundary
-        query={performanceSummary}
-        isEmpty={(data) => !data?.performanceId}
-        errorMessage="공연 정보를 불러오는데 실패했습니다."
-        emptyTitle="공연 정보 없음"
-        emptyDescription="공연 정보가 등록되지 않았습니다."
-      >
-        {(item) => <TopInfoBar item={item} />}
-      </QueryBoundary>
+      {/* <TopInfoBar item={item} /> */}
       <Box
         sx={{
           height: '100%',
@@ -59,15 +51,15 @@ const SeatPageClient = ({ performanceId }: SeatPageClientProps) => {
         }}
       >
         <QueryBoundary
-          query={seatMap}
-          isEmpty={(data) => !data?.seats}
+          query={seatViewQuery}
+          isEmpty={(data) => !data?.seats?.length}
           errorMessage="좌석 정보를 불러오는데 실패했습니다."
           emptyTitle="좌석 정보 없음"
           emptyDescription="좌석 정보가 등록되지 않았습니다."
         >
-          {(item) => <SeatMap item={item} seatState={seatState.data} />}
+          {(item) => <SeatMap seatView={item} />}
         </QueryBoundary>
-        <BookingSidebar seats={seatMap.data?.seats} />
+        <BookingSidebar selectedSeats={selectedSeats} />
       </Box>
     </Box>
   );

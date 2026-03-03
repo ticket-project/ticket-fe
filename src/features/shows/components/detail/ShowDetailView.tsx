@@ -40,6 +40,7 @@ const ShowDetailView = ({ item }: ShowDetailViewProps) => {
         <UpcomingPanel item={item} />
       ) : (
         <BookingPanel
+          showId={item.id}
           performances={item.performanceDates}
           isSaleEnded={isSaleEnded}
         />

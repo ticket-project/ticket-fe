@@ -1,38 +1,31 @@
 import Link from 'next/link';
-import { useMemo } from 'react';
 
 import { Clear } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 
 import { useBookingStore } from '@/store/bookingStore';
 
-import { SeatGeometry } from '../types';
+import { SeatViewItem } from '../types';
 import { formatKRW } from '../utils';
 
 interface BookingSidebarProps {
-  seats?: SeatGeometry[];
+  selectedSeats: SeatViewItem[];
 }
 
-const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
-  const { selectedSeatIds, toggleSeatSelection, resetSeatSelection } =
-    useBookingStore();
-
-  const selectedSeats = useMemo(() => {
-    const seatMap = new Map(seats.map((seat) => [seat.id, seat]));
-
-    return selectedSeatIds
-      .map((id) => seatMap.get(id))
-      .filter((seat): seat is SeatGeometry => Boolean(seat));
-  }, [seats, selectedSeatIds]);
-
-  const selectedCount = selectedSeats.length;
-
-  const totalPrice = selectedSeats.reduce(
-    (sum, seat) => sum + seat.grade.price,
-    0
+const BookingSidebar = ({ selectedSeats }: BookingSidebarProps) => {
+  const toggleSeatSelection = useBookingStore(
+    (state) => state.toggleSeatSelection
+  );
+  const resetSeatSelection = useBookingStore(
+    (state) => state.resetSeatSelection
   );
 
+  const selectedCount = selectedSeats.length;
   const isEmpty = selectedCount === 0;
+  const totalPrice = selectedSeats.reduce(
+    (acc, seat) => acc + seat.grade.price,
+    0
+  );
 
   return (
     <Box
@@ -121,7 +114,8 @@ const BookingSidebar = ({ seats = [] }: BookingSidebarProps) => {
                   </Typography>
                   <Box sx={{ mt: '.1rem', color: 'grey.600' }}>
                     <Typography sx={{ fontSize: '1.6rem' }}>
-                      1층 {seat.section}구역 {seat.row}열 {seat.col}번
+                      {seat.floor}층 {seat.section}구역 {seat.row}열 {seat.col}
+                      번
                     </Typography>
                   </Box>
                 </Box>

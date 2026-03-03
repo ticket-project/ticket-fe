@@ -46,13 +46,13 @@ export const queryKeys = {
     show: (performanceId: string | number) =>
       [...queryKeys.booking.all, 'show', String(performanceId)] as const,
 
-    summary: (performanceId: string | number) =>
-      [...queryKeys.booking.all, 'summary', String(performanceId)] as const,
-
     seatMap: (performanceId: string | number) =>
       [...queryKeys.booking.all, 'seatMap', String(performanceId)] as const,
 
     seatState: (performanceId: string | number) =>
       [...queryKeys.booking.all, 'seatState', String(performanceId)] as const,
+
+    venueLayout: (showId: string | number) =>
+      [...queryKeys.booking.all, 'venueLayout', String(showId)] as const,
   },
 } as const;

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import SeatPageClient from '@/features/booking/components/page/SeatPageClient';
 
@@ -12,13 +13,21 @@ export const metadata: Metadata = {
 // (가능하면) 초기 레이아웃/공연정보 fetch → Client에 주기
 
 interface Props {
-  searchParams: { performanceId: string };
+  searchParams: Promise<{
+    performanceId?: string;
+    showId?: string;
+  }>;
 }
 
 const SeatPage = async ({ searchParams }: Props) => {
-  const performanceId = searchParams.performanceId ?? '1';
-  // const queryClient = createQueryClient();
+  const { showId, performanceId } = await searchParams;
 
+  const parsedShowId = showId ? Number(showId) : undefined;
+  const parsedPerformanceId = performanceId ? Number(performanceId) : undefined;
+
+  if (!parsedShowId || !parsedPerformanceId) return notFound();
+
+  // const queryClient = createQueryClient();
   // await Promise.all([
   //   queryClient.prefetchQuery({
   //     queryKey: queryKeys.show.latest(),
@@ -33,7 +42,7 @@ const SeatPage = async ({ searchParams }: Props) => {
   return (
     // <HydrationBoundary state={dehydrate(queryClient)}>
     // </HydrationBoundary>
-    <SeatPageClient performanceId={performanceId} />
+    <SeatPageClient showId={parsedShowId} performanceId={parsedPerformanceId} />
   );
 };
 

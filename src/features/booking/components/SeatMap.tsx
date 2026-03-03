@@ -4,41 +4,43 @@ import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 import { useBookingStore } from '@/store/bookingStore';
 
-import { PerformanceSeatMap, SeatState } from '../types';
+import { SeatView } from '../types';
 import ZoomButtons from './buttons/ZoomButtons';
 import SeatMapSvg from './seatmap/SeatMapSvg';
 
 import { Root } from './seatmap/Seat.styles';
 
 interface SeatMapProps {
-  item: PerformanceSeatMap;
-  seatState: SeatState[];
+  seatView: SeatView;
 }
 
-const SeatMap = ({ item, seatState }: SeatMapProps) => {
-  const { selectedSeatIds, toggleSeatSelection } = useBookingStore();
+const SeatMap = ({ seatView }: SeatMapProps) => {
+  const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
+  const toggleSeatSelection = useBookingStore(
+    (state) => state.toggleSeatSelection
+  );
 
   const selectedSeatIdSet = useMemo(
     () => new Set(selectedSeatIds),
     [selectedSeatIds]
   );
 
-  const handleClickSeat = (e: MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement | null;
+  const handleSeatClick = (event: MouseEvent<HTMLDivElement>) => {
+    const target = event.target as Element | null;
     if (!target) return;
 
-    const seatEl = target.closest<HTMLElement>('[data-seat-id]');
-    const seatId = seatEl?.dataset.seatId;
-    if (!seatId) return;
+    const seatEl = target.closest('[data-seat-id]');
+    const seatId = Number(seatEl?.getAttribute('data-seat-id'));
+    if (!Number.isFinite(seatId)) return;
 
-    const status = seatState[seatId]?.state ?? 'AVAILABLE';
-    if (status !== 'AVAILABLE') return;
+    const seat = seatView.seats.find((seat) => seat.id === seatId);
+    if (!seat?.selectable) return;
 
     toggleSeatSelection(seatId);
   };
 
   return (
-    <Root onClick={handleClickSeat}>
+    <Root>
       <TransformWrapper
         initialScale={1}
         centerOnInit
@@ -60,11 +62,15 @@ const SeatMap = ({ item, seatState }: SeatMapProps) => {
             height: '100%',
           }}
         >
-          <SeatMapSvg
-            data={item}
-            selectedSeatIds={selectedSeatIdSet}
-            seatState={seatState}
-          />
+          <div
+            onClick={handleSeatClick}
+            style={{ width: '100%', height: '100%' }}
+          >
+            <SeatMapSvg
+              seatView={seatView}
+              selectedSeatIds={selectedSeatIdSet}
+            />
+          </div>
         </TransformComponent>
         <ZoomButtons />
       </TransformWrapper>

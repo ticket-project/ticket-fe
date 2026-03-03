@@ -1,42 +1,7 @@
-import { SeatMap } from '../types';
-import { PerformanceSummary } from '../types';
-import { makePerformanceSummaryMock } from './performanceSummary.mock';
-import { makeSeatMapMock } from './seatmap.mock';
-import { makeSeatStateMock } from './seatState.mock';
+import { fetchApi } from '@/lib/api';
+import { ApiResponse } from '@/types/api';
 
-export const getPerformanceSummary = async (
-  performanceId: string
-): Promise<PerformanceSummary> => {
-  // const res = await fetchApi<ApiResponse<ShowInfo>>(`/api/v1/shows/${showId}`);
-  // if (!res?.data) {
-  //   throw new Error('공연 정보를 불러오지 못했습니다.');
-  // }
-  return makePerformanceSummaryMock(performanceId);
-};
-
-export const getSeatMap = async (performanceId: string): Promise<SeatMap> => {
-  // const res = await fetchApi<ApiResponse<SeatMapData>>(
-  //   `/api/v1/shows/${showId}/seatmap`
-  // );
-
-  // if (!res?.data) {
-  //   throw new Error('좌석 배치도를 불러오지 못했습니다.');
-  // }
-
-  // return res.data;
-
-  return makeSeatMapMock(performanceId);
-};
-
-export const getSeatState = async (performanceId: string, since?: string) => {
-  // const qs = since ? `?since=${encodeURIComponent(since)}` : '';
-
-  // const res = await fetchApi<ApiResponse<{}>>(
-  //   `/api/v1/shows/${showId}/seats/state${qs}`
-  // );
-
-  return makeSeatStateMock(performanceId);
-};
+import { SeatMap, SeatMapResponse, SeatState, VenueLayout } from '../types';
 
 // export const holdSeats = async (showId: string, seatIds: string[]) => {
 //   const res = await fetchApi<ApiResponse<{}>>(`/api/v1/shows/${showId}/holds`, {
@@ -67,3 +32,70 @@ export const getSeatState = async (performanceId: string, since?: string) => {
 
 //   return res?.data;
 // };
+
+export const getVenueLayout = async (showId: number) => {
+  const res = await fetchApi<ApiResponse<VenueLayout>>(
+    `/api/v1/shows/${showId}/venue-layout`
+  );
+
+  if (!res?.data) {
+    throw new Error('공연장 정보를 불러오지 못했습니다.');
+  }
+
+  return res.data;
+};
+
+export const getSeatMap = async (showId: number) => {
+  const [seatMapRes, venueLayoutRes] = await Promise.all([
+    fetchApi<ApiResponse<SeatMapResponse>>(`/api/v1/shows/${showId}/seats`),
+    fetchApi<ApiResponse<VenueLayout>>(`/api/v1/shows/${showId}/venue-layout`),
+  ]);
+
+  if (!seatMapRes?.data || !venueLayoutRes?.data) {
+    throw new Error('좌석 배치도를 불러오지 못했습니다.');
+  }
+
+  const { seats } = seatMapRes.data;
+  const { seatDiameter, viewBoxWidth, viewBoxHeight } = venueLayoutRes.data;
+
+  const result: SeatMap = {
+    viewBox: [0, 0, viewBoxWidth, viewBoxHeight],
+    seats: seats.map((seat) => ({
+      id: seat.seatId,
+      floor: seat.floor,
+      section: seat.section,
+      row: seat.row,
+      col: seat.col,
+      x: seat.x,
+      y: seat.y,
+      w: seatDiameter,
+      h: seatDiameter,
+      grade: {
+        id: seat.gradeCode,
+        name: seat.gradeName,
+        price: seat.price,
+      },
+    })),
+  };
+
+  return result;
+};
+
+export const getSeatState = async (
+  performanceId: number,
+  token?: string | null
+) => {
+  const res = await fetchApi<ApiResponse<SeatState>>(
+    `/api/v1/performances/${performanceId}/seats/status`,
+    {
+      method: 'GET',
+      token,
+    }
+  );
+
+  if (!res?.data) {
+    throw new Error('좌석 정보를 불러오지 못했습니다.');
+  }
+
+  return res.data;
+};

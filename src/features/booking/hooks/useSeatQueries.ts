@@ -2,23 +2,23 @@ import { useQuery } from '@tanstack/react-query';
 
 import { queryKeys } from '@/lib/queryKeys';
 
-import { getSeatMap, getSeatState, getPerformanceSummary } from '../api';
+import { getSeatMap, getSeatState, getVenueLayout } from '../api';
 
 const SEAT_QUERY_CONFIG = {
   staleTime: 0,
   gcTime: 1000 * 60 * 5,
 } as const;
 
-export const usePerformanceSummary = (performanceId: string) => {
+export const useVenueLayout = (showId: number) => {
   return useQuery({
-    queryKey: queryKeys.booking.summary(performanceId),
-    queryFn: () => getPerformanceSummary(performanceId),
-    enabled: Boolean(performanceId),
+    queryKey: queryKeys.booking.venueLayout(showId),
+    queryFn: () => getVenueLayout(showId),
+    enabled: Boolean(showId),
     ...SEAT_QUERY_CONFIG,
   });
 };
 
-export const useSeatMap = (showId: string) => {
+export const useSeatMap = (showId: number) => {
   return useQuery({
     queryKey: queryKeys.booking.seatMap(showId),
     queryFn: () => getSeatMap(showId),
@@ -27,11 +27,11 @@ export const useSeatMap = (showId: string) => {
   });
 };
 
-export const useSeatState = (showId: string) => {
+export const useSeatState = (performanceId: number, token?: string | null) => {
   return useQuery({
-    queryKey: queryKeys.booking.seatState(showId),
-    queryFn: () => getSeatState(showId),
-    enabled: Boolean(showId),
+    queryKey: queryKeys.booking.seatState(performanceId),
+    queryFn: () => getSeatState(performanceId, token),
+    enabled: Boolean(performanceId),
     ...SEAT_QUERY_CONFIG,
   });
 };

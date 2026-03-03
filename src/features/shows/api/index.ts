@@ -26,7 +26,6 @@ export const getLatestShows = async (
 };
 
 // 오픈예정 공연
-
 export const getUpcomingShowsPreview = async (
   category?: string
 ): Promise<UpcomingShowItem[]> => {
@@ -113,7 +112,7 @@ export const getShowLike = async (
   token?: string | null
 ): Promise<ShowLike> => {
   const res = await fetchApi<ApiResponse<ShowLike>>(
-    `/api/v1/shows/${showId}/likes`,
+    `/api/v1/likes/shows/${showId}`,
     {
       method: 'GET',
       token,
@@ -133,7 +132,8 @@ export const addShowLike = async (
   token?: string | null
 ): Promise<ShowLike> => {
   const res = await fetchApi<ApiResponse<ShowLike>>(
-    `/api/v1/shows/${showId}/likes`,
+    `/api/v1/likes/shows/${showId}`,
+
     { method: 'POST', token }
   );
 
@@ -149,7 +149,7 @@ export const removeShowLike = async (
   token?: string | null
 ): Promise<ShowLike> => {
   const res = await fetchApi<ApiResponse<ShowLike>>(
-    `/api/v1/shows/${showId}/likes`,
+    `/api/v1/likes/shows/${showId}`,
     {
       method: 'DELETE',
       token,
@@ -169,7 +169,7 @@ export const getMyLikedShows = async (
   size = 20
 ): Promise<PaginatedResponse<LikedShowItem>> => {
   const res = await fetchApi<ApiResponse<PaginatedResponse<LikedShowItem>>>(
-    '/api/v1/shows/likes',
+    '/api/v1/likes/shows/me',
     {
       method: 'GET',
       params: { size },
@@ -186,10 +186,10 @@ export const getMyLikedShows = async (
 
 // 회차 잔여석
 export const getSeatGrades = async (
-  showId: string | number
+  performanceId: string | number
 ): Promise<SeatGrade[]> => {
   const res = await fetchApi<ApiResponse<{ grades: SeatGrade[] }>>(
-    `/api/v1/performances/${showId}/seats/availability`
+    `/api/v1/performances/${performanceId}/seats/availability`
   );
 
   return res?.data?.grades ?? [];

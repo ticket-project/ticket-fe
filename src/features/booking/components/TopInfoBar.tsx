@@ -1,10 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 
-import { PerformanceSummary } from '../types';
-
-interface TopInfoBarProps {
-  item: PerformanceSummary;
-}
+interface TopInfoBarProps {}
 
 const TopInfoBar = ({ item }: TopInfoBarProps) => {
   const { title, region, performanceDate, grades } = item;

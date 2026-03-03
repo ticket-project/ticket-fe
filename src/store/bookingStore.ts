@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
 type BookingState = {
-  performanceId: string | null;
-  selectedSeatIds: string[];
-  setPerformance: (performanceId: string) => void;
-  toggleSeatSelection: (seatId: string) => void;
+  performanceId: number | null;
+  selectedSeatIds: number[];
+  setPerformance: (performanceId: number) => void;
+  toggleSeatSelection: (seatId: number) => void;
   resetSeatSelection: () => void;
 };
 
@@ -12,7 +12,7 @@ export const useBookingStore = create<BookingState>((set) => ({
   performanceId: null,
   selectedSeatIds: [],
 
-  setPerformance: (performanceId: string) =>
+  setPerformance: (performanceId: number) =>
     set((state) => {
       if (state.performanceId === performanceId) {
         return state;
@@ -24,7 +24,7 @@ export const useBookingStore = create<BookingState>((set) => ({
       };
     }),
 
-  toggleSeatSelection: (seatId: string) =>
+  toggleSeatSelection: (seatId: number) =>
     set((state) => {
       const isSelected = state.selectedSeatIds.includes(seatId);
 

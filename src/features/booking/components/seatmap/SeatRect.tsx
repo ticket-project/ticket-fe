@@ -1,10 +1,10 @@
-import { SeatGeometry, SeatState, SeatStatus } from '../../types';
+import { SeatGeometry, SeatStatus } from '../../types';
 
 import { getIconRect } from '../../utils';
 
 interface SeatRectProps {
   seat: SeatGeometry;
-  state: SeatState;
+  state: SeatStatus;
   isSelected: boolean;
 }
 
