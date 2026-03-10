@@ -32,3 +32,12 @@ export const getSelectedSeats = (
     .map((seatId) => seatById.get(seatId))
     .filter((seat) => seat != null);
 };
+
+export const getSeatGradeClassName = (gradeName: string) => {
+  if (gradeName.includes('VIP석')) return 'grade-vip';
+  if (gradeName.includes('R석')) return 'grade-r';
+  if (gradeName.includes('S석')) return 'grade-s';
+  if (gradeName.includes('A석')) return 'grade-a';
+
+  return 'grade-default';
+};

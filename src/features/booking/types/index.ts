@@ -66,7 +66,7 @@ export interface SeatMapItem {
   grade: BookingSeatGrade;
 }
 
-export type SeatGeometry = Pick<SeatMapItem, 'id' | 'x' | 'y'>;
+export type SeatGeometry = Pick<SeatMapItem, 'id' | 'x' | 'y' | 'grade'>;
 
 export interface SeatMap {
   viewBox: ViewBox;

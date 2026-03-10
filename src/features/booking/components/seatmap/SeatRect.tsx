@@ -1,6 +1,6 @@
 import { PendingSeatAction, SeatGeometry, SeatStatus } from '../../types';
 
-import { getIconRect } from '../../utils';
+import { getIconRect, getSeatGradeClassName } from '../../utils';
 
 interface SeatRectProps {
   seat: SeatGeometry;
@@ -34,7 +34,7 @@ const SeatRect = ({
     <>
       <rect
         key={seat.id}
-        className={className}
+        className={`${className} ${getSeatGradeClassName(seat.grade.name)}`}
         data-seat-id={seat.id}
         x={seat.x}
         y={seat.y}

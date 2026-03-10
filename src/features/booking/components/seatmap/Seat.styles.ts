@@ -1,6 +1,6 @@
 import { Box, IconButton, styled } from '@mui/material';
 
-export const Root = styled(Box)(({ theme }) => ({
+export const Root = styled(Box)(() => ({
   position: 'relative',
   height: '100%',
   minHeight: 0,
@@ -10,7 +10,7 @@ export const Root = styled(Box)(({ theme }) => ({
   touchAction: 'none',
 }));
 
-export const ZoomControls = styled(Box)(({ theme }) => ({
+export const ZoomControls = styled(Box)(() => ({
   position: 'absolute',
   bottom: '2rem',
   right: '2rem',
@@ -22,7 +22,7 @@ export const ZoomControls = styled(Box)(({ theme }) => ({
   boxShadow: '0 .2rem .8rem 0 rgba(0, 0, 0, .1)',
 }));
 
-export const StyledIconButton = styled(IconButton)(({ theme }) => ({
+export const StyledIconButton = styled(IconButton)(() => ({
   backgroundColor: 'white',
   borderRadius: 0,
   '&:hover': {
@@ -34,7 +34,7 @@ export const StyledIconButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-export const SvgContainer = styled(Box)(({ theme }) => ({
+export const SvgContainer = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -48,13 +48,49 @@ export const SvgContainer = styled(Box)(({ theme }) => ({
     cursor: 'pointer',
     '&.is-available': {
       cursor: 'pointer',
-      fill: '#d0caf6',
-      stroke: '#7969e6',
+      '&.grade-a': {
+        fill: '#ffe48a',
+        stroke: '#d2a32a',
+      },
+      '&.grade-default': {
+        fill: '#ffe48a',
+        stroke: '#d2a32a',
+      },
+      '&.grade-r': {
+        fill: '#c2e0b8',
+        stroke: '#50a635',
+      },
+      '&.grade-s': {
+        fill: '#c3e4fd',
+        stroke: '#54b1f9',
+      },
+      '&.grade-vip': {
+        fill: '#d9c3ff',
+        stroke: '#8a5fe2',
+      },
     },
     '&.is-selected': {
       transform: 'scale(1.2)',
-      fill: '#7969e6',
-      stroke: '#afa5f0',
+      '&.grade-a': {
+        fill: '#d2a32a',
+        stroke: '#ffe48a',
+      },
+      '&.grade-default': {
+        fill: '#d2a32a',
+        stroke: '#ffe48a',
+      },
+      '&.grade-r': {
+        fill: '#50a635',
+        stroke: '#96c986',
+      },
+      '&.grade-s': {
+        fill: '#54b1f9',
+        stroke: '#98d0fb',
+      },
+      '&.grade-vip': {
+        fill: '#7969e6',
+        stroke: '#afa5f0',
+      },
       strokeWidth: 0.7,
     },
     '&.is-unavailable': {
