@@ -12,7 +12,7 @@ import { useAuthStore } from '@/store/authStore';
 import theme from '@/styles/theme';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-  const { initializeAuth, clearAuth } = useAuthStore();
+  const { initializeAuth, setAccessToken, clearAuth } = useAuthStore();
 
   const [queryClient] = useState(
     () =>
@@ -30,10 +30,24 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       clearAuth();
     };
 
+    const handleTokenRefreshed = (event: Event) => {
+      const token = (event as CustomEvent<string>).detail;
+
+      if (!token) {
+        return;
+      }
+
+      setAccessToken(token);
+    };
+
     window.addEventListener('auth:unauthorized', handleUnauthorized);
-    return () =>
+    window.addEventListener('auth:token-refreshed', handleTokenRefreshed);
+
+    return () => {
       window.removeEventListener('auth:unauthorized', handleUnauthorized);
-  }, [clearAuth]);
+      window.removeEventListener('auth:token-refreshed', handleTokenRefreshed);
+    };
+  }, [clearAuth, setAccessToken]);
 
   return (
     <QueryClientProvider client={queryClient}>

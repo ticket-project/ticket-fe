@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingState from '@/components/common/LoadingState';
-import { normalizeAccessToken } from '@/features/auth/utils/tokenStorage';
+import { exchangeOAuthCode } from '@/features/auth/api';
 import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
@@ -14,21 +14,30 @@ const CallbackPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
+  const code = searchParams.get('code');
   const { setAccessToken, clearAuth } = useAuthStore();
 
   useEffect(() => {
-    const accessToken = normalizeAccessToken(searchParams.get('accessToken'));
-
-    if (accessToken) {
-      setAccessToken(accessToken);
-      queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-      router.replace('/concert');
+    if (!code) {
+      clearAuth();
+      router.replace('/login');
       return;
     }
 
-    clearAuth();
-    router.replace('/login');
-  }, [clearAuth, queryClient, router, searchParams, setAccessToken]);
+    const authenticate = async () => {
+      try {
+        const accessToken = await exchangeOAuthCode(code);
+        setAccessToken(accessToken);
+        await queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
+        router.replace('/concert');
+      } catch {
+        clearAuth();
+        router.replace('/login');
+      }
+    };
+
+    authenticate();
+  }, [clearAuth, code, queryClient, router, setAccessToken]);
 
   return <LoadingState minHeight="100dvh" size={28} />;
 };
