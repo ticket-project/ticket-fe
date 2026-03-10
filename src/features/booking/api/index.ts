@@ -1,7 +1,13 @@
 import { fetchApi } from '@/lib/api';
 import { ApiResponse } from '@/types/api';
 
-import { SeatMap, SeatMapResponse, SeatState, VenueLayout } from '../types';
+import {
+  PerformanceSummary,
+  SeatMap,
+  SeatMapResponse,
+  SeatState,
+  VenueLayout,
+} from '../types';
 
 // export const holdSeats = async (showId: string, seatIds: string[]) => {
 //   const res = await fetchApi<ApiResponse<{}>>(`/api/v1/shows/${showId}/holds`, {
@@ -32,6 +38,18 @@ import { SeatMap, SeatMapResponse, SeatState, VenueLayout } from '../types';
 
 //   return res?.data;
 // };
+
+export const getPerformanceSummary = async (performanceId: number) => {
+  const res = await fetchApi<ApiResponse<PerformanceSummary>>(
+    `/api/v1/performances/${performanceId}/summary`
+  );
+
+  if (!res?.data) {
+    throw new Error('공연 정보를 불러오지 못했습니다.');
+  }
+
+  return res.data;
+};
 
 export const getVenueLayout = async (showId: number) => {
   const res = await fetchApi<ApiResponse<VenueLayout>>(

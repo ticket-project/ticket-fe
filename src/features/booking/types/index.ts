@@ -10,7 +10,8 @@ export interface BookingSeatGrade {
 
 export interface PerformanceSummary {
   title: string;
-  performanceDate: string;
+  region: string;
+  startTime: string;
 }
 
 export interface VenueLayout {

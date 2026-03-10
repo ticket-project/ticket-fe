@@ -42,8 +42,8 @@ export const queryKeys = {
 
   booking: {
     all: ['booking'] as const,
-    // show: (performanceId: number) =>
-    //   [...queryKeys.booking.all, 'show', performanceId] as const,
+    performanceSummary: (performanceId: number) =>
+      [...queryKeys.booking.all, 'performanceSummary', performanceId] as const,
 
     seatMap: (showId: number) =>
       [...queryKeys.booking.all, 'seatMap', showId] as const,

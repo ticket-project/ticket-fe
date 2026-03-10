@@ -1,13 +1,19 @@
 import { Box, Button, Container, Typography } from '@mui/material';
+import dayjs from 'dayjs';
 
 import { PerformanceSummary } from '../types';
 
 interface TopInfoBarProps {
-  performanceSummary: PerformanceSummary;
+  performanceSummary?: PerformanceSummary;
 }
 
 const TopInfoBar = ({ performanceSummary }: TopInfoBarProps) => {
-  const { title, performanceDate } = performanceSummary;
+  if (!performanceSummary) return null;
+  const { title, region, startTime } = performanceSummary;
+
+  const formattedStartTime = dayjs(startTime)
+    .locale('ko')
+    .format('YYYY.MM.DD(ddd) HH:mm');
 
   return (
     <Container
@@ -25,7 +31,10 @@ const TopInfoBar = ({ performanceSummary }: TopInfoBarProps) => {
           {title}
         </Typography>
         <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 800 }}>
-          &nbsp;· {performanceDate}
+          &nbsp;· {region}
+        </Typography>
+        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 800 }}>
+          &nbsp;· {formattedStartTime}
         </Typography>
       </Box>
       <Button

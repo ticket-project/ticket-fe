@@ -10,13 +10,13 @@ import QueryBoundary from '@/components/common/QueryBoundary';
 import BookingSidebar from '@/features/booking/components/BookingSidebar';
 import SeatMap from '@/features/booking/components/SeatMap';
 import TopInfoBar from '@/features/booking/components/TopInfoBar';
-import { useShowById } from '@/features/shows/hooks/useShowQueries';
 import { useBookingStore } from '@/store/bookingStore';
 
 import useSeatActions from '../../hooks/useSeatActions';
+import { usePerformanceSummary } from '../../hooks/useSeatQueries';
 import useSeatSocket from '../../hooks/useSeatSocket';
 import useSeatViewModel from '../../hooks/useSeatViewModel';
-import { getPerformanceSummary, getSelectedSeats } from '../../utils';
+import { getSelectedSeats } from '../../utils';
 
 interface SeatPageClientProps {
   showId: number;
@@ -25,7 +25,7 @@ interface SeatPageClientProps {
 
 const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
   const { seatViewQuery } = useSeatViewModel({ showId, performanceId });
-  const { data: show } = useShowById(showId);
+  const { data: performanceSummary } = usePerformanceSummary(performanceId);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
   const resetBookingState = useBookingStore((state) => state.resetBookingState);
 
@@ -38,8 +38,6 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     handleDeselectSeat,
     handleClearSeats,
   } = useSeatActions({ performanceId });
-
-  const performanceSummary = getPerformanceSummary(show, performanceId);
 
   const selectedSeats = useMemo(
     () => getSelectedSeats(seatViewQuery.data?.seats ?? [], selectedSeatIds),
