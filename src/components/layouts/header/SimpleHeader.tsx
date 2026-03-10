@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 
 import { Box } from '@mui/material';
 
+import AuthButtons from '@/features/auth/components/buttons/AuthButtons';
+
 import {
   Root,
   TopArea,
@@ -27,6 +29,7 @@ const SimpleHeader = () => {
                 <span>ONE</span>&nbsp;티켓
               </LogoText>
             </Box>
+            {isSeatPage && <AuthButtons />}
           </HeaderContainer>
         </TopArea>
       </Header>

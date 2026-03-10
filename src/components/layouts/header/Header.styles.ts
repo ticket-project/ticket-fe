@@ -51,13 +51,11 @@ export const StickyHeader = styled(AppBar, {
   pointerEvents: isScrolled ? 'auto' : 'none',
 }));
 
-export const HeaderContainer = styled(Container)(({ theme }) => ({
+export const HeaderContainer = styled(Container)(() => ({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   height: '100%',
-  [theme.breakpoints.down('md')]: {
-    justifyContent: 'space-between',
-  },
 }));
 
 export const TopArea = styled(Box)(({ theme }) => ({
