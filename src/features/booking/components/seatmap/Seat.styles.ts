@@ -1,5 +1,7 @@
 import { Box, IconButton, styled } from '@mui/material';
 
+import { SEAT_GRADE_COLORS } from '../../constants';
+
 export const Root = styled(Box)(() => ({
   position: 'relative',
   height: '100%',
@@ -47,49 +49,42 @@ export const SvgContainer = styled(Box)(() => ({
       'transform 140ms ease-out, fill 140ms ease-out, stroke 140ms ease-out, stroke-width 140ms ease-out, opacity 140ms ease-out',
     cursor: 'pointer',
     '&.is-available': {
-      cursor: 'pointer',
-      '&.grade-a': {
-        fill: '#ffe48a',
-        stroke: '#d2a32a',
-      },
-      '&.grade-default': {
-        fill: '#ffe48a',
-        stroke: '#d2a32a',
+      '&.grade-a, &.grade-default': {
+        fill: SEAT_GRADE_COLORS['grade-a'].baseFill,
+        stroke: SEAT_GRADE_COLORS['grade-a'].baseStroke,
       },
       '&.grade-r': {
-        fill: '#c2e0b8',
-        stroke: '#50a635',
+        fill: SEAT_GRADE_COLORS['grade-r'].baseFill,
+        stroke: SEAT_GRADE_COLORS['grade-r'].baseStroke,
       },
       '&.grade-s': {
-        fill: '#c3e4fd',
-        stroke: '#54b1f9',
+        fill: SEAT_GRADE_COLORS['grade-s'].baseFill,
+        stroke: SEAT_GRADE_COLORS['grade-s'].baseStroke,
       },
       '&.grade-vip': {
-        fill: '#d9c3ff',
-        stroke: '#8a5fe2',
+        fill: SEAT_GRADE_COLORS['grade-vip'].baseFill,
+        stroke: SEAT_GRADE_COLORS['grade-vip'].baseStroke,
       },
     },
+
     '&.is-selected': {
       transform: 'scale(1.2)',
-      '&.grade-a': {
-        fill: '#d2a32a',
-        stroke: '#ffe48a',
+      '&.grade-a, &.grade-default': {
+        fill: SEAT_GRADE_COLORS['grade-a'].selectedFill,
+        stroke: SEAT_GRADE_COLORS['grade-a'].selectedStroke,
       },
-      '&.grade-default': {
-        fill: '#d2a32a',
-        stroke: '#ffe48a',
-      },
+
       '&.grade-r': {
-        fill: '#50a635',
-        stroke: '#96c986',
+        fill: SEAT_GRADE_COLORS['grade-r'].selectedFill,
+        stroke: SEAT_GRADE_COLORS['grade-r'].selectedStroke,
       },
       '&.grade-s': {
-        fill: '#54b1f9',
-        stroke: '#98d0fb',
+        fill: SEAT_GRADE_COLORS['grade-s'].selectedFill,
+        stroke: SEAT_GRADE_COLORS['grade-s'].selectedStroke,
       },
       '&.grade-vip': {
-        fill: '#7969e6',
-        stroke: '#afa5f0',
+        fill: SEAT_GRADE_COLORS['grade-vip'].selectedFill,
+        stroke: SEAT_GRADE_COLORS['grade-vip'].selectedStroke,
       },
       strokeWidth: 0.7,
     },

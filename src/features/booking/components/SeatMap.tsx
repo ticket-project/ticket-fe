@@ -6,6 +6,7 @@ import { useBookingStore } from '@/store/bookingStore';
 
 import { PendingSeatActionMap, SeatView } from '../types';
 import ZoomButtons from './buttons/ZoomButtons';
+import GradePricePopover from './popover/GradePricePopover';
 import SeatMapSvg from './seatmap/SeatMapSvg';
 
 import { Root } from './seatmap/Seat.styles';
@@ -98,6 +99,7 @@ const SeatMap = ({
             />
           </div>
         </TransformComponent>
+        <GradePricePopover seatView={seatView} />
         <ZoomButtons />
       </TransformWrapper>
     </Root>

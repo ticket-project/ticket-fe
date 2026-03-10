@@ -1,8 +1,5 @@
-import dayjs from 'dayjs';
-
-import { ShowDetail } from '@/features/shows/types';
-
-import { PerformanceSummary, SeatGeometry, SeatViewItem } from '../types';
+import { SEAT_GRADE_CLASS, SEAT_GRADE_COLORS } from '../constants';
+import { SeatGeometry, SeatViewItem } from '../types';
 
 export const getIconRect = (
   seat: SeatGeometry,
@@ -34,10 +31,15 @@ export const getSelectedSeats = (
 };
 
 export const getSeatGradeClassName = (gradeName: string) => {
-  if (gradeName.includes('VIP석')) return 'grade-vip';
-  if (gradeName.includes('R석')) return 'grade-r';
-  if (gradeName.includes('S석')) return 'grade-s';
-  if (gradeName.includes('A석')) return 'grade-a';
+  if (gradeName.includes('VIP석')) return SEAT_GRADE_CLASS.VIP;
+  if (gradeName.includes('R석')) return SEAT_GRADE_CLASS.R;
+  if (gradeName.includes('S석')) return SEAT_GRADE_CLASS.S;
+  if (gradeName.includes('A석')) return SEAT_GRADE_CLASS.A;
 
-  return 'grade-default';
+  return SEAT_GRADE_CLASS.DEFAULT;
+};
+
+export const getSeatGradeColor = (gradeName: string) => {
+  const className = getSeatGradeClassName(gradeName);
+  return SEAT_GRADE_COLORS[className].legend;
 };
