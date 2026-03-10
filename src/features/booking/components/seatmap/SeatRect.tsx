@@ -1,4 +1,4 @@
-import { SeatGeometry, SeatStatus } from '../../types';
+import { PendingSeatAction, SeatGeometry, SeatStatus } from '../../types';
 
 import { getIconRect } from '../../utils';
 
@@ -6,20 +6,30 @@ interface SeatRectProps {
   seat: SeatGeometry;
   seatSize: number;
   state: SeatStatus;
+  pendingAction?: PendingSeatAction;
   isSelected: boolean;
+  isSelectedByOthers: boolean;
 }
 
-const SeatRect = ({ seat, seatSize, state, isSelected }: SeatRectProps) => {
-  const isAvailable = state === 'AVAILABLE';
-  const className = [
-    'seat',
-    isAvailable ? 'is-available' : 'is-unavailable',
-    isSelected && 'is-selected',
-  ]
-    .filter(Boolean)
-    .join(' ');
+const SeatRect = ({
+  seat,
+  seatSize,
+  state,
+  pendingAction,
+  isSelected,
+  isSelectedByOthers,
+}: SeatRectProps) => {
+  const isVisuallySelected = isSelected || pendingAction === 'deselect';
 
+  const displayState = isVisuallySelected
+    ? 'selected'
+    : isSelectedByOthers || state !== 'AVAILABLE'
+      ? 'unavailable'
+      : 'available';
+
+  const className = `seat is-${displayState}`;
   const checkIcon = getIconRect(seat, seatSize, 0.5);
+
   return (
     <>
       <rect
@@ -32,16 +42,15 @@ const SeatRect = ({ seat, seatSize, state, isSelected }: SeatRectProps) => {
         height={seatSize}
         rx={seatSize / 2}
       />
-      {isSelected && (
-        <image
-          href="/images/check-white.svg"
-          x={checkIcon.x}
-          y={checkIcon.y}
-          width={checkIcon.width}
-          height={checkIcon.height}
-          style={{ pointerEvents: 'none' }}
-        />
-      )}
+      <image
+        href="/images/check-white.svg"
+        className={`seat-check ${isVisuallySelected ? 'is-visible' : ''}`}
+        x={checkIcon.x}
+        y={checkIcon.y}
+        width={checkIcon.width}
+        height={checkIcon.height}
+        style={{ pointerEvents: 'none' }}
+      />
     </>
   );
 };

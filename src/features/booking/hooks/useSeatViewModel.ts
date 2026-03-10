@@ -23,9 +23,8 @@ const useSeatViewModel = ({ showId, performanceId }: UseSeatViewModelProps) => {
     if (!seatMap) return undefined;
 
     const stateMap = new Map(
-      seatStateQuery.data?.seats.map((seat) => [seat.seatId, seat.state])
+      seatStateQuery.data?.seats.map((seat) => [seat.seatId, seat.status])
     );
-
     return {
       ...seatMap,
       seats: seatMap.seats.map((seat) => {
@@ -34,10 +33,7 @@ const useSeatViewModel = ({ showId, performanceId }: UseSeatViewModelProps) => {
         return {
           ...seat,
           state,
-          disabled: state === 'SOLD',
           selectable: state === 'AVAILABLE',
-          //   disabled: status !== 'AVAILABLE' && status !== 'HELD_BY_ME',
-          //   selectable: status === 'AVAILABLE' || status === 'HELD_BY_ME',
         };
       }),
     };

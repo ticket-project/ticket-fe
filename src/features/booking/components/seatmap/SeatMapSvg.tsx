@@ -1,4 +1,4 @@
-import { SeatView } from '../../types';
+import { PendingSeatActionMap, SeatView } from '../../types';
 
 import SeatRect from './SeatRect';
 
@@ -6,10 +6,17 @@ import { SvgContainer } from './Seat.styles';
 
 interface SeatMapSvgProps {
   seatView: SeatView;
+  pendingSeatActions: PendingSeatActionMap;
   selectedSeatIds: Set<number>;
+  selectedByOthersSeatIds: Set<number>;
 }
 
-const SeatMapSvg = ({ seatView, selectedSeatIds }: SeatMapSvgProps) => {
+const SeatMapSvg = ({
+  seatView,
+  pendingSeatActions,
+  selectedSeatIds,
+  selectedByOthersSeatIds,
+}: SeatMapSvgProps) => {
   const [minX, minY, vbW, vbH] = seatView.viewBox;
 
   return (
@@ -33,13 +40,18 @@ const SeatMapSvg = ({ seatView, selectedSeatIds }: SeatMapSvgProps) => {
         />
         <g>
           {seatView.seats.map((seat) => {
+            const isSelectedByMe = selectedSeatIds.has(seat.id);
+            const isSelectedByOther = selectedByOthersSeatIds.has(seat.id);
+
             return (
               <SeatRect
                 key={seat.id}
                 seat={seat}
                 seatSize={seatView.seatSize}
                 state={seat.state}
-                isSelected={selectedSeatIds.has(seat.id)}
+                pendingAction={pendingSeatActions[seat.id]}
+                isSelected={isSelectedByMe}
+                isSelectedByOthers={isSelectedByOther}
               />
             );
           })}

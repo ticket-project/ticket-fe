@@ -98,3 +98,31 @@ export const getSeatState = async (
 
   return res.data;
 };
+
+export const selectSeat = async (
+  performanceId: number,
+  seatId: number,
+  token?: string | null
+) => {
+  await fetchApi<ApiResponse<null>>(
+    `/api/v1/performances/${performanceId}/seats/${seatId}/select`,
+    {
+      method: 'POST',
+      token,
+    }
+  );
+};
+
+export const deselectSeat = async (
+  performanceId: number,
+  seatId: number,
+  token?: string | null
+) => {
+  await fetchApi<ApiResponse<null>>(
+    `/api/v1/performances/${performanceId}/seats/${seatId}/select`,
+    {
+      method: 'DELETE',
+      token,
+    }
+  );
+};

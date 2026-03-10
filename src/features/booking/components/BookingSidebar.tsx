@@ -3,23 +3,22 @@ import Link from 'next/link';
 import { Clear } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 
-import { useBookingStore } from '@/store/bookingStore';
-
 import { SeatViewItem } from '../types';
 import { formatKRW } from '../utils';
 
 interface BookingSidebarProps {
   selectedSeats: SeatViewItem[];
+  pendingSeatIds: Set<number>;
+  onClearSeats: () => Promise<void>;
+  onRemoveSeat: (seatId: number) => Promise<void>;
 }
 
-const BookingSidebar = ({ selectedSeats }: BookingSidebarProps) => {
-  const toggleSeatSelection = useBookingStore(
-    (state) => state.toggleSeatSelection
-  );
-  const resetSeatSelection = useBookingStore(
-    (state) => state.resetSeatSelection
-  );
-
+const BookingSidebar = ({
+  selectedSeats,
+  pendingSeatIds,
+  onClearSeats,
+  onRemoveSeat,
+}: BookingSidebarProps) => {
   const selectedCount = selectedSeats.length;
   const isEmpty = selectedCount === 0;
   const totalPrice = selectedSeats.reduce(
@@ -62,7 +61,7 @@ const BookingSidebar = ({ selectedSeats }: BookingSidebarProps) => {
         {!isEmpty && (
           <Button
             variant="text"
-            onClick={resetSeatSelection}
+            onClick={onClearSeats}
             sx={{
               color: 'grey.500',
               fontSize: '1.8rem',
@@ -125,7 +124,8 @@ const BookingSidebar = ({ selectedSeats }: BookingSidebarProps) => {
               </Stack>
               <IconButton
                 aria-label={`${seat.row}열 ${seat.col}번 삭제`}
-                onClick={() => toggleSeatSelection(seat.id)}
+                disabled={pendingSeatIds.has(seat.id)}
+                onClick={() => onRemoveSeat(seat.id)}
                 sx={{
                   pr: 0,
                   pl: '16px',
@@ -169,7 +169,6 @@ const BookingSidebar = ({ selectedSeats }: BookingSidebarProps) => {
               py: '1.2rem',
             }}
           >
-            {/* {isEmpty ? '좌석 선택하기' : `${selectedCount}매 예매하기`} */}
             예매하기
           </Button>
         </Stack>

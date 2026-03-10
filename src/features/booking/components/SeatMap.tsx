@@ -4,7 +4,7 @@ import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 import { useBookingStore } from '@/store/bookingStore';
 
-import { SeatView } from '../types';
+import { PendingSeatActionMap, SeatView } from '../types';
 import ZoomButtons from './buttons/ZoomButtons';
 import SeatMapSvg from './seatmap/SeatMapSvg';
 
@@ -12,17 +12,32 @@ import { Root } from './seatmap/Seat.styles';
 
 interface SeatMapProps {
   seatView: SeatView;
+  pendingSeatActions: PendingSeatActionMap;
+  pendingSeatIds: Set<number>;
+  onSelectSeat: (seatId: number) => Promise<void>;
+  onDeselectSeat: (seatId: number) => Promise<void>;
 }
 
-const SeatMap = ({ seatView }: SeatMapProps) => {
+const SeatMap = ({
+  seatView,
+  pendingSeatActions,
+  pendingSeatIds,
+  onSelectSeat,
+  onDeselectSeat,
+}: SeatMapProps) => {
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
-  const toggleSeatSelection = useBookingStore(
-    (state) => state.toggleSeatSelection
+  const selectedByOthersSeatIds = useBookingStore(
+    (state) => state.selectedByOthersSeatIds
   );
 
   const selectedSeatIdSet = useMemo(
     () => new Set(selectedSeatIds),
     [selectedSeatIds]
+  );
+
+  const selectedByOthersSeatIdSet = useMemo(
+    () => new Set(selectedByOthersSeatIds),
+    [selectedByOthersSeatIds]
   );
 
   const handleSeatClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -33,10 +48,19 @@ const SeatMap = ({ seatView }: SeatMapProps) => {
     const seatId = Number(seatEl?.getAttribute('data-seat-id'));
     if (!Number.isFinite(seatId)) return;
 
+    const isSelectedByMe = selectedSeatIdSet.has(seatId);
+    if (isSelectedByMe) {
+      onDeselectSeat(seatId);
+      return;
+    }
+
     const seat = seatView.seats.find((seat) => seat.id === seatId);
+
+    if (selectedByOthersSeatIdSet.has(seatId)) return;
+    if (pendingSeatIds.has(seatId)) return;
     if (!seat?.selectable) return;
 
-    toggleSeatSelection(seatId);
+    onSelectSeat(seatId);
   };
 
   return (
@@ -68,7 +92,9 @@ const SeatMap = ({ seatView }: SeatMapProps) => {
           >
             <SeatMapSvg
               seatView={seatView}
+              pendingSeatActions={pendingSeatActions}
               selectedSeatIds={selectedSeatIdSet}
+              selectedByOthersSeatIds={selectedByOthersSeatIdSet}
             />
           </div>
         </TransformComponent>

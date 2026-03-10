@@ -44,7 +44,7 @@ export const SvgContainer = styled(Box)(({ theme }) => ({
 
   '.seat': {
     transition:
-      'fill 120ms ease, stroke-width 120ms ease, opacity 120ms ease, transform 120ms ease',
+      'transform 140ms ease-out, fill 140ms ease-out, stroke 140ms ease-out, stroke-width 140ms ease-out, opacity 140ms ease-out',
     cursor: 'pointer',
     '&.is-available': {
       cursor: 'pointer',
@@ -57,14 +57,21 @@ export const SvgContainer = styled(Box)(({ theme }) => ({
       stroke: '#afa5f0',
       strokeWidth: 0.7,
     },
-
     '&.is-unavailable': {
-      cursor: 'default',
-      fill: '#eeeff3',
-      stroke: '#eeeff3',
+      opacity: 0.95,
+      cursor: 'not-allowed',
+      fill: '#cfd4dc',
+      stroke: '#a7b0bd',
     },
     strokeWidth: 0.6,
     transformBox: 'fill-box',
     transformOrigin: 'center',
+  },
+  '.seat-check': {
+    opacity: 0,
+    transition: 'opacity 120ms ease-out',
+  },
+  '.seat-check.is-visible': {
+    opacity: 1,
   },
 }));

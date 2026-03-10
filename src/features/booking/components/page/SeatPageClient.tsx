@@ -5,7 +5,6 @@ import 'dayjs/locale/ko';
 import { useEffect, useMemo } from 'react';
 
 import { Box } from '@mui/material';
-import dayjs from 'dayjs';
 
 import QueryBoundary from '@/components/common/QueryBoundary';
 import BookingSidebar from '@/features/booking/components/BookingSidebar';
@@ -14,7 +13,10 @@ import TopInfoBar from '@/features/booking/components/TopInfoBar';
 import { useShowById } from '@/features/shows/hooks/useShowQueries';
 import { useBookingStore } from '@/store/bookingStore';
 
+import useSeatActions from '../../hooks/useSeatActions';
+import useSeatSocket from '../../hooks/useSeatSocket';
 import useSeatViewModel from '../../hooks/useSeatViewModel';
+import { getPerformanceSummary, getSelectedSeats } from '../../utils';
 
 interface SeatPageClientProps {
   showId: number;
@@ -25,33 +27,28 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
   const { seatViewQuery } = useSeatViewModel({ showId, performanceId });
   const { data: show } = useShowById(showId);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
-  const setPerformance = useBookingStore((state) => state.setPerformance);
+  const resetBookingState = useBookingStore((state) => state.resetBookingState);
 
-  const selectedPerformance = show?.performanceDates
-    .flatMap((performanceDate) => performanceDate.performances)
-    .find((performance) => performance.id === performanceId);
+  useSeatSocket({ performanceId });
 
-  const performanceSummary = {
-    title: show?.title ?? '공연 정보',
-    performanceDate: selectedPerformance?.startTime
-      ? dayjs(selectedPerformance.startTime)
-          .locale('ko')
-          .format('YYYY.MM.DD(ddd) HH:mm')
-      : '-',
-  };
+  const {
+    pendingSeatActions,
+    pendingSeatIdSet,
+    handleSelectSeat,
+    handleDeselectSeat,
+    handleClearSeats,
+  } = useSeatActions({ performanceId });
 
-  const selectedSeats = useMemo(() => {
-    const seats = seatViewQuery.data?.seats ?? [];
-    const seatById = new Map(seats.map((seat) => [seat.id, seat]));
+  const performanceSummary = getPerformanceSummary(show, performanceId);
 
-    return selectedSeatIds
-      .map((seatId) => seatById.get(seatId))
-      .filter((seat) => seat != null);
-  }, [seatViewQuery.data?.seats, selectedSeatIds]);
+  const selectedSeats = useMemo(
+    () => getSelectedSeats(seatViewQuery.data?.seats ?? [], selectedSeatIds),
+    [seatViewQuery.data?.seats, selectedSeatIds]
+  );
 
   useEffect(() => {
-    setPerformance(performanceId);
-  }, [performanceId, setPerformance]);
+    resetBookingState();
+  }, [performanceId, resetBookingState]);
 
   return (
     <Box
@@ -78,9 +75,22 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
           emptyTitle="좌석 정보 없음"
           emptyDescription="좌석 정보가 등록되지 않았습니다."
         >
-          {(item) => <SeatMap seatView={item} />}
+          {(item) => (
+            <SeatMap
+              seatView={item}
+              pendingSeatActions={pendingSeatActions}
+              pendingSeatIds={pendingSeatIdSet}
+              onSelectSeat={handleSelectSeat}
+              onDeselectSeat={handleDeselectSeat}
+            />
+          )}
         </QueryBoundary>
-        <BookingSidebar selectedSeats={selectedSeats} />
+        <BookingSidebar
+          selectedSeats={selectedSeats}
+          pendingSeatIds={pendingSeatIdSet}
+          onClearSeats={handleClearSeats}
+          onRemoveSeat={handleDeselectSeat}
+        />
       </Box>
     </Box>
   );

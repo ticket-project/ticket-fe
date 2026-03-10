@@ -1,42 +1,60 @@
 import { create } from 'zustand';
 
 type BookingState = {
-  performanceId: number | null;
   selectedSeatIds: number[];
-  setPerformance: (performanceId: number) => void;
-  toggleSeatSelection: (seatId: number) => void;
-  resetSeatSelection: () => void;
+  selectedByOthersSeatIds: number[];
+  resetBookingState: () => void;
+  addSelectedSeat: (seatId: number) => void;
+  removeSelectedSeat: (seatId: number) => void;
+  addSelectedByOther: (seatId: number) => void;
+  removeSelectedByOther: (seatId: number) => void;
+  isSelectedByMe: (seatId: number) => boolean;
 };
 
-export const useBookingStore = create<BookingState>((set) => ({
-  performanceId: null,
+export const useBookingStore = create<BookingState>((set, get) => ({
   selectedSeatIds: [],
+  selectedByOthersSeatIds: [],
 
-  setPerformance: (performanceId: number) =>
-    set((state) => {
-      if (state.performanceId === performanceId) {
-        return state;
-      }
-
-      return {
-        performanceId: performanceId,
-        selectedSeatIds: [],
-      };
-    }),
-
-  toggleSeatSelection: (seatId: number) =>
-    set((state) => {
-      const isSelected = state.selectedSeatIds.includes(seatId);
-
-      return {
-        selectedSeatIds: isSelected
-          ? state.selectedSeatIds.filter((id) => id !== seatId)
-          : [...state.selectedSeatIds, seatId],
-      };
-    }),
-
-  resetSeatSelection: () =>
+  resetBookingState: () =>
     set({
       selectedSeatIds: [],
+      selectedByOthersSeatIds: [],
     }),
+
+  addSelectedSeat: (seatId) => {
+    const { selectedSeatIds } = get();
+
+    if (selectedSeatIds.includes(seatId)) return;
+
+    set({
+      selectedSeatIds: [...selectedSeatIds, seatId],
+    });
+  },
+
+  removeSelectedSeat: (seatId) => {
+    set((state) => ({
+      selectedSeatIds: state.selectedSeatIds.filter((id) => id !== seatId),
+    }));
+  },
+
+  addSelectedByOther: (seatId) => {
+    const { selectedByOthersSeatIds, selectedSeatIds } = get();
+
+    if (selectedSeatIds.includes(seatId)) return;
+    if (selectedByOthersSeatIds.includes(seatId)) return;
+
+    set({
+      selectedByOthersSeatIds: [...selectedByOthersSeatIds, seatId],
+    });
+  },
+
+  removeSelectedByOther: (seatId) => {
+    set((state) => ({
+      selectedByOthersSeatIds: state.selectedByOthersSeatIds.filter(
+        (id) => id !== seatId
+      ),
+    }));
+  },
+
+  isSelectedByMe: (seatId) => get().selectedSeatIds.includes(seatId),
 }));
