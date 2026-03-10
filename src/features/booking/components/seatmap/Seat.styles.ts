@@ -43,6 +43,13 @@ export const SvgContainer = styled(Box)(() => ({
   height: '100%',
   width: '100%',
   overflow: 'hidden',
+  '& > svg': {
+    display: 'block',
+    flexShrink: 0,
+    height: '100%',
+    maxWidth: 'none',
+    width: '100%',
+  },
 
   '.seat': {
     transition:
