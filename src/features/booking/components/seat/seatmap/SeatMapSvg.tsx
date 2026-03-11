@@ -1,4 +1,4 @@
-import { PendingSeatActionMap, SeatView } from '../../types';
+import { PendingSeatActionMap, SeatView } from '@/features/booking/types';
 
 import SeatRect from './SeatRect';
 

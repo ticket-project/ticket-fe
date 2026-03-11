@@ -9,7 +9,6 @@ import { Box } from '@mui/material';
 import QueryBoundary from '@/components/common/QueryBoundary';
 import BookingSidebar from '@/features/booking/components/seat/BookingSidebar';
 import SeatMap from '@/features/booking/components/seat/SeatMap';
-import TopInfoBar from '@/features/booking/components/common/TopInfoBar';
 import { useBookingStore } from '@/store/bookingStore';
 
 import useSeatActions from '../../hooks/useSeatActions';
@@ -17,6 +16,7 @@ import { usePerformanceSummary } from '../../hooks/useSeatQueries';
 import useSeatSocket from '../../hooks/useSeatSocket';
 import useSeatViewModel from '../../hooks/useSeatViewModel';
 import { getSelectedSeats } from '../../utils';
+import TopInfoBar from '../common/TopInfoBar';
 
 interface SeatPageClientProps {
   showId: number;
