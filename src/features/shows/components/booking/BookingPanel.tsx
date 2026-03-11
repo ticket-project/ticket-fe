@@ -97,7 +97,7 @@ const BookingPanel = ({
     }
 
     router.push(
-      `/onestop/seat?showId=${showId}&performanceId=${selectedSession}`
+      `/booking/seat?showId=${showId}&performanceId=${selectedSession}`
     );
   };
 

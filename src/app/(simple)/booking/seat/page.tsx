@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   // title: '콘서트 예매 | 티켓팅',
 };
 
-// app/(simple)/onestop/seat/page.tsx (Server Component)
+// app/(simple)/booking/seat/page.tsx (Server Component)
 // searchParams(공연id/회차id/bookingKey 등) 파싱
 // (가능하면) 초기 레이아웃/공연정보 fetch → Client에 주기
 

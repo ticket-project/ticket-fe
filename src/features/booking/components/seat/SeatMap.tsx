@@ -2,9 +2,10 @@ import { MouseEvent, useMemo } from 'react';
 
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
+import { PendingSeatActionMap, SeatView } from '../../types';
+
 import { useBookingStore } from '@/store/bookingStore';
 
-import { PendingSeatActionMap, SeatView } from '../types';
 import ZoomButtons from './buttons/ZoomButtons';
 import GradePricePopover from './popover/GradePricePopover';
 import SeatMapSvg from './seatmap/SeatMapSvg';

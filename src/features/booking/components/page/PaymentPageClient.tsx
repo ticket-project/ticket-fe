@@ -3,7 +3,7 @@
 import { Box } from '@mui/material';
 
 import QueryBoundary from '@/components/common/QueryBoundary';
-import TopInfoBar from '@/features/booking/components/TopInfoBar';
+import TopInfoBar from '@/features/booking/components/common/TopInfoBar';
 import { usePerformanceSummary } from '@/features/booking/hooks/useSeatQueries';
 
 interface PaymentPageClientProps {

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import { getPerformanceSummary } from '@/features/booking/api';
-import PaymentPageClient from '@/features/payment/components/page/PaymentPageClient';
+import PaymentPageClient from '@/features/booking/components/page/PaymentPageClient';
 import { createQueryClient } from '@/lib/queryClient';
 import { queryKeys } from '@/lib/queryKeys';
 

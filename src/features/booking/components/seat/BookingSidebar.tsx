@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { Clear } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 
-import { SeatViewItem } from '../types';
-import { formatKRW } from '../utils';
+import { SeatViewItem } from '../../types';
+
+import { formatKRW } from '../../utils';
 
 interface BookingSidebarProps {
   performanceId: number;
@@ -159,7 +160,7 @@ const BookingSidebar = ({
           </Box>
           <Button
             component={Link}
-            href={`/onestop/payment?performanceId=${performanceId}`}
+            href={`/booking/payment?performanceId=${performanceId}`}
             fullWidth
             variant="contained"
             disabled={isEmpty}

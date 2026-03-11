@@ -1,10 +1,11 @@
 import { Box, Container, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
-import BookingTimer from '@/features/payment/components/bookingTimer/BookingTimer';
+import { PerformanceSummary } from '../../types';
 
-import { PerformanceSummary } from '../types';
-import ScheduleChangeButton from './buttons/ScheduleChangeButton';
+import BookingTimer from '@/features/booking/components/common/bookingTimer/BookingTimer';
+
+import ScheduleChangeButton from './ScheduleChangeButton';
 
 interface TopInfoBarProps {
   performanceSummary: PerformanceSummary;

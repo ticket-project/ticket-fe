@@ -7,9 +7,9 @@ import { useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 
 import QueryBoundary from '@/components/common/QueryBoundary';
-import BookingSidebar from '@/features/booking/components/BookingSidebar';
-import SeatMap from '@/features/booking/components/SeatMap';
-import TopInfoBar from '@/features/booking/components/TopInfoBar';
+import BookingSidebar from '@/features/booking/components/seat/BookingSidebar';
+import SeatMap from '@/features/booking/components/seat/SeatMap';
+import TopInfoBar from '@/features/booking/components/common/TopInfoBar';
 import { useBookingStore } from '@/store/bookingStore';
 
 import useSeatActions from '../../hooks/useSeatActions';

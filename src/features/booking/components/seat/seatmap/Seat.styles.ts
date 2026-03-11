@@ -1,6 +1,6 @@
 import { Box, IconButton, styled } from '@mui/material';
 
-import { SEAT_GRADE_COLORS } from '../../constants';
+import { SEAT_GRADE_COLORS } from '@/features/booking/constants';
 
 export const Root = styled(Box)(() => ({
   position: 'relative',

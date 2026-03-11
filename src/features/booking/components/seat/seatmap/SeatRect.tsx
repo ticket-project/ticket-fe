@@ -1,6 +1,10 @@
-import { PendingSeatAction, SeatGeometry, SeatStatus } from '../../types';
+import {
+  PendingSeatAction,
+  SeatGeometry,
+  SeatStatus,
+} from '@/features/booking/types';
 
-import { getIconRect, getSeatGradeClassName } from '../../utils';
+import { getSeatGradeClassName, getIconRect } from '@/features/booking/utils';
 
 interface SeatRectProps {
   seat: SeatGeometry;

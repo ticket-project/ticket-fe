@@ -3,11 +3,10 @@ import { MouseEvent, useState } from 'react';
 import { InfoOutlined } from '@mui/icons-material';
 import { Box, Stack } from '@mui/material';
 
-import { SeatView } from '../../types';
+import { SeatView } from '@/features/booking/types';
 
 import Popover from '@/components/ui/Popover';
-
-import { formatKRW, getSeatGradeColor } from '../../utils';
+import { formatKRW, getSeatGradeColor } from '@/features/booking/utils';
 
 import {
   GradeDivider,
