@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { Clear } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 
@@ -8,19 +6,19 @@ import { SeatViewItem } from '../../types';
 import { formatKRW } from '../../utils';
 
 interface BookingSidebarProps {
-  performanceId: number;
   selectedSeats: SeatViewItem[];
   pendingSeatIds: Set<number>;
   onClearSeats: () => Promise<void>;
-  onRemoveSeat: (seatId: number) => Promise<void>;
+  onDeselectSeat: (seatId: number) => Promise<void>;
+  onHoldSeats: () => Promise<void>;
 }
 
 const BookingSidebar = ({
-  performanceId,
   selectedSeats,
   pendingSeatIds,
   onClearSeats,
-  onRemoveSeat,
+  onDeselectSeat,
+  onHoldSeats,
 }: BookingSidebarProps) => {
   const selectedCount = selectedSeats.length;
   const isEmpty = selectedCount === 0;
@@ -128,7 +126,7 @@ const BookingSidebar = ({
               <IconButton
                 aria-label={`${seat.row}열 ${seat.col}번 삭제`}
                 disabled={pendingSeatIds.has(seat.id)}
-                onClick={() => onRemoveSeat(seat.id)}
+                onClick={() => onDeselectSeat(seat.id)}
                 sx={{
                   pr: 0,
                   pl: '16px',
@@ -159,11 +157,10 @@ const BookingSidebar = ({
             </Typography>
           </Box>
           <Button
-            component={Link}
-            href={`/booking/payment?performanceId=${performanceId}`}
             fullWidth
             variant="contained"
             disabled={isEmpty}
+            onClick={onHoldSeats}
             sx={{
               borderRadius: '1rem',
               color: 'white',

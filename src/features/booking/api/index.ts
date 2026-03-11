@@ -9,32 +9,11 @@ import {
   VenueLayout,
 } from '../types';
 
-// export const holdSeats = async (showId: string, seatIds: string[]) => {
-//   const res = await fetchApi<ApiResponse<{}>>(`/api/v1/shows/${showId}/holds`, {
-//     method: 'POST',
-//     body: JSON.stringify({ seatIds }),
-//   });
-
-//   return res?.data;
-// };
-
 // export const releaseSeats = async (showId: string, seatIds: string[]) => {
 //   const res = await fetchApi<ApiResponse<{}>>(`/api/v1/shows/${showId}/holds`, {
 //     method: 'DELETE',
 //     body: JSON.stringify({ seatIds }),
 //   });
-
-//   return res?.data;
-// };
-
-// export const extendHolds = async (showId: string, seatIds?: string[]) => {
-//   const res = await fetchApi<ApiResponse<{}>>(
-//     `/api/v1/shows/${showId}/holds/extend`,
-//     {
-//       method: 'POST',
-//       body: JSON.stringify({ seatIds }),
-//     }
-//   );
 
 //   return res?.data;
 // };
@@ -143,4 +122,19 @@ export const deselectSeat = async (
       token,
     }
   );
+};
+
+export const holdSeats = async (
+  performanceId: number,
+  seatIds: number[],
+  token?: string | null
+) => {
+  await fetchApi<ApiResponse<null>>('/api/v1/holds', {
+    method: 'POST',
+    body: {
+      performanceId,
+      seatIds,
+    },
+    token,
+  });
 };

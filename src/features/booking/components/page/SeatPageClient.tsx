@@ -2,15 +2,20 @@
 
 import 'dayjs/locale/ko';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 
 import { Box } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { enqueueSnackbar } from 'notistack';
 
 import QueryBoundary from '@/components/common/QueryBoundary';
 import BookingSidebar from '@/features/booking/components/seat/BookingSidebar';
 import SeatMap from '@/features/booking/components/seat/SeatMap';
+import { useAuthStore } from '@/store/authStore';
 import { useBookingStore } from '@/store/bookingStore';
 
+import { holdSeats } from '../../api';
 import useSeatActions from '../../hooks/useSeatActions';
 import { usePerformanceSummary } from '../../hooks/useSeatQueries';
 import useSeatSocket from '../../hooks/useSeatSocket';
@@ -24,10 +29,13 @@ interface SeatPageClientProps {
 }
 
 const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
+  const router = useRouter();
+  const accessToken = useAuthStore((state) => state.accessToken);
   const { seatViewQuery } = useSeatViewModel({ showId, performanceId });
   const summaryQuery = usePerformanceSummary(performanceId);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
   const resetBookingState = useBookingStore((state) => state.resetBookingState);
+  // const [isHolding, setIsHolding] = useState(false);
 
   useSeatSocket({ performanceId });
 
@@ -43,6 +51,37 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     () => getSelectedSeats(seatViewQuery.data?.seats ?? [], selectedSeatIds),
     [seatViewQuery.data?.seats, selectedSeatIds]
   );
+
+  const holdSeatsMutation = useMutation({
+    mutationFn: () => holdSeats(performanceId, selectedSeatIds, accessToken),
+    onSuccess: () => {
+      router.push(`/booking/payment?performanceId=${performanceId}`);
+    },
+    onError: (error) => {
+      console.error('좌석 선점에 실패했습니다.', error);
+      enqueueSnackbar('좌석 선점에 실패했습니다.', {
+        variant: 'error',
+      });
+    },
+  });
+
+  const handleHoldSeats = async () => {
+    if (!accessToken) {
+      enqueueSnackbar('로그인 후 예매를 진행할 수 있습니다.', {
+        variant: 'warning',
+      });
+      return;
+    }
+
+    if (!selectedSeatIds.length) {
+      enqueueSnackbar('좌석을 먼저 선택해 주세요.', {
+        variant: 'warning',
+      });
+      return;
+    }
+
+    await holdSeatsMutation.mutateAsync();
+  };
 
   useEffect(() => {
     resetBookingState();
@@ -88,11 +127,11 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
           )}
         </QueryBoundary>
         <BookingSidebar
-          performanceId={performanceId}
           selectedSeats={selectedSeats}
           pendingSeatIds={pendingSeatIdSet}
-          onClearSeats={handleClearSeats}
-          onRemoveSeat={handleDeselectSeat}
+          onClearSeats={handleClearSeats} // 전체삭제
+          onDeselectSeat={handleDeselectSeat} // 개별삭제
+          onHoldSeats={handleHoldSeats}
         />
       </Box>
     </Box>

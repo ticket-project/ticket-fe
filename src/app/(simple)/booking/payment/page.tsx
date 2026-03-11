@@ -1,11 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-
-import { getPerformanceSummary } from '@/features/booking/api';
 import PaymentPageClient from '@/features/booking/components/page/PaymentPageClient';
-import { createQueryClient } from '@/lib/queryClient';
-import { queryKeys } from '@/lib/queryKeys';
 
 interface SeatPageProps {
   searchParams: Promise<{
@@ -21,18 +16,7 @@ const PaymentPage = async ({ searchParams }: SeatPageProps) => {
     return notFound();
   }
 
-  const queryClient = createQueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: queryKeys.booking.performanceSummary(performanceId),
-    queryFn: () => getPerformanceSummary(performanceId),
-  });
-
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <PaymentPageClient performanceId={performanceId} />
-    </HydrationBoundary>
-  );
+  return <PaymentPageClient performanceId={performanceId} />;
 };
 
 export default PaymentPage;
