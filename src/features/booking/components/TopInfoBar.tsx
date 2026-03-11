@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { PerformanceSummary } from '../types';
 
 interface TopInfoBarProps {
-  performanceSummary?: PerformanceSummary;
+  performanceSummary: PerformanceSummary;
 }
 
 const TopInfoBar = ({ performanceSummary }: TopInfoBarProps) => {
@@ -27,13 +27,13 @@ const TopInfoBar = ({ performanceSummary }: TopInfoBarProps) => {
       }}
     >
       <Box sx={{ display: 'flex' }}>
-        <Typography component="h3" sx={{ fontSize: '2rem', fontWeight: 800 }}>
+        <Typography component="h3" sx={{ fontSize: '2rem', fontWeight: 700 }}>
           {title}
         </Typography>
-        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 800 }}>
+        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 700 }}>
           &nbsp;· {region}
         </Typography>
-        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 800 }}>
+        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 700 }}>
           &nbsp;· {formattedStartTime}
         </Typography>
       </Box>

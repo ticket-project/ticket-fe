@@ -25,7 +25,7 @@ interface SeatPageClientProps {
 
 const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
   const { seatViewQuery } = useSeatViewModel({ showId, performanceId });
-  const { data: performanceSummary } = usePerformanceSummary(performanceId);
+  const summaryQuery = usePerformanceSummary(performanceId);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
   const resetBookingState = useBookingStore((state) => state.resetBookingState);
 
@@ -57,7 +57,9 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
         gridTemplateRows: '60px minmax(0,1fr)',
       }}
     >
-      <TopInfoBar performanceSummary={performanceSummary} />
+      <QueryBoundary query={summaryQuery}>
+        {(item) => <TopInfoBar performanceSummary={item} />}
+      </QueryBoundary>
       <Box
         sx={{
           height: '100%',
