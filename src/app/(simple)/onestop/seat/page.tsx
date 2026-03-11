@@ -3,9 +3,8 @@ import { notFound } from 'next/navigation';
 
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { getPerformanceSummary, getSeatMap } from '@/features/booking/api';
+import { getPerformanceSummary } from '@/features/booking/api';
 import SeatPageClient from '@/features/booking/components/page/SeatPageClient';
-import { getShowById } from '@/features/shows/api';
 import { createQueryClient } from '@/lib/queryClient';
 import { queryKeys } from '@/lib/queryKeys';
 
@@ -38,16 +37,10 @@ const SeatPage = async ({ searchParams }: SeatPageProps) => {
 
   const queryClient = createQueryClient();
 
-  await Promise.all([
-    queryClient.prefetchQuery({
-      queryKey: queryKeys.booking.performanceSummary(performanceId),
-      queryFn: () => getPerformanceSummary(performanceId),
-    }),
-    queryClient.prefetchQuery({
-      queryKey: queryKeys.booking.seatMap(showId),
-      queryFn: () => getSeatMap(showId),
-    }),
-  ]);
+  await queryClient.prefetchQuery({
+    queryKey: queryKeys.booking.performanceSummary(performanceId),
+    queryFn: () => getPerformanceSummary(performanceId),
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

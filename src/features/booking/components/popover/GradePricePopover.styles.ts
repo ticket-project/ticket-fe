@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  Typography,
-  styled,
-} from '@mui/material';
+import { Box, Button, Divider, Typography, styled } from '@mui/material';
 
 export const TriggerButton = styled(Button)(() => ({
   position: 'absolute',
@@ -31,19 +24,6 @@ export const TriggerIcon = styled(Box)(() => ({
   '& svg': {
     fontSize: '1.8rem',
   },
-}));
-
-export const PopoverPaperStyles = {
-  width: '17rem',
-  padding: '1.6rem 1.8rem',
-  borderRadius: '1.2rem',
-  boxShadow: '0 1.2rem 3rem rgba(17, 24, 39, 0.12)',
-};
-
-export const Content = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
 }));
 
 export const GradeDot = styled(Box, {
@@ -72,18 +52,4 @@ export const GradePrice = styled(Typography)(() => ({
 export const GradeDivider = styled(Divider)(({ theme }) => ({
   margin: '1rem 0',
   borderColor: theme.palette.divider,
-}));
-
-export const CloseButton = styled(IconButton)(() => ({
-  position: 'absolute',
-  right: '0.6rem',
-  top: '0.6rem',
-}));
-
-export const CloseIconWrapper = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  '& svg': {
-    fontSize: '1.8rem',
-  },
 }));

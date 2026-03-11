@@ -40,8 +40,6 @@ import {
 // };
 
 export const getPerformanceSummary = async (performanceId: number) => {
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-
   const res = await fetchApi<ApiResponse<PerformanceSummary>>(
     `/api/v1/performances/${performanceId}/summary`
   );

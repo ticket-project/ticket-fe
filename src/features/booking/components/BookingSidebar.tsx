@@ -7,6 +7,7 @@ import { SeatViewItem } from '../types';
 import { formatKRW } from '../utils';
 
 interface BookingSidebarProps {
+  performanceId: number;
   selectedSeats: SeatViewItem[];
   pendingSeatIds: Set<number>;
   onClearSeats: () => Promise<void>;
@@ -14,6 +15,7 @@ interface BookingSidebarProps {
 }
 
 const BookingSidebar = ({
+  performanceId,
   selectedSeats,
   pendingSeatIds,
   onClearSeats,
@@ -157,7 +159,7 @@ const BookingSidebar = ({
           </Box>
           <Button
             component={Link}
-            href="/onestop/payment"
+            href={`/onestop/payment?performanceId=${performanceId}`}
             fullWidth
             variant="contained"
             disabled={isEmpty}

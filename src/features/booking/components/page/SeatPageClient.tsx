@@ -58,7 +58,9 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
       }}
     >
       <QueryBoundary query={summaryQuery}>
-        {(item) => <TopInfoBar performanceSummary={item} />}
+        {(item) => (
+          <TopInfoBar performanceSummary={item} showBookingTimer={false} />
+        )}
       </QueryBoundary>
       <Box
         sx={{
@@ -86,6 +88,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
           )}
         </QueryBoundary>
         <BookingSidebar
+          performanceId={performanceId}
           selectedSeats={selectedSeats}
           pendingSeatIds={pendingSeatIdSet}
           onClearSeats={handleClearSeats}

@@ -1,21 +1,19 @@
 import { MouseEvent, useState } from 'react';
 
-import { Close, InfoOutlined } from '@mui/icons-material';
-import { Box, Popover, Stack } from '@mui/material';
+import { InfoOutlined } from '@mui/icons-material';
+import { Box, Stack } from '@mui/material';
 
 import { SeatView } from '../../types';
+
+import Popover from '@/components/ui/Popover';
 
 import { formatKRW, getSeatGradeColor } from '../../utils';
 
 import {
-  CloseButton,
-  CloseIconWrapper,
-  Content,
   GradeDivider,
   GradeDot,
   GradeName,
   GradePrice,
-  PopoverPaperStyles,
   TriggerButton,
   TriggerIcon,
 } from './GradePricePopover.styles';
@@ -59,33 +57,21 @@ const GradePricePopover = (_props: GradePricePopoverProps) => {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        slotProps={{
-          paper: {
-            sx: PopoverPaperStyles,
-          },
-        }}
       >
-        <Content>
-          <Box sx={{ flex: 1 }}>
-            {gradePrices.map((grade, index) => (
-              <Box key={grade.name}>
-                <Stack direction="row" spacing={1.2} alignItems="center">
-                  <GradeDot backgroundColor={getSeatGradeColor(grade.name)} />
-                  <Box>
-                    <GradeName>{grade.name}</GradeName>
-                    <GradePrice>{formatKRW(grade.price)}</GradePrice>
-                  </Box>
-                </Stack>
-                {index < gradePrices.length - 1 && <GradeDivider />}
-              </Box>
-            ))}
-          </Box>
-          <CloseButton aria-label="등급 별 가격 닫기" onClick={handleClose}>
-            <CloseIconWrapper>
-              <Close />
-            </CloseIconWrapper>
-          </CloseButton>
-        </Content>
+        <Box sx={{ flex: 1 }}>
+          {gradePrices.map((grade, index) => (
+            <Box key={grade.name}>
+              <Stack direction="row" spacing={1.2} alignItems="center">
+                <GradeDot backgroundColor={getSeatGradeColor(grade.name)} />
+                <Box>
+                  <GradeName>{grade.name}</GradeName>
+                  <GradePrice>{formatKRW(grade.price)}</GradePrice>
+                </Box>
+              </Stack>
+              {index < gradePrices.length - 1 && <GradeDivider />}
+            </Box>
+          ))}
+        </Box>
       </Popover>
     </>
   );

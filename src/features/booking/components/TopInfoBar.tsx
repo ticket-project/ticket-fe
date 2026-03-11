@@ -1,14 +1,24 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
+import BookingTimer from '@/features/payment/components/bookingTimer/BookingTimer';
+
 import { PerformanceSummary } from '../types';
+import ScheduleChangeButton from './buttons/ScheduleChangeButton';
 
 interface TopInfoBarProps {
   performanceSummary: PerformanceSummary;
+  showScheduleChangeButton?: boolean;
+  showBookingTimer?: boolean;
 }
 
-const TopInfoBar = ({ performanceSummary }: TopInfoBarProps) => {
+const TopInfoBar = ({
+  performanceSummary,
+  showScheduleChangeButton = true,
+  showBookingTimer = true,
+}: TopInfoBarProps) => {
   if (!performanceSummary) return null;
+
   const { title, region, startTime } = performanceSummary;
 
   const formattedStartTime = dayjs(startTime)
@@ -19,35 +29,43 @@ const TopInfoBar = ({ performanceSummary }: TopInfoBarProps) => {
     <Container
       maxWidth={false}
       sx={{
+        position: 'relative',
         display: 'flex',
-        gap: '2rem',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        gap: '2rem',
         borderBottom: '1px solid',
         borderBottomColor: 'grey.200',
       }}
     >
-      <Box sx={{ display: 'flex' }}>
-        <Typography component="h3" sx={{ fontSize: '2rem', fontWeight: 700 }}>
-          {title}
-        </Typography>
-        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 700 }}>
-          &nbsp;· {region}
-        </Typography>
-        <Typography component="span" sx={{ fontSize: '2rem', fontWeight: 700 }}>
-          &nbsp;· {formattedStartTime}
-        </Typography>
-      </Box>
-      <Button
-        variant="outlined"
+      <Box
         sx={{
-          fontSize: '1.6rem',
-          fontWeight: 800,
-          whiteSpace: 'nowrap',
-          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '2rem',
+          minWidth: 0,
         }}
       >
-        일정변경
-      </Button>
+        <Stack direction="row">
+          <Typography component="h3" sx={{ fontSize: '2rem', fontWeight: 700 }}>
+            {title}
+          </Typography>
+          <Typography
+            component="span"
+            sx={{ fontSize: '2rem', fontWeight: 700 }}
+          >
+            &nbsp;· {region}
+          </Typography>
+          <Typography
+            component="span"
+            sx={{ fontSize: '2rem', fontWeight: 700 }}
+          >
+            &nbsp;· {formattedStartTime}
+          </Typography>
+        </Stack>
+        {showScheduleChangeButton && <ScheduleChangeButton />}
+      </Box>
+      {showBookingTimer && <BookingTimer />}
     </Container>
   );
 };

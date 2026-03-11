@@ -1,16 +1,37 @@
-import { Box } from '@mui/material';
+import { notFound } from 'next/navigation';
 
-import TopInfoBar from '@/features/booking/components/TopInfoBar';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-const PaymentPage = () => {
+import { getPerformanceSummary } from '@/features/booking/api';
+import PaymentPageClient from '@/features/payment/components/page/PaymentPageClient';
+import { createQueryClient } from '@/lib/queryClient';
+import { queryKeys } from '@/lib/queryKeys';
+
+interface SeatPageProps {
+  searchParams: Promise<{
+    performanceId?: string;
+  }>;
+}
+
+const PaymentPage = async ({ searchParams }: SeatPageProps) => {
+  const { performanceId: rawPerformanceId } = await searchParams;
+  const performanceId = rawPerformanceId ? Number(rawPerformanceId) : undefined;
+
+  if (!performanceId) {
+    return notFound();
+  }
+
+  const queryClient = createQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: queryKeys.booking.performanceSummary(performanceId),
+    queryFn: () => getPerformanceSummary(performanceId),
+  });
+
   return (
-    <Box>
-      <TopInfoBar />
-      <Box>
-        <div>결제페이지</div>
-        <div>결제 패널</div>
-      </Box>
-    </Box>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PaymentPageClient performanceId={performanceId} />
+    </HydrationBoundary>
   );
 };
 
