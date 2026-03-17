@@ -2,12 +2,15 @@
 
 <img src="./public/images/preview.png" alt="ONE 티켓 대표 이미지" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);" />
 
+
 ## 1. 프로젝트 소개
 
 ONE TICKET은 사용자가 공연 정보를 탐색하고 상세 정보를 확인한 뒤, 좌석 선택과 예매 단계까지 자연스럽게 이어갈 수 있도록 설계한 티켓 예매 서비스입니다.
+
 공연 탐색 경험과 실시간 좌석 선택 기능에 집중해, 빠르고 직관적인 예매 흐름을 제공하는 웹 서비스입니다.
 
-## 팀 정보
+
+## 2. 팀 정보
 
 <table>
   <tr>
@@ -24,9 +27,11 @@ ONE TICKET은 사용자가 공연 정보를 탐색하고 상세 정보를 확인
   </tr>
 </table>
 
+
 ## 3. 배포 링크 / 데모
 
 - **Demo**: 배포 URL 업데이트 필요
+
 
 ## 4. 주요 기능
 
@@ -65,6 +70,7 @@ ONE TICKET은 사용자가 공연 정보를 탐색하고 상세 정보를 확인
 - 로딩, 에러, 빈 상태를 공통 UI로 일관되게 처리
 - Snackbar로 주요 상태 안내
 
+
 ## 5. 기술 스택
 
 ### Frontend
@@ -100,7 +106,8 @@ ONE TICKET은 사용자가 공연 정보를 탐색하고 상세 정보를 확인
 - **Formatting**: Prettier
 - **Type Checking**: TypeScript
 
-## 8. 빠른 시작
+
+## 6. 빠른 시작
 
 ### 설치
 
@@ -131,7 +138,8 @@ pnpm build
 pnpm start
 ```
 
-## 9. 프로젝트 구조
+
+## 7. 프로젝트 구조
 
 ```text
 src
@@ -151,7 +159,8 @@ src
 └── types                   # 공통 타입
 ```
 
-## 실행 스크립트
+
+## 8. 실행 스크립트
 
 ```bash
 pnpm dev
