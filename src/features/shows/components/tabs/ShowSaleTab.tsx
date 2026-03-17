@@ -315,7 +315,7 @@ const ShowSaleTab = () => {
 
       <Box>
         <InfoTitle variant="h6">예매 유의사항</InfoTitle>
-        <StyledList component="ul" spacing={1}>
+        <StyledList as="ul" spacing={1}>
           <li>
             <Typography variant="body2">
               다른 이용자의 원활한 예매 및 취소에 지장을 초래할 정도로 반복적인
@@ -354,7 +354,7 @@ const ShowSaleTab = () => {
         <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
           신용카드 결제의 경우
         </Typography>
-        <StyledList component="ul" spacing={0.5}>
+        <StyledList as="ul" spacing={0.5}>
           <li>
             <Typography variant="body2">
               일반적으로 당사의 취소 처리가 완료되고 4~5일 후 카드사의 취소가
@@ -374,7 +374,7 @@ const ShowSaleTab = () => {
         <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
           무통장 입금의 경우
         </Typography>
-        <StyledList component="ul" spacing={0.5}>
+        <StyledList as="ul" spacing={0.5}>
           <li>
             <Typography variant="body2">
               예매 취소 시에 환불 계좌번호를 남기고, 그 계좌를 통해 취소수수료를
@@ -397,7 +397,7 @@ const ShowSaleTab = () => {
         <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
           휴대폰 결제의 경우
         </Typography>
-        <StyledList component="ul" spacing={0.5}>
+        <StyledList as="ul" spacing={0.5}>
           <li>
             <Typography variant="body2">
               취소 신청 후 바로 취소 처리가 되며 취소 수수료를 제외한 티켓 금액
@@ -431,7 +431,7 @@ const ShowSaleTab = () => {
 
       <Box>
         <InfoTitle variant="h6">무통장입금 시 주의사항</InfoTitle>
-        <StyledList component="ul" spacing={1}>
+        <StyledList as="ul" spacing={1}>
           <li>
             <Typography variant="body2">
               입금 시 총 결제금액을 정확히 입금하여야 합니다. 입금금액이 다를
