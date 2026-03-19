@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next';
 
-import { API_BASE_URL } from '@/lib/env';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
