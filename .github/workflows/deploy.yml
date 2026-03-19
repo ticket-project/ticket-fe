@@ -69,11 +69,12 @@ jobs:
             set -e
             IMAGE="${{ secrets.DOCKER_USERNAME }}/ticket-fe:latest"
             DEPLOY_DIR="/home/ubuntu"
+            CURRENT_BE_IMAGE="$(sudo docker inspect ticket-be --format '{{.Config.Image}}')"
 
             echo "${{ secrets.DOCKER_PASSWORD }}" | sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
             sudo docker pull "$IMAGE"
 
-            sudo FRONTEND_DOCKER_IMAGE="$IMAGE" \
+            sudo DOCKER_IMAGE="$CURRENT_BE_IMAGE" FRONTEND_DOCKER_IMAGE="$IMAGE" \
               docker compose -f "$DEPLOY_DIR/docker-compose.yml" up -d frontend --no-deps --force-recreate
 
             sudo docker image prune -f
