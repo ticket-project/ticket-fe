@@ -31,7 +31,7 @@ interface UpdateSeatStateCacheParams {
   authScope: SeatStateAuthScope;
   performanceId: number;
   queryClient: QueryClient;
-  seatId: number;
+  seatIds: number[];
   status?: SeatStatus;
   action?: SeatSelectionAction;
 }
@@ -43,13 +43,33 @@ export const updateSeatStateCache = ({
   seatId,
   status,
   action,
+}: Omit<UpdateSeatStateCacheParams, 'seatIds'> & { seatId: number }) => {
+  updateSeatStatesCache({
+    authScope,
+    performanceId,
+    queryClient,
+    seatIds: [seatId],
+    status,
+    action,
+  });
+};
+
+export const updateSeatStatesCache = ({
+  authScope,
+  performanceId,
+  queryClient,
+  seatIds,
+  status,
+  action,
 }: UpdateSeatStateCacheParams) => {
   const nextStatus =
     status ?? (action ? getSeatStatusFromAction(action) : null);
 
-  if (!nextStatus) {
+  if (!nextStatus || !seatIds.length) {
     return;
   }
+
+  const targetSeatIds = new Set(seatIds);
 
   queryClient.setQueryData<SeatState>(
     queryKeys.booking.seatState(performanceId, authScope),
@@ -61,7 +81,7 @@ export const updateSeatStateCache = ({
       let hasChanged = false;
 
       const seats = current.seats.map((seat) => {
-        if (seat.seatId !== seatId || seat.status === nextStatus) {
+        if (!targetSeatIds.has(seat.seatId) || seat.status === nextStatus) {
           return seat;
         }
 

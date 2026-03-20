@@ -116,6 +116,19 @@ export const deselectSeat = async (
   );
 };
 
+export const deselectAllSeats = async (
+  performanceId: number,
+  token?: string | null
+) => {
+  await fetchApi<ApiResponse<null>>(
+    `/api/v1/performances/${performanceId}/seats/select`,
+    {
+      method: 'DELETE',
+      token,
+    }
+  );
+};
+
 export const holdSeats = async (
   performanceId: number,
   seatIds: number[],

@@ -7,10 +7,11 @@ import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 import { useBookingStore } from '@/store/bookingStore';
 
-import { deselectSeat, selectSeat } from '../api';
+import { deselectAllSeats, deselectSeat, selectSeat } from '../api';
 import {
   getSeatStateAuthScope,
   updateSeatStateCache,
+  updateSeatStatesCache,
 } from '../lib/seatStateCache';
 import { PendingSeatAction, PendingSeatActionMap, SeatState } from '../types';
 
@@ -24,6 +25,9 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
   const accessToken = useAuthStore((state) => state.accessToken);
   const authScope = getSeatStateAuthScope(accessToken);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
+  const setSelectedSeatIds = useBookingStore(
+    (state) => state.setSelectedSeatIds
+  );
   const addSelectedSeat = useBookingStore((state) => state.addSelectedSeat);
   const removeSelectedSeat = useBookingStore(
     (state) => state.removeSelectedSeat
@@ -33,7 +37,7 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
     authScope
   );
 
-  const [pendingSeatActions, setPendingSeatActions] =
+  const [pendingSeatActions, setPendingSeatActionsState] =
     useState<PendingSeatActionMap>({});
 
   const pendingSeatIdSet = useMemo(
@@ -45,16 +49,38 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
     seatId: number,
     pendingAction: PendingSeatAction
   ) => {
-    setPendingSeatActions((current) => ({
+    setPendingSeatActionsState((current) => ({
       ...current,
       [seatId]: pendingAction,
     }));
   };
 
   const clearPendingSeatAction = (seatId: number) => {
-    setPendingSeatActions((current) => {
+    setPendingSeatActionsState((current) => {
       const next = { ...current };
       delete next[seatId];
+      return next;
+    });
+  };
+
+  const setPendingSeatActionsForSeats = (
+    seatIds: number[],
+    pendingAction: PendingSeatAction
+  ) => {
+    setPendingSeatActionsState((current) => ({
+      ...current,
+      ...Object.fromEntries(seatIds.map((seatId) => [seatId, pendingAction])),
+    }));
+  };
+
+  const clearPendingSeatActions = (seatIds: number[]) => {
+    setPendingSeatActionsState((current) => {
+      const next = { ...current };
+
+      seatIds.forEach((seatId) => {
+        delete next[seatId];
+      });
+
       return next;
     });
   };
@@ -137,6 +163,46 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
     },
   });
 
+  const clearSeatsMutation = useMutation({
+    mutationFn: () => deselectAllSeats(performanceId, accessToken),
+    onMutate: async () => {
+      const seatIds = [...selectedSeatIds];
+
+      await queryClient.cancelQueries({
+        queryKey: seatStateQueryKey,
+      });
+
+      const previousSeatState =
+        queryClient.getQueryData<SeatState>(seatStateQueryKey);
+
+      setPendingSeatActionsForSeats(seatIds, 'deselect');
+      setSelectedSeatIds([]);
+
+      updateSeatStatesCache({
+        authScope,
+        performanceId,
+        queryClient,
+        seatIds,
+        status: 'AVAILABLE',
+      });
+
+      return { previousSeatState, seatIds };
+    },
+    onError: (error, _, context) => {
+      setSelectedSeatIds(context?.seatIds ?? []);
+      if (context?.previousSeatState) {
+        queryClient.setQueryData(seatStateQueryKey, context.previousSeatState);
+      }
+      console.error('좌석 전체 해제 API 호출에 실패했습니다.', error);
+      enqueueSnackbar('좌석 전체 해제 중 오류가 발생했습니다.', {
+        variant: 'error',
+      });
+    },
+    onSettled: (_, __, ___, context) => {
+      clearPendingSeatActions(context?.seatIds ?? []);
+    },
+  });
+
   // 좌석을 선택 - 낙관적 업데이트(store 선반영) 후 API 호출
   const handleSelectSeat = async (seatId: number) => {
     if (!accessToken) {
@@ -161,13 +227,18 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
     await deselectSeatMutation.mutateAsync(seatId);
   };
 
-  // 현재 선택된 모든 좌석 순차적으로 해제
+  // 현재 선택된 모든 좌석을 한 번에 해제
   const handleClearSeats = async () => {
-    const seatIds = [...selectedSeatIds];
+    if (!accessToken) {
+      enqueueSnackbar('로그인 후 좌석 선택을 해제할 수 있습니다.', {
+        variant: 'warning',
+      });
+      return;
+    }
 
-    await Promise.allSettled(
-      seatIds.map((seatId) => handleDeselectSeat(seatId))
-    );
+    if (!selectedSeatIds.length) return;
+
+    await clearSeatsMutation.mutateAsync();
   };
 
   return {

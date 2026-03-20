@@ -4,6 +4,7 @@ type BookingState = {
   selectedSeatIds: number[];
   selectedByOthersSeatIds: number[];
   resetBookingState: () => void;
+  setSelectedSeatIds: (seatIds: number[]) => void;
   addSelectedSeat: (seatId: number) => void;
   removeSelectedSeat: (seatId: number) => void;
   addSelectedByOther: (seatId: number) => void;
@@ -20,6 +21,12 @@ export const useBookingStore = create<BookingState>((set, get) => ({
       selectedSeatIds: [],
       selectedByOthersSeatIds: [],
     }),
+
+  setSelectedSeatIds: (seatIds) => {
+    set({
+      selectedSeatIds: [...new Set(seatIds)],
+    });
+  },
 
   addSelectedSeat: (seatId) => {
     const { selectedSeatIds } = get();
