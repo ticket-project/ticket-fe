@@ -8,7 +8,11 @@ import { useAuthStore } from '@/store/authStore';
 import { useBookingStore } from '@/store/bookingStore';
 
 import { deselectSeat, selectSeat } from '../api';
-import { PendingSeatAction, PendingSeatActionMap } from '../types';
+import {
+  getSeatStateAuthScope,
+  updateSeatStateCache,
+} from '../lib/seatStateCache';
+import { PendingSeatAction, PendingSeatActionMap, SeatState } from '../types';
 
 interface UseSeatActionsProps {
   performanceId: number;
@@ -18,10 +22,15 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
   const accessToken = useAuthStore((state) => state.accessToken);
+  const authScope = getSeatStateAuthScope(accessToken);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
   const addSelectedSeat = useBookingStore((state) => state.addSelectedSeat);
   const removeSelectedSeat = useBookingStore(
     (state) => state.removeSelectedSeat
+  );
+  const seatStateQueryKey = queryKeys.booking.seatState(
+    performanceId,
+    authScope
   );
 
   const [pendingSeatActions, setPendingSeatActions] =
@@ -50,29 +59,42 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
     });
   };
 
-  // 현재 공연의 좌석 상태 쿼리 무효화 후 최신 데이터로 다시 패치
-  const invalidateSeatState = async () =>
-    await queryClient.invalidateQueries({
-      queryKey: queryKeys.booking.seatState(performanceId),
-    });
-
   const selectSeatMutation = useMutation({
     mutationFn: (seatId: number) =>
       selectSeat(performanceId, seatId, accessToken),
     onMutate: async (seatId) => {
+      await queryClient.cancelQueries({
+        queryKey: seatStateQueryKey,
+      });
+
+      const previousSeatState =
+        queryClient.getQueryData<SeatState>(seatStateQueryKey);
+
       setPendingSeatAction(seatId, 'select');
       addSelectedSeat(seatId);
+
+      updateSeatStateCache({
+        authScope,
+        performanceId,
+        queryClient,
+        seatId,
+        status: 'OCCUPIED',
+      });
+
+      return { previousSeatState };
     },
-    onError: (error, seatId) => {
+    onError: (error, seatId, context) => {
       removeSelectedSeat(seatId);
+      if (context?.previousSeatState) {
+        queryClient.setQueryData(seatStateQueryKey, context.previousSeatState);
+      }
       console.error('좌석 선택 API 호출에 실패했습니다.', error);
       enqueueSnackbar('좌석 선택 처리 중 오류가 발생했습니다.', {
         variant: 'error',
       });
     },
-    onSettled: async (_, __, seatId) => {
+    onSettled: (_, __, seatId) => {
       clearPendingSeatAction(seatId);
-      await invalidateSeatState();
     },
   });
 
@@ -80,19 +102,38 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
     mutationFn: (seatId: number) =>
       deselectSeat(performanceId, seatId, accessToken),
     onMutate: async (seatId) => {
+      await queryClient.cancelQueries({
+        queryKey: seatStateQueryKey,
+      });
+
+      const previousSeatState =
+        queryClient.getQueryData<SeatState>(seatStateQueryKey);
+
       setPendingSeatAction(seatId, 'deselect');
       removeSelectedSeat(seatId);
+
+      updateSeatStateCache({
+        authScope,
+        performanceId,
+        queryClient,
+        seatId,
+        status: 'AVAILABLE',
+      });
+
+      return { previousSeatState };
     },
-    onError: (error, seatId) => {
+    onError: (error, seatId, context) => {
       addSelectedSeat(seatId);
+      if (context?.previousSeatState) {
+        queryClient.setQueryData(seatStateQueryKey, context.previousSeatState);
+      }
       console.error('좌석 선택 해제 API 호출에 실패했습니다.', error);
       enqueueSnackbar('좌석 선택 해제 중 오류가 발생했습니다.', {
         variant: 'error',
       });
     },
-    onSettled: async (_, __, seatId) => {
+    onSettled: (_, __, seatId) => {
       clearPendingSeatAction(seatId);
-      await invalidateSeatState();
     },
   });
 
@@ -124,9 +165,9 @@ const useSeatActions = ({ performanceId }: UseSeatActionsProps) => {
   const handleClearSeats = async () => {
     const seatIds = [...selectedSeatIds];
 
-    for (const seatId of seatIds) {
-      await handleDeselectSeat(seatId);
-    }
+    await Promise.allSettled(
+      seatIds.map((seatId) => handleDeselectSeat(seatId))
+    );
   };
 
   return {

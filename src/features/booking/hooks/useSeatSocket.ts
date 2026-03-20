@@ -1,14 +1,17 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 import { useBookingStore } from '@/store/bookingStore';
 
 import { SeatSocketClient } from '../lib/seatSocketClient';
+import {
+  getSeatStateAuthScope,
+  updateSeatStateCache,
+} from '../lib/seatStateCache';
 import { SeatSelectionEvent } from '../types';
 
 interface UseSeatSocketParams {
@@ -18,6 +21,7 @@ interface UseSeatSocketParams {
 const useSeatSocket = ({ performanceId }: UseSeatSocketParams) => {
   const queryClient = useQueryClient();
   const accessToken = useAuthStore((state) => state.accessToken);
+  const authScope = getSeatStateAuthScope(accessToken);
 
   const addSelectedByOther = useBookingStore(
     (state) => state.addSelectedByOther
@@ -29,8 +33,8 @@ const useSeatSocket = ({ performanceId }: UseSeatSocketParams) => {
 
   const client = useMemo(() => new SeatSocketClient(), []);
 
-  const handleSeatEvent = useMemo(() => {
-    return (event: SeatSelectionEvent) => {
+  const handleSeatEvent = useCallback(
+    (event: SeatSelectionEvent) => {
       if (event.performanceId !== performanceId) return;
 
       const shouldOccupySeat =
@@ -44,26 +48,36 @@ const useSeatSocket = ({ performanceId }: UseSeatSocketParams) => {
 
       if (shouldOccupySeat) {
         addSelectedByOther(event.seatId);
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.booking.seatState(performanceId),
+        updateSeatStateCache({
+          authScope,
+          performanceId,
+          queryClient,
+          seatId: event.seatId,
+          action: event.action,
         });
         return;
       }
+
       if (shouldReleaseSeat) {
         removeSelectedByOther(event.seatId);
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.booking.seatState(performanceId),
+        updateSeatStateCache({
+          authScope,
+          performanceId,
+          queryClient,
+          seatId: event.seatId,
+          action: event.action,
         });
-        return;
       }
-    };
-  }, [
-    addSelectedByOther,
-    removeSelectedByOther,
-    isSelectedByMe,
-    performanceId,
-    queryClient,
-  ]);
+    },
+    [
+      addSelectedByOther,
+      authScope,
+      removeSelectedByOther,
+      isSelectedByMe,
+      performanceId,
+      queryClient,
+    ]
+  );
 
   useEffect(() => {
     if (!accessToken) {
@@ -74,9 +88,6 @@ const useSeatSocket = ({ performanceId }: UseSeatSocketParams) => {
     client.connect({
       accessToken,
       onConnect: () => {
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.booking.seatState(performanceId),
-        });
         client.subscribeSeatEvents({
           performanceId,
           onMessage: handleSeatEvent,
@@ -94,7 +105,7 @@ const useSeatSocket = ({ performanceId }: UseSeatSocketParams) => {
       client.unsubscribeSeatEvents();
       client.disconnect();
     };
-  }, [accessToken, client, handleSeatEvent, performanceId, queryClient]);
+  }, [accessToken, client, handleSeatEvent, performanceId]);
 
   return null;
 };

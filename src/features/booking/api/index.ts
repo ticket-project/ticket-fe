@@ -3,7 +3,7 @@ import { ApiResponse } from '@/types/api';
 
 import {
   PerformanceSummary,
-  SeatMap,
+  SeatMapItem,
   SeatMapResponse,
   SeatState,
   VenueLayout,
@@ -42,39 +42,31 @@ export const getVenueLayout = async (showId: number) => {
   return res.data;
 };
 
-export const getSeatMap = async (showId: number) => {
-  const [seatMapRes, venueLayoutRes] = await Promise.all([
-    fetchApi<ApiResponse<SeatMapResponse>>(`/api/v1/shows/${showId}/seats`),
-    fetchApi<ApiResponse<VenueLayout>>(`/api/v1/shows/${showId}/venue-layout`),
-  ]);
+export const getSeatMap = async (showId: number): Promise<SeatMapItem[]> => {
+  const seatMapRes = await fetchApi<ApiResponse<SeatMapResponse>>(
+    `/api/v1/shows/${showId}/seats`
+  );
 
-  if (!seatMapRes?.data || !venueLayoutRes?.data) {
+  if (!seatMapRes?.data) {
     throw new Error('좌석 배치도를 불러오지 못했습니다.');
   }
 
   const { seats } = seatMapRes.data;
-  const { seatDiameter, viewBoxWidth, viewBoxHeight } = venueLayoutRes.data;
 
-  const result: SeatMap = {
-    viewBox: [0, 0, viewBoxWidth, viewBoxHeight],
-    seatSize: seatDiameter,
-    seats: seats.map((seat) => ({
-      id: seat.seatId,
-      floor: seat.floor,
-      section: seat.section,
-      row: seat.row,
-      col: seat.col,
-      x: seat.x,
-      y: seat.y,
-      grade: {
-        id: seat.gradeCode,
-        name: seat.gradeName,
-        price: seat.price,
-      },
-    })),
-  };
-
-  return result;
+  return seats.map((seat) => ({
+    id: seat.seatId,
+    floor: seat.floor,
+    section: seat.section,
+    row: seat.row,
+    col: seat.col,
+    x: seat.x,
+    y: seat.y,
+    grade: {
+      id: seat.gradeCode,
+      name: seat.gradeName,
+      price: seat.price,
+    },
+  }));
 };
 
 export const getSeatState = async (

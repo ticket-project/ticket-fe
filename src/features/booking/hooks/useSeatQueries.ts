@@ -8,10 +8,16 @@ import {
   getSeatState,
   getVenueLayout,
 } from '../api';
+import { getSeatStateAuthScope } from '../lib/seatStateCache';
 
-const STATIC_SEAT_QUERY_CONFIG = {
+const PERFORMANCE_SUMMARY_QUERY_CONFIG = {
   staleTime: 1000 * 60,
   gcTime: 1000 * 60 * 5,
+} as const;
+
+const STATIC_SEAT_LAYOUT_QUERY_CONFIG = {
+  staleTime: 1000 * 60 * 30,
+  gcTime: 1000 * 60 * 60,
 } as const;
 
 const DYNAMIC_SEAT_QUERY_CONFIG = {
@@ -24,7 +30,7 @@ export const usePerformanceSummary = (performanceId: number) => {
     queryKey: queryKeys.booking.performanceSummary(performanceId),
     queryFn: () => getPerformanceSummary(performanceId),
     enabled: Boolean(performanceId),
-    ...STATIC_SEAT_QUERY_CONFIG,
+    ...PERFORMANCE_SUMMARY_QUERY_CONFIG,
   });
 };
 
@@ -33,7 +39,7 @@ export const useVenueLayout = (showId: number) => {
     queryKey: queryKeys.booking.venueLayout(showId),
     queryFn: () => getVenueLayout(showId),
     enabled: Boolean(showId),
-    ...STATIC_SEAT_QUERY_CONFIG,
+    ...STATIC_SEAT_LAYOUT_QUERY_CONFIG,
   });
 };
 
@@ -42,15 +48,21 @@ export const useSeatMap = (showId: number) => {
     queryKey: queryKeys.booking.seatMap(showId),
     queryFn: () => getSeatMap(showId),
     enabled: Boolean(showId),
-    ...STATIC_SEAT_QUERY_CONFIG,
+    ...STATIC_SEAT_LAYOUT_QUERY_CONFIG,
   });
 };
 
-export const useSeatState = (performanceId: number, token?: string | null) => {
+export const useSeatState = (
+  performanceId: number,
+  token?: string | null,
+  isAuthInitialized = true
+) => {
+  const authScope = getSeatStateAuthScope(token);
+
   return useQuery({
-    queryKey: queryKeys.booking.seatState(performanceId),
+    queryKey: queryKeys.booking.seatState(performanceId, authScope),
     queryFn: () => getSeatState(performanceId, token),
-    enabled: Boolean(performanceId),
+    enabled: Boolean(performanceId) && isAuthInitialized,
     ...DYNAMIC_SEAT_QUERY_CONFIG,
   });
 };

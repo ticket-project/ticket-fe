@@ -39,6 +39,7 @@ export interface SeatMapResponse {
 }
 
 export type SeatStatus = 'AVAILABLE' | 'OCCUPIED';
+export type SeatStateAuthScope = 'guest' | 'member';
 export type SeatSelectionAction =
   | 'SELECTED'
   | 'DESELECTED'
