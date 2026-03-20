@@ -14,13 +14,24 @@ import {
   SeatGrade,
 } from '../types';
 
+const SHOWS_REVALIDATE_SECONDS = 300;
+
+const SHOWS_FETCH_OPTIONS = {
+  next: { revalidate: SHOWS_REVALIDATE_SECONDS },
+} as const;
+
+export { SHOWS_REVALIDATE_SECONDS };
+
 // 최신 공연
 export const getLatestShows = async (
   category?: string
 ): Promise<ShowCarouselItem[]> => {
   const res = await fetchApi<ApiResponse<{ shows: ShowCarouselItem[] }>>(
     '/api/v1/shows/latest',
-    { params: { category } }
+    {
+      ...SHOWS_FETCH_OPTIONS,
+      params: { category },
+    }
   );
   return res?.data.shows ?? [];
 };
@@ -31,7 +42,10 @@ export const getUpcomingShowsPreview = async (
 ): Promise<UpcomingShowItem[]> => {
   const res = await fetchApi<ApiResponse<{ shows: UpcomingShowItem[] }>>(
     '/api/v1/shows/sale-opening-soon',
-    { params: { category } }
+    {
+      ...SHOWS_FETCH_OPTIONS,
+      params: { category },
+    }
   );
 
   return res?.data.shows ?? [];
@@ -44,6 +58,7 @@ export const getUpcomingShowsPage = async (
   const res = await fetchApi<ApiResponse<PaginatedResponse<UpcomingShowItem>>>(
     '/api/v1/shows/sale-opening-soon/page',
     {
+      ...SHOWS_FETCH_OPTIONS,
       params: {
         category: params.category,
         region: params.region !== 'ALL' ? params.region : undefined,
@@ -64,6 +79,7 @@ export const getUpcomingShowsPage = async (
 // 공연 장르
 export const getGenres = async (category?: string): Promise<Genre[]> => {
   const res = await fetchApi<ApiResponse<Genre[]>>('/api/v1/genres', {
+    ...SHOWS_FETCH_OPTIONS,
     params: { category },
   });
 
@@ -77,6 +93,7 @@ export const getShowsPage = async (
   const res = await fetchApi<ApiResponse<PaginatedResponse<ShowBase>>>(
     '/api/v1/shows',
     {
+      ...SHOWS_FETCH_OPTIONS,
       params: {
         category: params.category,
         region: params.region !== 'ALL' ? params.region : undefined,

@@ -1,13 +1,12 @@
 import { useCallback, useState } from 'react';
 
+import { DEFAULT_SHOWS_FILTERS } from '../constants/defaultFilters';
 import { GenreCode, Region, ShowsFilterState, ShowSort } from '../types';
 
 const useShowsFilter = () => {
-  const [filters, setFilters] = useState<ShowsFilterState>({
-    genre: 'ALL',
-    region: 'ALL',
-    sort: 'popular',
-  });
+  const [filters, setFilters] = useState<ShowsFilterState>(
+    DEFAULT_SHOWS_FILTERS
+  );
 
   const setGenre = useCallback((genre: GenreCode) => {
     setFilters((prev) => ({ ...prev, genre }));
@@ -22,11 +21,7 @@ const useShowsFilter = () => {
   }, []);
 
   const resetFilters = useCallback(() => {
-    setFilters({
-      genre: 'ALL',
-      region: 'ALL',
-      sort: 'popular',
-    });
+    setFilters(DEFAULT_SHOWS_FILTERS);
   }, []);
 
   return {
