@@ -11,12 +11,14 @@ interface TopInfoBarProps {
   performanceSummary: PerformanceSummary;
   showScheduleChangeButton?: boolean;
   showBookingTimer?: boolean;
+  onScheduleChange?: () => void;
 }
 
 const TopInfoBar = ({
   performanceSummary,
   showScheduleChangeButton = true,
   showBookingTimer = true,
+  onScheduleChange,
 }: TopInfoBarProps) => {
   if (!performanceSummary) return null;
 
@@ -64,7 +66,9 @@ const TopInfoBar = ({
             &nbsp;· {formattedStartTime}
           </Typography>
         </Stack>
-        {showScheduleChangeButton && <ScheduleChangeButton />}
+        {showScheduleChangeButton && (
+          <ScheduleChangeButton onClick={onScheduleChange} />
+        )}
       </Box>
       {showBookingTimer && <BookingTimer />}
     </Container>
