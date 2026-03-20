@@ -7,7 +7,6 @@ import {
   getLatestShows,
   getShowsPage,
   getUpcomingShowsPreview,
-  SHOWS_REVALIDATE_SECONDS,
 } from '@/features/shows/api';
 import ShowPageClient from '@/features/shows/components/page/ShowPageClient';
 import { getCategoryMeta } from '@/features/shows/constants/categories';
@@ -15,7 +14,7 @@ import { DEFAULT_SHOWS_FILTERS } from '@/features/shows/constants/defaultFilters
 import { createQueryClient } from '@/lib/queryClient';
 import { queryKeys } from '@/lib/queryKeys';
 
-export const revalidate = SHOWS_REVALIDATE_SECONDS;
+export const revalidate = 300;
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
