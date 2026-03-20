@@ -2,6 +2,7 @@
  * React Query Keys
  */
 
+import type { SeatStateAuthScope } from '@/features/booking/types';
 import type {
   ShowsFilterState,
   UpcomingShowsFilterState,
@@ -48,8 +49,16 @@ export const queryKeys = {
     seatMap: (showId: number) =>
       [...queryKeys.booking.all, 'seatMap', showId] as const,
 
-    seatState: (performanceId: number) =>
-      [...queryKeys.booking.all, 'seatState', performanceId] as const,
+    seatState: (
+      performanceId: number,
+      authScope: SeatStateAuthScope = 'guest'
+    ) =>
+      [
+        ...queryKeys.booking.all,
+        'seatState',
+        performanceId,
+        authScope,
+      ] as const,
 
     venueLayout: (showId: number) =>
       [...queryKeys.booking.all, 'venueLayout', showId] as const,

@@ -1,12 +1,18 @@
 'use client';
 
-import { UseQueryResult } from '@tanstack/react-query';
-
 import { EmptyState } from '@/components/common/EmptyState';
 import LoadingState from '@/components/common/LoadingState';
 
+interface QueryBoundaryState<T> {
+  data: T | undefined;
+  error: Error | null;
+  isError: boolean;
+  isPending: boolean;
+  refetch: () => Promise<unknown> | unknown;
+}
+
 interface QueryBoundaryProps<T> {
-  query: UseQueryResult<T, Error>;
+  query: QueryBoundaryState<T>;
   isEmpty?: (data: T | undefined) => boolean;
   errorTitle?: string;
   errorMessage?: string;

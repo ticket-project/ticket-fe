@@ -1,11 +1,9 @@
 import { useMemo } from 'react';
 
-import { UseQueryResult } from '@tanstack/react-query';
-
 import { useAuthStore } from '@/store/authStore';
 
 import { SeatView } from '../types';
-import { useSeatMap, useSeatState } from './useSeatQueries';
+import { useSeatMap, useSeatState, useVenueLayout } from './useSeatQueries';
 
 interface UseSeatViewModelProps {
   showId: number;
@@ -14,20 +12,28 @@ interface UseSeatViewModelProps {
 
 const useSeatViewModel = ({ showId, performanceId }: UseSeatViewModelProps) => {
   const accessToken = useAuthStore((state) => state.accessToken);
+  const isAuthInitialized = useAuthStore((state) => state.isAuthInitialized);
 
   const seatMapQuery = useSeatMap(showId);
-  const seatStateQuery = useSeatState(performanceId, accessToken);
+  const venueLayoutQuery = useVenueLayout(showId);
+  const seatStateQuery = useSeatState(
+    performanceId,
+    accessToken,
+    isAuthInitialized
+  );
 
   const data = useMemo<SeatView | undefined>(() => {
     const seatMap = seatMapQuery.data;
-    if (!seatMap) return undefined;
+    const venueLayout = venueLayoutQuery.data;
+    if (!seatMap || !venueLayout) return undefined;
 
     const stateMap = new Map(
       seatStateQuery.data?.seats.map((seat) => [seat.seatId, seat.status])
     );
     return {
-      ...seatMap,
-      seats: seatMap.seats.map((seat) => {
+      viewBox: [0, 0, venueLayout.viewBoxWidth, venueLayout.viewBoxHeight],
+      seatSize: venueLayout.seatDiameter,
+      seats: seatMap.map((seat) => {
         const state = stateMap.get(seat.id) ?? 'AVAILABLE';
 
         return {
@@ -37,20 +43,33 @@ const useSeatViewModel = ({ showId, performanceId }: UseSeatViewModelProps) => {
         };
       }),
     };
-  }, [seatMapQuery.data, seatStateQuery.data?.seats]);
+  }, [seatMapQuery.data, seatStateQuery.data?.seats, venueLayoutQuery.data]);
 
   const seatViewQuery = {
-    ...seatMapQuery,
     data,
-    isPending: seatMapQuery.isPending || seatStateQuery.isPending,
-    isError: seatMapQuery.isError || seatStateQuery.isError,
-    error: seatMapQuery.error ?? seatStateQuery.error,
-  } as UseQueryResult<SeatView, Error>;
+    isPending:
+      seatMapQuery.isPending ||
+      venueLayoutQuery.isPending ||
+      seatStateQuery.isPending,
+    isError:
+      seatMapQuery.isError ||
+      venueLayoutQuery.isError ||
+      seatStateQuery.isError,
+    error: seatMapQuery.error ?? venueLayoutQuery.error ?? seatStateQuery.error,
+    refetch: async () => {
+      await Promise.all([
+        seatMapQuery.refetch(),
+        venueLayoutQuery.refetch(),
+        seatStateQuery.refetch(),
+      ]);
+    },
+  };
 
   return {
     seatViewQuery,
     seatMapQuery,
     seatStateQuery,
+    venueLayoutQuery,
   };
 };
 
