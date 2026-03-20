@@ -13,9 +13,10 @@ interface ShowListProps {
 const ShowList = ({ items, categorySlug, variant }: ShowListProps) => {
   return (
     <ShowCardList as="ul">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <ShowCard
           key={item.id}
+          index={index}
           item={item}
           variant={variant}
           categorySlug={categorySlug}

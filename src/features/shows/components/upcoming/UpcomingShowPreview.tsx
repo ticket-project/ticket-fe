@@ -23,9 +23,10 @@ const UpcomingShowPreview = ({
         role="region"
         aria-label="오픈 예정 공연 목록"
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <ShowCard
             key={item.id}
+            index={index}
             item={item}
             variant="upcoming"
             categorySlug={categorySlug}

@@ -3,11 +3,19 @@ import { notFound } from 'next/navigation';
 
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { getLatestShows, getUpcomingShowsPreview } from '@/features/shows/api';
+import {
+  getLatestShows,
+  getShowsPage,
+  getUpcomingShowsPreview,
+  SHOWS_REVALIDATE_SECONDS,
+} from '@/features/shows/api';
 import ShowPageClient from '@/features/shows/components/page/ShowPageClient';
 import { getCategoryMeta } from '@/features/shows/constants/categories';
+import { DEFAULT_SHOWS_FILTERS } from '@/features/shows/constants/defaultFilters';
 import { createQueryClient } from '@/lib/queryClient';
 import { queryKeys } from '@/lib/queryKeys';
+
+export const revalidate = SHOWS_REVALIDATE_SECONDS;
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
@@ -41,6 +49,17 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     queryClient.prefetchQuery({
       queryKey: queryKeys.show.upcomingPreview(categoryMeta.code),
       queryFn: () => getUpcomingShowsPreview(categoryMeta.code),
+    }),
+    queryClient.prefetchInfiniteQuery({
+      queryKey: queryKeys.show.list(categoryMeta.code, DEFAULT_SHOWS_FILTERS),
+      queryFn: ({ pageParam }: { pageParam: string | null }) =>
+        getShowsPage({
+          cursor: pageParam,
+          category: categoryMeta.code,
+          size: 20,
+          ...DEFAULT_SHOWS_FILTERS,
+        }),
+      initialPageParam: null,
     }),
   ]);
 

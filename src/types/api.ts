@@ -19,6 +19,11 @@ export type FetchApiOptions = {
   credentials?: RequestCredentials;
   headers?: HeadersInit;
   method?: ApiMethod;
+  cache?: RequestCache;
+  next?: {
+    revalidate?: number;
+    tags?: string[];
+  };
   params?: Record<string, QueryParamValue>;
   token?: string | null;
 };

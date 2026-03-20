@@ -24,6 +24,7 @@ import {
 
 interface ShowCardProps {
   categorySlug: CategorySlug;
+  index?: number;
   item: ShowBase | UpcomingShowItem;
   variant?: 'upcoming' | 'all';
 }
@@ -32,9 +33,15 @@ const isShowBase = (item: ShowBase | UpcomingShowItem): item is ShowBase => {
   return 'startDate' in item && 'endDate' in item;
 };
 
-const ShowCard = ({ item, categorySlug, variant = 'all' }: ShowCardProps) => {
+const ShowCard = ({
+  item,
+  categorySlug,
+  variant = 'all',
+  index = 0,
+}: ShowCardProps) => {
   const isExclusive = item.saleType === 'EXCLUSIVE';
   const isUpcoming = variant === 'upcoming';
+  const prioritizeImage = isUpcoming && index < 2;
 
   return (
     <>
@@ -51,7 +58,11 @@ const ShowCard = ({ item, categorySlug, variant = 'all' }: ShowCardProps) => {
             <Image
               src={item.image}
               alt={`${item.title} 포스터`}
+              fetchPriority={prioritizeImage ? 'high' : 'low'}
               fill
+              loading={prioritizeImage ? 'eager' : 'lazy'}
+              priority={prioritizeImage}
+              unoptimized
               sizes="(max-width: 767px) 80vw, (max-width: 1279px) 30vw, 20vw"
               style={{ objectFit: 'cover' }}
             />

@@ -94,9 +94,11 @@ export const fetchApi = async <T>(
 ): Promise<T | null> => {
   const {
     body,
+    cache,
     credentials = 'include',
     headers,
     method = 'GET',
+    next,
     params,
     token,
   } = options;
@@ -118,9 +120,11 @@ export const fetchApi = async <T>(
 
     const response = await fetch(requestUrl, {
       method,
+      cache,
       credentials,
       headers: requestHeaders,
       body: hasBody ? JSON.stringify(body) : undefined,
+      next,
     });
 
     const data = await safeParseJson<T>(response);
