@@ -186,7 +186,7 @@ export const getMyLikedShows = async (
   size = 20
 ): Promise<PaginatedResponse<LikedShowItem>> => {
   const res = await fetchApi<ApiResponse<PaginatedResponse<LikedShowItem>>>(
-    '/api/v1/likes/shows/me',
+    '/api/v1/members/me/likes',
     {
       method: 'GET',
       params: { size },

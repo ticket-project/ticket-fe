@@ -163,12 +163,14 @@ export const holdSeats = async (
   seatIds: number[],
   token?: string | null
 ) => {
-  await fetchApi<ApiResponse<null>>('/api/v1/holds', {
-    method: 'POST',
-    body: {
-      performanceId,
-      seatIds,
-    },
-    token,
-  });
+  await fetchApi<ApiResponse<null>>(
+    `/api/v1/performances/${performanceId}/holds`,
+    {
+      method: 'POST',
+      body: {
+        seatIds,
+      },
+      token,
+    }
+  );
 };
