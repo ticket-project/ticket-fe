@@ -54,7 +54,7 @@ const DefaultHeader = () => {
                   <span>ONE</span>&nbsp;티켓
                 </LogoText>
               </Box>
-              <SearchBar sx={{ ml: 2 }} />
+              {/* <SearchBar sx={{ ml: 2 }} /> */}
               <Box sx={{ flexGrow: 1 }} />
               <AuthButtons />
             </HeaderContainer>
@@ -69,7 +69,7 @@ const DefaultHeader = () => {
         <StickyHeader elevation={0} isScrolled={isScrolled}>
           <HeaderContainer>
             <GnbNav pathname={pathname} />
-            <SearchBar sx={{ ml: 1 }} />
+            {/* <SearchBar sx={{ ml: 1 }} /> */}
             <Box sx={{ flexGrow: 1 }} />
             <AuthButtons />
           </HeaderContainer>
