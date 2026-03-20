@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
         pathname: '/upload/**',
       },
     ],
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/webp'],
   },
   // Emotion 설정
   compiler: {
