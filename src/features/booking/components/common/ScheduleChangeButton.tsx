@@ -1,7 +1,12 @@
 import { Button } from '@mui/material';
 
-const ScheduleChangeButton = () => (
+interface ScheduleChangeButtonProps {
+  onClick?: () => void;
+}
+
+const ScheduleChangeButton = ({ onClick }: ScheduleChangeButtonProps) => (
   <Button
+    onClick={onClick}
     variant="outlined"
     sx={{
       fontSize: '1.6rem',

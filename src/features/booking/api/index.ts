@@ -1,4 +1,5 @@
 import { fetchApi } from '@/lib/api';
+import { API_BASE_URL } from '@/lib/env';
 import { ApiResponse } from '@/types/api';
 
 import {
@@ -127,6 +128,34 @@ export const deselectAllSeats = async (
       token,
     }
   );
+};
+
+export const deselectAllSeatsInBackground = async (
+  performanceId: number,
+  token?: string | null
+) => {
+  const requestUrl = API_BASE_URL
+    ? `${API_BASE_URL.replace(/\/$/, '')}/api/v1/performances/${performanceId}/seats/select`
+    : `/api/v1/performances/${performanceId}/seats/select`;
+
+  const headers = new Headers({
+    Accept: 'application/json',
+  });
+
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  const response = await fetch(requestUrl, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers,
+    keepalive: true,
+  });
+
+  if (!response.ok) {
+    throw new Error('좌석 전체 해제 API 호출에 실패했습니다.');
+  }
 };
 
 export const holdSeats = async (

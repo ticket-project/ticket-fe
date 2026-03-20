@@ -17,6 +17,7 @@ import { useBookingStore } from '@/store/bookingStore';
 
 import { holdSeats } from '../../api';
 import useSeatActions from '../../hooks/useSeatActions';
+import useSeatLeaveGuard from '../../hooks/useSeatLeaveGuard';
 import { usePerformanceSummary } from '../../hooks/useSeatQueries';
 import useSeatSocket from '../../hooks/useSeatSocket';
 import useSeatViewModel from '../../hooks/useSeatViewModel';
@@ -47,6 +48,13 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     handleClearSeats,
   } = useSeatActions({ performanceId });
 
+  const { allowSeatPageExit, requestBackNavigation } = useSeatLeaveGuard({
+    accessToken,
+    hasSelectedSeats: selectedSeatIds.length > 0,
+    onConfirmLeave: handleClearSeats,
+    performanceId,
+  });
+
   const selectedSeats = useMemo(
     () => getSelectedSeats(seatViewQuery.data?.seats ?? [], selectedSeatIds),
     [seatViewQuery.data?.seats, selectedSeatIds]
@@ -55,6 +63,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
   const holdSeatsMutation = useMutation({
     mutationFn: () => holdSeats(performanceId, selectedSeatIds, accessToken),
     onSuccess: () => {
+      allowSeatPageExit();
       router.push(`/booking/payment?performanceId=${performanceId}`);
     },
     onError: (error) => {
@@ -98,7 +107,11 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     >
       <QueryBoundary query={summaryQuery}>
         {(item) => (
-          <TopInfoBar performanceSummary={item} showBookingTimer={false} />
+          <TopInfoBar
+            performanceSummary={item}
+            showBookingTimer={false}
+            onScheduleChange={requestBackNavigation}
+          />
         )}
       </QueryBoundary>
       <Box
