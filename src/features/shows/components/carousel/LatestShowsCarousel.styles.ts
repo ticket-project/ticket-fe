@@ -13,16 +13,17 @@ interface StyledIconButtonProps {
 }
 
 export const LatestShowsCarouselContainer = styled(Box)(({ theme }) => ({
+  '--carousel-gap': theme.spacing(2.8),
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing(2.8),
+  gap: 'var(--carousel-gap)',
   [theme.breakpoints.down('sm')]: {
-    gap: theme.spacing(1.4),
+    '--carousel-gap': theme.spacing(1.4),
   },
 }));
 
 export const Root = styled(Card)(({ theme }) => ({
-  flex: '0 0 32%',
+  flex: '0 0 calc((100% - (var(--carousel-gap) * 2)) / 3)',
   minWidth: 0,
   [theme.breakpoints.down('md')]: {
     flex: '0 0 70%',

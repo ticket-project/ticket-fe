@@ -7,7 +7,7 @@ export const Root = styled(Box)(({ theme }) => ({
   gap: theme.spacing(2),
   justifyContent: 'space-between',
   marginTop: theme.spacing(2),
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     alignItems: 'stretch',
     flexDirection: 'column',
   },
@@ -17,13 +17,18 @@ export const GenreStack = styled(Stack)(({ theme }) => ({
   flex: '1 1 0',
   rowGap: theme.spacing(1),
   minWidth: 0,
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     flex: 'none',
     flexWrap: 'nowrap',
     maxWidth: '100%',
     width: '100%',
     overflowX: 'auto',
     overflowY: 'hidden',
+    paddingBottom: theme.spacing(0.5),
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+    scrollbarWidth: 'none',
     WebkitOverflowScrolling: 'touch',
   },
 }));
@@ -56,7 +61,7 @@ export const SelectStack = styled(Stack)(({ theme }) => ({
   justifyContent: 'flex-end',
   rowGap: theme.spacing(1),
   minWidth: 0,
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     flex: 'none',
     justifyContent: 'flex-start',
     width: '100%',
