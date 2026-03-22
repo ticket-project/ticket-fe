@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { MouseEvent } from 'react';
+import { useState, type MouseEvent } from 'react';
 
 import HomeIcon from '@mui/icons-material/Home';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -12,9 +12,13 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Box, Typography } from '@mui/material';
 
+import Popover from '@/components/ui/Popover';
 import { CATEGORIES } from '@/features/shows/constants/categories';
 
 import {
+  CategoryLinkButton,
+  CategoryList,
+  CategoryListItem,
   NavButton,
   NavItem,
   NavList,
@@ -24,10 +28,21 @@ import {
 
 const MobileNav = () => {
   const pathname = usePathname();
+  const [categoryAnchorEl, setCategoryAnchorEl] = useState<HTMLElement | null>(
+    null
+  );
 
   const handleSearchClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     window.alert('검색 페이지는 준비 중입니다.');
+  };
+
+  const handleCategoryClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setCategoryAnchorEl((current) => (current ? null : event.currentTarget));
+  };
+
+  const handleCategoryClose = () => {
+    setCategoryAnchorEl(null);
   };
 
   const isCategoryPath = (slug: string) =>
@@ -37,6 +52,7 @@ const MobileNav = () => {
   const isCategory = Object.keys(CATEGORIES).some(isCategoryPath);
   const isSearch = pathname === '/search' || pathname.startsWith('/search/');
   const isMe = pathname === '/me' || pathname.startsWith('/me/');
+  const isCategoryOpen = Boolean(categoryAnchorEl);
 
   const items = [
     {
@@ -50,9 +66,9 @@ const MobileNav = () => {
       ),
     },
     {
-      href: '/concert',
       label: '카테고리',
       isActive: isCategory,
+      onClick: handleCategoryClick,
       icon: <ListAltOutlinedIcon sx={{ fontSize: '2.8rem' }} />,
     },
     {
@@ -81,10 +97,19 @@ const MobileNav = () => {
           {items.map((item) => (
             <NavItem key={item.label}>
               <NavButton
-                component={Link}
-                href={item.href}
+                component={item.label === '카테고리' ? 'button' : Link}
+                href={item.label === '카테고리' ? undefined : item.href}
+                type={item.label === '카테고리' ? 'button' : undefined}
                 onClick={item.onClick}
                 aria-current={item.isActive ? 'page' : undefined}
+                aria-expanded={
+                  item.label === '카테고리' ? isCategoryOpen : undefined
+                }
+                aria-controls={
+                  item.label === '카테고리'
+                    ? 'mobile-category-popover'
+                    : undefined
+                }
                 isActive={item.isActive}
               >
                 <Box sx={{ lineHeight: 0 }}>{item.icon}</Box>
@@ -101,6 +126,41 @@ const MobileNav = () => {
           ))}
         </NavList>
       </NavWrapper>
+      <Popover
+        id="mobile-category-popover"
+        open={isCategoryOpen}
+        anchorEl={categoryAnchorEl}
+        onClose={handleCategoryClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        width="min(22rem, calc(100vw - 3.2rem))"
+        paperSx={{
+          mb: 1.2,
+          px: 1.2,
+          py: 1.2,
+        }}
+      >
+        <CategoryList>
+          {Object.entries(CATEGORIES).map(([slug, category]) => (
+            <CategoryListItem key={slug}>
+              <CategoryLinkButton
+                component={Link}
+                href={`/${slug}`}
+                aria-current={isCategoryPath(slug) ? 'page' : undefined}
+                onClick={handleCategoryClose}
+              >
+                {category.label}
+              </CategoryLinkButton>
+            </CategoryListItem>
+          ))}
+        </CategoryList>
+      </Popover>
       <Box sx={{ height: 'var(--mobile-nav-height)' }} aria-hidden="true" />
     </Root>
   );
