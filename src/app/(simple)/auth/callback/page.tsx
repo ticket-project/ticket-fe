@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingState from '@/components/common/LoadingState';
 import { exchangeOAuthCode } from '@/features/auth/api';
+import { consumePostLoginRedirect } from '@/features/auth/utils';
 import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
@@ -29,7 +30,7 @@ const CallbackPage = () => {
         const accessToken = await exchangeOAuthCode(code);
         setAccessToken(accessToken);
         await queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-        router.replace('/concert');
+        router.replace(consumePostLoginRedirect() ?? '/concert');
       } catch {
         clearAuth();
         router.replace('/login');

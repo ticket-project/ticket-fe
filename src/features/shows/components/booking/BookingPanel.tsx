@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { Box, Divider, Stack, Typography } from '@mui/material';
@@ -10,6 +10,7 @@ import { Dayjs } from 'dayjs';
 
 import { Performances } from '../../types';
 
+import { buildLoginPath, getPathWithSearch } from '@/features/auth/utils';
 import { useAuthStore } from '@/store/authStore';
 
 import { useSeatGrades } from '../../hooks/useShowQueries';
@@ -45,6 +46,8 @@ const BookingPanel = ({
   isSaleEnded,
 }: BookingPanelProps) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const accessToken = useAuthStore((state) => state.accessToken);
   const { availableDateSet, initialSelectedDate, initialSelectedSessionId } =
     getInitialDateState(performances);
@@ -92,7 +95,7 @@ const BookingPanel = ({
     if (!selectedSession) return;
 
     if (!accessToken) {
-      router.push('/login');
+      router.push(buildLoginPath(getPathWithSearch(pathname, searchParams)));
       return;
     }
 

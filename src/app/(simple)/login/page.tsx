@@ -1,10 +1,23 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+
 import AuthCard from '@/features/auth/components/card/AuthCard';
 import useSocialAuth from '@/features/auth/hooks/useSocialAuth';
+import {
+  savePostLoginRedirect,
+  sanitizeRedirectPath,
+} from '@/features/auth/utils';
 
 const LoginPage = () => {
+  const searchParams = useSearchParams();
   const { mutation, isPending, errorMessage } = useSocialAuth();
+  const redirectPath = sanitizeRedirectPath(searchParams.get('redirect'));
+
+  useEffect(() => {
+    savePostLoginRedirect(redirectPath);
+  }, [redirectPath]);
 
   return (
     <AuthCard

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
 
 import { logout } from '@/features/auth/api';
+import { buildLoginPath, getPathWithSearch } from '@/features/auth/utils';
 import { queryKeys } from '@/lib/queryKeys';
 import { useAuthStore } from '@/store/authStore';
 
@@ -17,11 +18,14 @@ import { Root, StyledButton } from './AuthButtons.styles';
 
 const AuthButtons = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
   const accessToken = useAuthStore((s) => s.accessToken);
   const clearAuth = useAuthStore((s) => s.clearAuth);
   const isAuthenticated = Boolean(accessToken);
+  const loginHref = buildLoginPath(getPathWithSearch(pathname, searchParams));
 
   const logoutMutation = useMutation({
     mutationFn: () => logout(accessToken),
@@ -63,7 +67,7 @@ const AuthButtons = () => {
         </>
       ) : (
         <>
-          <StyledButton href="/login" startIcon={<LoginIcon />}>
+          <StyledButton href={loginHref} startIcon={<LoginIcon />}>
             로그인
           </StyledButton>
           <StyledButton href="/signup" startIcon={<PersonOutlineIcon />}>

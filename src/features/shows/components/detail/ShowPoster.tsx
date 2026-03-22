@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Favorite, FavoriteBorder, Share } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
@@ -9,6 +9,7 @@ import { useSnackbar } from 'notistack';
 
 import { ShowDetail } from '../../types';
 
+import { buildLoginPath, getPathWithSearch } from '@/features/auth/utils';
 import { useShowLike } from '@/features/shows/hooks/useShowQueries';
 import { useAuthStore } from '@/store/authStore';
 
@@ -22,6 +23,8 @@ interface ShowPosterProps {
 
 const ShowPoster = ({ item }: ShowPosterProps) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { enqueueSnackbar } = useSnackbar();
   const accessToken = useAuthStore((state) => state.accessToken);
   const like = useShowLike(item.id, accessToken);
@@ -40,7 +43,7 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
       );
 
       if (isConfirmed) {
-        router.push('/login');
+        router.push(buildLoginPath(getPathWithSearch(pathname, searchParams)));
       }
 
       return;
