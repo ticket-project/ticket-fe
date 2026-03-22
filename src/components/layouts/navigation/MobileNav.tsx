@@ -1,6 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { MouseEvent } from 'react';
 
 import HomeIcon from '@mui/icons-material/Home';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -22,6 +24,11 @@ import {
 
 const MobileNav = () => {
   const pathname = usePathname();
+
+  const handleSearchClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.alert('검색 페이지는 준비 중입니다.');
+  };
 
   const isCategoryPath = (slug: string) =>
     pathname === `/${slug}` || pathname.startsWith(`/${slug}/`);
@@ -52,6 +59,7 @@ const MobileNav = () => {
       href: '/search',
       label: '검색',
       isActive: isSearch,
+      onClick: handleSearchClick,
       icon: <SearchOutlinedIcon sx={{ fontSize: '2.8rem' }} />,
     },
     {
@@ -73,7 +81,9 @@ const MobileNav = () => {
           {items.map((item) => (
             <NavItem key={item.label}>
               <NavButton
+                component={Link}
                 href={item.href}
+                onClick={item.onClick}
                 aria-current={item.isActive ? 'page' : undefined}
                 isActive={item.isActive}
               >

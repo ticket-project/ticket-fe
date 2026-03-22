@@ -32,6 +32,10 @@ const DefaultHeader = () => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const handleMobileSearchClick = () => {
+    window.alert('검색 페이지는 준비 중입니다.');
+  };
+
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY || 0;
@@ -84,7 +88,10 @@ const DefaultHeader = () => {
                 <span>ONE</span>&nbsp;티켓
               </LogoText>
             </Box>
-            <MobileSearchButton href="/search" aria-label="검색 페이지로 이동">
+            <MobileSearchButton
+              onClick={handleMobileSearchClick}
+              aria-label="검색 기능 준비 중 안내"
+            >
               <SearchIcon />
             </MobileSearchButton>
           </HeaderContainer>
