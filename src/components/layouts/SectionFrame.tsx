@@ -11,7 +11,16 @@ interface SectionFrameProps {
   children: ReactNode;
   fullWidth?: boolean;
   maxWidth?: ContainerProps['maxWidth'];
-  spacing?: number;
+  spacing?:
+    | number
+    | string
+    | {
+        xs?: number | string;
+        sm?: number | string;
+        md?: number | string;
+        lg?: number | string;
+        xl?: number | string;
+      };
   sx?: SxProps<Theme>;
   containerSx?: SxProps<Theme>;
 }
@@ -23,7 +32,7 @@ const SectionFrame = ({
   children,
   fullWidth = false,
   maxWidth = 'lg',
-  spacing = 16,
+  spacing = { xs: 8, md: 12, lg: 16 },
   sx,
   containerSx,
 }: SectionFrameProps) => {
