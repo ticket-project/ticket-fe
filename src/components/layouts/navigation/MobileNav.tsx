@@ -32,12 +32,12 @@ const MobileNav = () => {
     null
   );
 
-  const handleSearchClick = (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleSearchClick = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     window.alert('검색 페이지는 준비 중입니다.');
   };
 
-  const handleCategoryClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleCategoryClick = (event: MouseEvent<HTMLElement>) => {
     setCategoryAnchorEl((current) => (current ? null : event.currentTarget));
   };
 
@@ -97,10 +97,10 @@ const MobileNav = () => {
           {items.map((item) => (
             <NavItem key={item.label}>
               <NavButton
-                component={item.label === '카테고리' ? 'button' : Link}
-                href={item.label === '카테고리' ? undefined : item.href}
+                as={item.label === '카테고리' ? 'button' : Link}
+                href={'href' in item ? item.href : undefined}
                 type={item.label === '카테고리' ? 'button' : undefined}
-                onClick={item.onClick}
+                onClick={'onClick' in item ? item.onClick : undefined}
                 aria-current={item.isActive ? 'page' : undefined}
                 aria-expanded={
                   item.label === '카테고리' ? isCategoryOpen : undefined
@@ -150,7 +150,7 @@ const MobileNav = () => {
           {Object.entries(CATEGORIES).map(([slug, category]) => (
             <CategoryListItem key={slug}>
               <CategoryLinkButton
-                component={Link}
+                as={Link}
                 href={`/${slug}`}
                 aria-current={isCategoryPath(slug) ? 'page' : undefined}
                 onClick={handleCategoryClose}
