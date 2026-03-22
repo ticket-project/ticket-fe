@@ -93,7 +93,7 @@ export class SeatSocketClient {
           ? (message) => {
               console.warn('[seat-socket]', message);
             }
-          : undefined,
+          : () => {},
       onConnect: () => {
         onConnect?.();
       },
