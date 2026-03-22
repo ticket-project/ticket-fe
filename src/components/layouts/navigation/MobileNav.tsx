@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState, type MouseEvent } from 'react';
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -13,7 +13,9 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Box, Typography } from '@mui/material';
 
 import Popover from '@/components/ui/Popover';
+import { buildLoginPath, getPathWithSearch } from '@/features/auth/utils';
 import { CATEGORIES } from '@/features/shows/constants/categories';
+import { useAuthStore } from '@/store/authStore';
 
 import {
   CategoryLinkButton,
@@ -29,9 +31,14 @@ import {
 const MobileNav = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const isAuthInitialized = useAuthStore((state) => state.isAuthInitialized);
   const [categoryAnchorEl, setCategoryAnchorEl] = useState<HTMLElement | null>(
     null
   );
+  const loginHref = buildLoginPath(getPathWithSearch(pathname, searchParams));
+  const isAuthenticated = Boolean(accessToken);
 
   const handleSearchClick = () => {
     window.alert('검색 페이지는 준비 중입니다.');
@@ -50,7 +57,11 @@ const MobileNav = () => {
   };
 
   const handleMeClick = () => {
-    router.push('/me');
+    if (!isAuthInitialized) {
+      return;
+    }
+
+    router.push(isAuthenticated ? '/me' : loginHref);
   };
 
   const isCategoryPath = (slug: string) =>

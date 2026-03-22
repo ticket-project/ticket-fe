@@ -8,6 +8,7 @@
 }
 :root {
   --simple-header-height: 96px;
+  --mobile-header-height: 56px;
 }
 
 html,

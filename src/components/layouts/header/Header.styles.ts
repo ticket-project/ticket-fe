@@ -6,7 +6,6 @@ export const Root = styled(Box)(() => ({
   '--header-bottom-height': '45px',
   '--header-height': '130px',
   '--header-top-height': '85px',
-  '--mobile-header-height': '56px',
 
   zIndex: 999,
   '& .MuiToolbar-root': {

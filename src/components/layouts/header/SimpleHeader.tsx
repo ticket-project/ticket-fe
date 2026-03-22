@@ -9,6 +9,9 @@ import AuthButtons from '@/features/auth/components/buttons/AuthButtons';
 
 import {
   Root,
+  Wrapper,
+  MobileWrapper,
+  MobileHeader,
   TopArea,
   LogoText,
   HeaderContainer,
@@ -21,18 +24,37 @@ const SimpleHeader = () => {
 
   return (
     <Root>
-      <Header elevation={0}>
-        <TopArea sx={{ height: 'var(--simple-header-height)' }}>
+      <Wrapper>
+        <Header elevation={0}>
+          <TopArea sx={{ height: 'var(--simple-header-height)' }}>
+            <HeaderContainer maxWidth={isSeatPage ? false : 'lg'}>
+              <Box component={Link} href="/" aria-label="홈으로 이동">
+                <LogoText variant="h1" sx={{ fontSize: '3.2rem' }}>
+                  <span>ONE</span>&nbsp;티켓
+                </LogoText>
+              </Box>
+              {isSeatPage && <AuthButtons />}
+            </HeaderContainer>
+          </TopArea>
+        </Header>
+      </Wrapper>
+
+      <MobileWrapper>
+        <MobileHeader elevation={0}>
           <HeaderContainer maxWidth={isSeatPage ? false : 'lg'}>
             <Box component={Link} href="/" aria-label="홈으로 이동">
-              <LogoText variant="h1" sx={{ fontSize: '3.2rem' }}>
+              <LogoText variant="h1" sx={{ fontSize: '2.2rem' }}>
                 <span>ONE</span>&nbsp;티켓
               </LogoText>
             </Box>
             {isSeatPage && <AuthButtons />}
           </HeaderContainer>
-        </TopArea>
-      </Header>
+        </MobileHeader>
+        <Box
+          sx={{ height: 'var(--mobile-header-height)' }}
+          aria-hidden="true"
+        />
+      </MobileWrapper>
     </Root>
   );
 };
