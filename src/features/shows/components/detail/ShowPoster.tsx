@@ -35,10 +35,13 @@ const ShowPoster = ({ item }: ShowPosterProps) => {
 
   const handleToggleLike = async () => {
     if (!accessToken) {
-      enqueueSnackbar('로그인 후 이용해 주세요.', {
-        variant: 'info',
-      });
-      router.push('/login');
+      const isConfirmed = window.confirm(
+        '로그인을 하신 후 서비스 이용이 가능합니다. 로그인하시겠습니까?'
+      );
+
+      if (isConfirmed) {
+        router.push('/login');
+      }
 
       return;
     }
