@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, type MouseEvent } from 'react';
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -28,21 +28,29 @@ import {
 
 const MobileNav = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [categoryAnchorEl, setCategoryAnchorEl] = useState<HTMLElement | null>(
     null
   );
 
-  const handleSearchClick = (event: MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+  const handleSearchClick = () => {
     window.alert('검색 페이지는 준비 중입니다.');
   };
 
-  const handleCategoryClick = (event: MouseEvent<HTMLElement>) => {
+  const handleCategoryClick = (event: MouseEvent<HTMLButtonElement>) => {
     setCategoryAnchorEl((current) => (current ? null : event.currentTarget));
   };
 
   const handleCategoryClose = () => {
     setCategoryAnchorEl(null);
+  };
+
+  const handleHomeClick = () => {
+    router.push('/concert');
+  };
+
+  const handleMeClick = () => {
+    router.push('/me');
   };
 
   const isCategoryPath = (slug: string) =>
@@ -56,9 +64,9 @@ const MobileNav = () => {
 
   const items = [
     {
-      href: '/concert',
       label: '홈',
       isActive: isHome,
+      onClick: handleHomeClick,
       icon: isHome ? (
         <HomeIcon sx={{ fontSize: '2.8rem' }} />
       ) : (
@@ -72,16 +80,15 @@ const MobileNav = () => {
       icon: <ListAltOutlinedIcon sx={{ fontSize: '2.8rem' }} />,
     },
     {
-      href: '/search',
       label: '검색',
       isActive: isSearch,
       onClick: handleSearchClick,
       icon: <SearchOutlinedIcon sx={{ fontSize: '2.8rem' }} />,
     },
     {
-      href: '/me',
       label: '마이',
       isActive: isMe,
+      onClick: handleMeClick,
       icon: isMe ? (
         <PersonIcon sx={{ fontSize: '2.8rem' }} />
       ) : (
@@ -97,11 +104,8 @@ const MobileNav = () => {
           {items.map((item) => (
             <NavItem key={item.label}>
               <NavButton
-                as={item.label === '카테고리' ? 'button' : Link}
-                href={'href' in item ? item.href : undefined}
-                type={item.label === '카테고리' ? 'button' : undefined}
-                onClick={'onClick' in item ? item.onClick : undefined}
-                aria-current={item.isActive ? 'page' : undefined}
+                type="button"
+                onClick={item.onClick}
                 aria-expanded={
                   item.label === '카테고리' ? isCategoryOpen : undefined
                 }
@@ -110,6 +114,7 @@ const MobileNav = () => {
                     ? 'mobile-category-popover'
                     : undefined
                 }
+                aria-haspopup={item.label === '카테고리' ? 'dialog' : undefined}
                 isActive={item.isActive}
               >
                 <Box sx={{ lineHeight: 0 }}>{item.icon}</Box>
@@ -131,6 +136,7 @@ const MobileNav = () => {
         open={isCategoryOpen}
         anchorEl={categoryAnchorEl}
         onClose={handleCategoryClose}
+        showCloseButton={false}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'center',
