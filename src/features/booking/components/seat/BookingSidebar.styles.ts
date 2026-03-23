@@ -2,6 +2,7 @@ import { Clear } from '@mui/icons-material';
 import {
   Box,
   Button,
+  CircularProgress,
   IconButton,
   Stack,
   Typography,
@@ -154,12 +155,31 @@ export const SidebarPriceValue = styled(Typography)(() => ({
 }));
 
 export const SidebarPrimaryButton = styled(Button)(() => ({
+  position: 'relative',
   paddingBottom: '1.2rem',
   paddingTop: '1.2rem',
   fontSize: '2rem',
   fontWeight: 800,
   color: 'white',
   borderRadius: '1rem',
+}));
+
+export const SidebarButtonSpinner = styled(CircularProgress)(() => ({
+  color: 'currentColor',
+}));
+
+export const SidebarButtonLabel = styled('span')({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const SidebarButtonSpinnerBox = styled('span')(() => ({
+  position: 'absolute',
+  inset: 0,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
 export const MobileSidebarRoot = styled(Box)(({ theme }) => ({
@@ -229,6 +249,7 @@ export const MobileFooter = styled(Box, {
 }));
 
 export const MobilePrimaryButton = styled(Button)(() => ({
+  position: 'relative',
   paddingBottom: '0.8rem',
   paddingTop: '0.8rem',
   fontSize: '1.8rem',

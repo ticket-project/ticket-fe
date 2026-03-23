@@ -151,6 +151,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
         <BookingSidebar
           selectedSeats={selectedSeats}
           pendingSeatIds={pendingSeatIdSet}
+          isHolding={holdSeatsMutation.isPending}
           onClearSeats={handleClearSeats}
           onDeselectSeat={handleDeselectSeat}
           onHoldSeats={handleHoldSeats}

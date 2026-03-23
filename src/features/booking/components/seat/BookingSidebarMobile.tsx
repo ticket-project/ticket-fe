@@ -24,31 +24,29 @@ import {
   SeatMeta,
   SeatMetaText,
   SeatPriceText,
+  SidebarButtonLabel,
+  SidebarButtonSpinner,
+  SidebarButtonSpinnerBox,
   SidebarCount,
-  SidebarFooterRow,
-  SidebarPriceBox,
-  SidebarPriceLabel,
-  SidebarPriceValue,
-  SidebarPrimaryButton,
   SidebarTitle,
 } from './BookingSidebar.styles';
 
 interface BookingSidebarMobileProps {
   selectedSeats: SeatViewItem[];
   pendingSeatIds: Set<number>;
+  isHolding: boolean;
   onClearSeats: () => Promise<void>;
   onDeselectSeat: (seatId: number) => Promise<void>;
   onHoldSeats: () => Promise<void>;
-  totalPrice: number;
 }
 
 const BookingSidebarMobile = ({
   selectedSeats,
   pendingSeatIds,
+  isHolding,
   onClearSeats,
   onDeselectSeat,
   onHoldSeats,
-  totalPrice,
 }: BookingSidebarMobileProps) => {
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
   const selectedCount = selectedSeats.length;
@@ -94,7 +92,7 @@ const BookingSidebarMobile = ({
         </MobileHeader>
         {isMobileExpanded && (
           <MobileSeatList>
-            {selectedSeats.map((seat, index) => (
+            {selectedSeats.map((seat) => (
               <SeatItem key={seat.id}>
                 <SeatItemContent
                   direction="row"
@@ -127,9 +125,20 @@ const BookingSidebarMobile = ({
           <MobilePrimaryButton
             fullWidth
             variant="contained"
+            disabled={isHolding}
+            aria-busy={isHolding}
             onClick={onHoldSeats}
           >
-            예매하기
+            <SidebarButtonLabel
+              sx={{ visibility: isHolding ? 'hidden' : 'visible' }}
+            >
+              예매하기
+            </SidebarButtonLabel>
+            {isHolding && (
+              <SidebarButtonSpinnerBox>
+                <SidebarButtonSpinner size={20} />
+              </SidebarButtonSpinnerBox>
+            )}
           </MobilePrimaryButton>
         </MobileFooter>
       </MobileSidebarSheet>

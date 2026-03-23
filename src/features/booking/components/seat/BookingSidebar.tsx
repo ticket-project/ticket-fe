@@ -7,6 +7,9 @@ import BookingSidebarMobile from './BookingSidebarMobile';
 
 import {
   DeleteIcon,
+  SidebarButtonLabel,
+  SidebarButtonSpinner,
+  SidebarButtonSpinnerBox,
   DesktopSidebar,
   SeatDeleteButton,
   SeatGradeText,
@@ -33,6 +36,7 @@ import {
 interface BookingSidebarProps {
   selectedSeats: SeatViewItem[];
   pendingSeatIds: Set<number>;
+  isHolding: boolean;
   onClearSeats: () => Promise<void>;
   onDeselectSeat: (seatId: number) => Promise<void>;
   onHoldSeats: () => Promise<void>;
@@ -41,6 +45,7 @@ interface BookingSidebarProps {
 const BookingSidebar = ({
   selectedSeats,
   pendingSeatIds,
+  isHolding,
   onClearSeats,
   onDeselectSeat,
   onHoldSeats,
@@ -110,10 +115,20 @@ const BookingSidebar = ({
             <SidebarPrimaryButton
               fullWidth
               variant="contained"
-              disabled={isEmpty}
+              disabled={isEmpty || isHolding}
+              aria-busy={isHolding}
               onClick={onHoldSeats}
             >
-              예매하기
+              <SidebarButtonLabel
+                sx={{ visibility: isHolding ? 'hidden' : 'visible' }}
+              >
+                예매하기
+              </SidebarButtonLabel>
+              {isHolding && (
+                <SidebarButtonSpinnerBox>
+                  <SidebarButtonSpinner size={20} />
+                </SidebarButtonSpinnerBox>
+              )}
             </SidebarPrimaryButton>
           </SidebarFooterRow>
         </SidebarFooter>
@@ -123,10 +138,10 @@ const BookingSidebar = ({
         <BookingSidebarMobile
           selectedSeats={selectedSeats}
           pendingSeatIds={pendingSeatIds}
+          isHolding={isHolding}
           onClearSeats={onClearSeats}
           onDeselectSeat={onDeselectSeat}
           onHoldSeats={onHoldSeats}
-          totalPrice={totalPrice}
         />
       )}
     </>
