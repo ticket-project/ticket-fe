@@ -3,6 +3,7 @@ import { API_BASE_URL } from '@/lib/env';
 import { ApiResponse } from '@/types/api';
 
 import {
+  HoldSeatsResponse,
   PerformanceSummary,
   SeatMapItem,
   SeatMapResponse,
@@ -163,7 +164,7 @@ export const holdSeats = async (
   seatIds: number[],
   token?: string | null
 ) => {
-  await fetchApi<ApiResponse<null>>(
+  const res = await fetchApi<ApiResponse<HoldSeatsResponse | null>>(
     `/api/v1/performances/${performanceId}/holds`,
     {
       method: 'POST',
@@ -173,4 +174,23 @@ export const holdSeats = async (
       token,
     }
   );
+
+  const holdData = res?.data;
+  const expiresAt =
+    holdData?.expiresAt ??
+    holdData?.holdExpiresAt ??
+    holdData?.expiredAt ??
+    null;
+
+  if (expiresAt) {
+    return expiresAt;
+  }
+
+  const remainingSeconds =
+    holdData?.remainingSeconds ?? holdData?.remainingTimeSeconds ?? 600;
+  const baseTime = holdData?.serverTime
+    ? new Date(holdData.serverTime).getTime()
+    : Date.now();
+
+  return new Date(baseTime + remainingSeconds * 1000).toISOString();
 };

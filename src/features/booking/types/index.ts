@@ -14,6 +14,15 @@ export interface PerformanceSummary {
   startTime: string;
 }
 
+export interface HoldSeatsResponse {
+  expiresAt?: string;
+  expiredAt?: string;
+  holdExpiresAt?: string;
+  serverTime?: string;
+  remainingSeconds?: number;
+  remainingTimeSeconds?: number;
+}
+
 export interface VenueLayout {
   name: string;
   viewBoxWidth: number;

@@ -4,19 +4,25 @@ import PaymentPageClient from '@/features/booking/components/page/PaymentPageCli
 
 interface SeatPageProps {
   searchParams: Promise<{
+    holdExpiresAt?: string;
     performanceId?: string;
   }>;
 }
 
 const PaymentPage = async ({ searchParams }: SeatPageProps) => {
-  const { performanceId: rawPerformanceId } = await searchParams;
+  const { performanceId: rawPerformanceId, holdExpiresAt } = await searchParams;
   const performanceId = rawPerformanceId ? Number(rawPerformanceId) : undefined;
 
   if (!performanceId) {
     return notFound();
   }
 
-  return <PaymentPageClient performanceId={performanceId} />;
+  return (
+    <PaymentPageClient
+      performanceId={performanceId}
+      holdExpiresAt={holdExpiresAt}
+    />
+  );
 };
 
 export default PaymentPage;

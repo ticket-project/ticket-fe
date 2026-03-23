@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
 
@@ -12,8 +12,29 @@ import {
   TimeValue,
 } from './BookingTimer.styles';
 
-const BookingTimer = () => {
+interface BookingTimerProps {
+  expiresAt?: string;
+}
+
+const formatRemainingTime = (expiresAt?: string, currentTime = Date.now()) => {
+  if (!expiresAt) return '00:00';
+
+  const remainingMs = new Date(expiresAt).getTime() - currentTime;
+
+  if (Number.isNaN(remainingMs) || remainingMs <= 0) {
+    return '00:00';
+  }
+
+  const totalSeconds = Math.floor(remainingMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
+
+const BookingTimer = ({ expiresAt }: BookingTimerProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
 
   const handleOpen = (e: MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
@@ -23,12 +44,27 @@ const BookingTimer = () => {
   };
 
   const isOpen = Boolean(anchorEl);
+  const timeLeft = formatRemainingTime(expiresAt, currentTime);
+
+  useEffect(() => {
+    if (!expiresAt) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [expiresAt]);
 
   return (
     <>
       <TimeInfoWrapper>
         <TimeLabel>예매 가능 시간</TimeLabel>
-        <TimeValue>6:50</TimeValue>
+        <TimeValue>{timeLeft}</TimeValue>
         <TimeHelpButton
           aria-label="예매 가능 시간 안내 열기"
           onClick={handleOpen}

@@ -62,9 +62,14 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
 
   const holdSeatsMutation = useMutation({
     mutationFn: () => holdSeats(performanceId, selectedSeatIds, accessToken),
-    onSuccess: () => {
+    onSuccess: (holdExpiresAt) => {
       allowSeatPageExit();
-      router.push(`/booking/payment?performanceId=${performanceId}`);
+      const params = new URLSearchParams({
+        performanceId: String(performanceId),
+        holdExpiresAt,
+      });
+
+      router.push(`/booking/payment?${params.toString()}`);
     },
     onError: (error) => {
       console.error('좌석 선점에 실패했습니다.', error);

@@ -6,11 +6,13 @@ import { PerformanceSummary } from '../../types';
 import BookingTimer from '@/features/booking/components/common/bookingTimer/BookingTimer';
 
 interface TopInfoBarProps {
+  bookingExpiresAt?: string;
   performanceSummary: PerformanceSummary;
   showBookingTimer?: boolean;
 }
 
 const TopInfoBar = ({
+  bookingExpiresAt,
   performanceSummary,
   showBookingTimer = true,
 }: TopInfoBarProps) => {
@@ -30,9 +32,10 @@ const TopInfoBar = ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '2rem',
+        gap: { xs: '1.2rem', md: '2rem' },
         borderBottom: '1px solid',
         borderBottomColor: 'grey.200',
+        minWidth: 0,
       }}
     >
       <Box
@@ -40,7 +43,7 @@ const TopInfoBar = ({
           display: 'flex',
           alignItems: 'center',
           flex: 1,
-          gap: '2rem',
+          gap: { xs: '1.2rem', md: '2rem' },
           minWidth: 0,
         }}
       >
@@ -101,7 +104,7 @@ const TopInfoBar = ({
           <ScheduleChangeButton onClick={onScheduleChange} />
         )} */}
       </Box>
-      {showBookingTimer && <BookingTimer />}
+      {showBookingTimer && <BookingTimer expiresAt={bookingExpiresAt} />}
     </Container>
   );
 };
