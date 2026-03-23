@@ -20,7 +20,7 @@ export const ShowCardList = styled(Box)(({ theme }) => ({
 }));
 
 export const ShowCardWrapper = styled(Card)(({ theme }) => ({
-  flex: '0 0 80%',
+  flex: '0 0 75%',
   height: '100%',
   minWidth: 0,
   [theme.breakpoints.up('md')]: {
@@ -32,9 +32,12 @@ export const ShowCardWrapper = styled(Card)(({ theme }) => ({
   },
   scrollSnapAlign: 'center',
 }));
-export const ShowCardLinkArea = styled(CardActionArea)<{
+export const ShowCardLinkArea = styled(CardActionArea, {
+  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'mobileLayout',
+})<{
   variant?: 'upcoming' | 'all';
-}>(({ theme, variant }) => ({
+  mobileLayout?: 'stacked' | 'compact';
+}>(({ mobileLayout, theme }) => ({
   display: 'flex',
   alignItems: 'start',
   flexDirection: 'column',
@@ -45,7 +48,7 @@ export const ShowCardLinkArea = styled(CardActionArea)<{
   '& img': {
     transition: 'transform 0.3s ease',
   },
-  ...(variant !== 'upcoming' && {
+  ...(mobileLayout === 'compact' && {
     [theme.breakpoints.down('md')]: {
       display: 'grid',
       alignItems: 'center',

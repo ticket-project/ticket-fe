@@ -58,6 +58,7 @@ const UpcomingShowPageClient = ({
               items={items}
               variant="upcoming"
               categorySlug={categorySlug}
+              mobileLayout="compact"
             />
           )}
         </InfiniteQueryBoundary>

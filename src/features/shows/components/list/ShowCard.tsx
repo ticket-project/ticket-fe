@@ -27,6 +27,7 @@ interface ShowCardProps {
   index?: number;
   item: ShowBase | UpcomingShowItem;
   variant?: 'upcoming' | 'all';
+  mobileLayout?: 'stacked' | 'compact';
 }
 
 const isShowBase = (item: ShowBase | UpcomingShowItem): item is ShowBase => {
@@ -37,6 +38,7 @@ const ShowCard = ({
   item,
   categorySlug,
   variant = 'all',
+  mobileLayout = variant === 'upcoming' ? 'stacked' : 'compact',
   index = 0,
 }: ShowCardProps) => {
   const isExclusive = item.saleType === 'EXCLUSIVE';
@@ -53,6 +55,7 @@ const ShowCard = ({
             prefetch: false,
           }}
           variant={variant}
+          mobileLayout={mobileLayout}
         >
           <PosterBox>
             <Image
@@ -91,7 +94,7 @@ const ShowCard = ({
           </CardContent>
         </ShowCardLinkArea>
       </ShowCardWrapper>
-      <Divider />
+      {!isUpcoming && <Divider />}
     </>
   );
 };

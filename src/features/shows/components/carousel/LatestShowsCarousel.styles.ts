@@ -17,8 +17,8 @@ export const LatestShowsCarouselContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 'var(--carousel-gap)',
-  [theme.breakpoints.down('sm')]: {
-    '--carousel-gap': theme.spacing(1.4),
+  [theme.breakpoints.down('md')]: {
+    '--carousel-gap': theme.spacing(2),
   },
 }));
 
@@ -26,13 +26,14 @@ export const Root = styled(Card)(({ theme }) => ({
   flex: '0 0 calc((100% - (var(--carousel-gap) * 2)) / 3)',
   minWidth: 0,
   [theme.breakpoints.down('md')]: {
-    flex: '0 0 70%',
+    flex: '0 0 75%',
   },
 }));
 
-export const StyledCardActionArea = styled(CardActionArea)(() => ({
+export const StyledCardActionArea = styled(CardActionArea)(({ theme }) => ({
   height: '100%',
   overflow: 'hidden',
+  border: `1px solid ${theme.palette.grey[100]}`,
   borderRadius: '1.4rem',
   aspectRatio: '700/985',
 }));

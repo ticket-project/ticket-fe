@@ -8,9 +8,15 @@ interface ShowListProps {
   categorySlug: CategorySlug;
   items: ShowBase[] | UpcomingShowItem[];
   variant?: 'upcoming' | 'all';
+  mobileLayout?: 'stacked' | 'compact';
 }
 
-const ShowList = ({ items, categorySlug, variant }: ShowListProps) => {
+const ShowList = ({
+  items,
+  categorySlug,
+  variant,
+  mobileLayout,
+}: ShowListProps) => {
   return (
     <ShowCardList as="ul">
       {items.map((item, index) => (
@@ -20,6 +26,7 @@ const ShowList = ({ items, categorySlug, variant }: ShowListProps) => {
           item={item}
           variant={variant}
           categorySlug={categorySlug}
+          mobileLayout={mobileLayout}
         />
       ))}
     </ShowCardList>
