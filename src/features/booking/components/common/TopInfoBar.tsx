@@ -5,20 +5,14 @@ import { PerformanceSummary } from '../../types';
 
 import BookingTimer from '@/features/booking/components/common/bookingTimer/BookingTimer';
 
-import ScheduleChangeButton from './ScheduleChangeButton';
-
 interface TopInfoBarProps {
   performanceSummary: PerformanceSummary;
-  showScheduleChangeButton?: boolean;
   showBookingTimer?: boolean;
-  onScheduleChange?: () => void;
 }
 
 const TopInfoBar = ({
   performanceSummary,
-  showScheduleChangeButton = true,
   showBookingTimer = true,
-  onScheduleChange,
 }: TopInfoBarProps) => {
   if (!performanceSummary) return null;
 
@@ -45,30 +39,67 @@ const TopInfoBar = ({
         sx={{
           display: 'flex',
           alignItems: 'center',
+          flex: 1,
           gap: '2rem',
           minWidth: 0,
         }}
       >
-        <Stack direction="row">
-          <Typography component="h3" sx={{ fontSize: '2rem', fontWeight: 700 }}>
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          sx={{
+            flex: 1,
+            minWidth: 0,
+            gap: { xs: '0.1rem', md: 0 },
+          }}
+        >
+          <Typography
+            component="h3"
+            sx={{
+              display: 'block',
+              maxWidth: '100%',
+              minWidth: 0,
+              fontSize: { xs: '1.6rem', md: '2rem' },
+              fontWeight: 700,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {title}
           </Typography>
           <Typography
             component="span"
-            sx={{ fontSize: '2rem', fontWeight: 700 }}
+            sx={{
+              fontSize: '2rem',
+              fontWeight: 700,
+              display: { xs: 'none', md: 'block' },
+              '&::before': {
+                content: '"·"',
+                margin: '0 0.4rem',
+              },
+            }}
           >
-            &nbsp;· {region}
+            {region}
           </Typography>
           <Typography
             component="span"
-            sx={{ fontSize: '2rem', fontWeight: 700 }}
+            sx={{
+              fontSize: { xs: '1.2rem', md: '2rem' },
+              fontWeight: { xs: 500, md: 700 },
+              color: { xs: 'text.secondary', md: 'text.primary' },
+              whiteSpace: 'nowrap',
+              '&::before': {
+                content: { xs: '""', md: '"·"' },
+                margin: { xs: 0, md: '0 0.4rem' },
+              },
+            }}
           >
-            &nbsp;· {formattedStartTime}
+            {formattedStartTime}
           </Typography>
         </Stack>
-        {showScheduleChangeButton && (
+        {/* {showScheduleChangeButton && (
           <ScheduleChangeButton onClick={onScheduleChange} />
-        )}
+        )} */}
       </Box>
       {showBookingTimer && <BookingTimer />}
     </Container>

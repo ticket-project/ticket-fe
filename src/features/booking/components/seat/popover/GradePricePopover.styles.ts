@@ -1,13 +1,16 @@
 import { Box, Button, Divider, Typography, styled } from '@mui/material';
 
-export const TriggerButton = styled(Button)(() => ({
+export const TriggerButton = styled(Button)(({ theme }) => ({
   position: 'absolute',
-  bottom: '2.8rem',
-  left: '2rem',
+  bottom: '1.5rem',
+  left: '1.5rem',
   zIndex: 3,
-  padding: '1rem 1.8rem',
-  fontSize: '1.5rem',
+  maxWidth: 'calc(100% - 3.2rem)',
+  minWidth: 0,
+  padding: '0.5rem 0.8rem',
+  fontSize: '1.2rem',
   fontWeight: 800,
+  whiteSpace: 'nowrap',
   color: 'grey.600',
   backgroundColor: 'white',
   borderRadius: '999px',
@@ -15,14 +18,26 @@ export const TriggerButton = styled(Button)(() => ({
   '&:hover': {
     boxShadow: '0 1rem 3rem rgba(17, 24, 39, 0.12)',
   },
+  [theme.breakpoints.up('md')]: {
+    bottom: '2.8rem',
+    left: '2rem',
+    maxWidth: 'none',
+    padding: '1rem 1.8rem',
+    fontSize: '1.5rem',
+  },
 }));
 
-export const TriggerIcon = styled(Box)(() => ({
+export const TriggerIcon = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   color: 'grey.600',
   '& svg': {
-    fontSize: '1.8rem',
+    fontSize: '1.7rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    '& svg': {
+      fontSize: '1.8rem',
+    },
   },
 }));
 

@@ -56,6 +56,10 @@ const GradePricePopover = (_props: GradePricePopoverProps) => {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        paperSx={{
+          width: { xs: '15.2rem', md: '17rem' },
+          padding: { xs: '1.4rem 1.6rem', md: '1.8rem 2rem' },
+        }}
       >
         <Box sx={{ flex: 1 }}>
           {gradePrices.map((grade, index) => (

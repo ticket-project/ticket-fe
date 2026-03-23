@@ -48,7 +48,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     handleClearSeats,
   } = useSeatActions({ performanceId });
 
-  const { allowSeatPageExit, requestBackNavigation } = useSeatLeaveGuard({
+  const { allowSeatPageExit } = useSeatLeaveGuard({
     accessToken,
     hasSelectedSeats: selectedSeatIds.length > 0,
     onConfirmLeave: handleClearSeats,
@@ -99,7 +99,10 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
   return (
     <Box
       sx={{
-        height: 'calc(100dvh - var(--simple-header-height) - 2px)',
+        height: {
+          xs: 'calc(100dvh - var(--mobile-header-height))',
+          md: 'calc(100dvh - var(--simple-header-height) - 2px)',
+        },
         minHeight: 0,
         display: 'grid',
         gridTemplateRows: '60px minmax(0,1fr)',
@@ -107,11 +110,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     >
       <QueryBoundary query={summaryQuery}>
         {(item) => (
-          <TopInfoBar
-            performanceSummary={item}
-            showBookingTimer={false}
-            onScheduleChange={requestBackNavigation}
-          />
+          <TopInfoBar performanceSummary={item} showBookingTimer={false} />
         )}
       </QueryBoundary>
       <Box
@@ -119,7 +118,12 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
           height: '100%',
           minHeight: 0,
           display: 'grid',
-          gridTemplateColumns: '1fr 480px',
+          position: 'relative',
+          overflow: 'hidden',
+          gridTemplateColumns: {
+            xs: '1fr',
+            lg: '1fr 480px',
+          },
         }}
       >
         <QueryBoundary
@@ -142,8 +146,8 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
         <BookingSidebar
           selectedSeats={selectedSeats}
           pendingSeatIds={pendingSeatIdSet}
-          onClearSeats={handleClearSeats} // 전체삭제
-          onDeselectSeat={handleDeselectSeat} // 개별삭제
+          onClearSeats={handleClearSeats}
+          onDeselectSeat={handleDeselectSeat}
           onHoldSeats={handleHoldSeats}
         />
       </Box>

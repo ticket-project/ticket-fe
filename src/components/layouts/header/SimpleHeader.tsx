@@ -47,7 +47,6 @@ const SimpleHeader = () => {
                 <span>ONE</span>&nbsp;티켓
               </LogoText>
             </Box>
-            {isSeatPage && <AuthButtons />}
           </HeaderContainer>
         </MobileHeader>
         <Box

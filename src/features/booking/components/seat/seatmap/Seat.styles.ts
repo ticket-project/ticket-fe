@@ -12,16 +12,19 @@ export const Root = styled(Box)(() => ({
   touchAction: 'none',
 }));
 
-export const ZoomControls = styled(Box)(() => ({
+export const ZoomControls = styled(Box)(({ theme }) => ({
   position: 'absolute',
   bottom: '2rem',
   right: '2rem',
-  display: 'flex',
+  display: 'none',
   flexDirection: 'column',
   gap: '1px',
   overflow: 'hidden',
   borderRadius: '.8rem',
   boxShadow: '0 .2rem .8rem 0 rgba(0, 0, 0, .1)',
+  [theme.breakpoints.up('lg')]: {
+    display: 'flex',
+  },
 }));
 
 export const StyledIconButton = styled(IconButton)(() => ({
