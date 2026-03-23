@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 
 import Footer from '@/components/layouts/footer/Footer';
 import DefaultHeader from '@/components/layouts/header/DefaultHeader';
+import { DETAIL_BOTTOM_PANEL_SLOT_ID } from '@/components/layouts/layoutSlots';
 import MobileNav from '@/components/layouts/navigation/MobileNav';
 import SkipLink from '@/components/layouts/SkipLink';
 
@@ -14,6 +15,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </Box>
       <Footer />
+      <Box id={DETAIL_BOTTOM_PANEL_SLOT_ID} />
       <MobileNav />
     </Box>
   );
