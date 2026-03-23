@@ -19,6 +19,13 @@ export class SeatSocketClient {
   private client: Client | null = null;
   private subscription: StompSubscription | null = null;
 
+  private shouldEnableDebug() {
+    return (
+      process.env.NODE_ENV === 'development' &&
+      process.env.NEXT_PUBLIC_ENABLE_SEAT_SOCKET_DEBUG === 'true'
+    );
+  }
+
   private resolveWsUrl() {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '');
 
@@ -88,12 +95,11 @@ export class SeatSocketClient {
             Authorization: `Bearer ${accessToken}`,
           }
         : {},
-      debug:
-        process.env.NODE_ENV === 'development'
-          ? (message) => {
-              console.warn('[seat-socket]', message);
-            }
-          : () => {},
+      debug: this.shouldEnableDebug()
+        ? (message) => {
+            console.debug('[seat-socket]', message);
+          }
+        : () => {},
       onConnect: () => {
         onConnect?.();
       },

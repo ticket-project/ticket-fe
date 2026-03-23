@@ -143,6 +143,7 @@ const ShowInfoRow = ({ item }: ShowInfoRowProps) => {
             alt="카카오페이 로고 이미지"
             width={42}
             height={26}
+            style={{ width: 'auto' }}
           />
           <Typography sx={{ fontSize: 13, color: '#555' }}>
             카카오머니 결제 시 4천원 즉시할인(선착순)
