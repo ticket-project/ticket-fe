@@ -76,6 +76,52 @@ export const ForeignBookButton = styled(Button)(({ theme }) => ({
   '&:hover': { backgroundColor: theme.palette.primary.light },
 }));
 
+export const BookingPanelMobileWrapper = styled(Box)(({ theme }) => ({
+  '--mobile-booking-panel-height': '78px',
+  display: 'block',
+}));
+
+export const MobileActionBar = styled(Box)(({ theme }) => ({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  zIndex: theme.zIndex.appBar + 2,
+  display: 'block',
+  height: 'var(--mobile-booking-panel-height)',
+  padding: theme.spacing(1.6, 2),
+  backgroundColor: 'rgba(255, 255, 255, 0.96)',
+  borderTop: `1px solid ${theme.palette.grey[200]}`,
+  backdropFilter: 'blur(14px)',
+  [theme.breakpoints.up('md')]: {
+    bottom: 0,
+  },
+  [theme.breakpoints.up('lg')]: {
+    display: 'none',
+  },
+}));
+
+export const MobileActionInner = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  alignItems: 'center',
+  gap: theme.spacing(1.2),
+  gridTemplateColumns: 'minmax(0, 1fr) auto',
+  width: '100%',
+}));
+
+export const MobileActionSummary = styled(Stack)(({ theme }) => ({
+  gap: theme.spacing(0.3),
+  minWidth: 0,
+}));
+
+export const BottomSheetHandle = styled(Box)(({ theme }) => ({
+  height: '0.5rem',
+  width: '4.8rem',
+  margin: '0 auto',
+  backgroundColor: theme.palette.grey[300],
+  borderRadius: 999,
+}));
+
 export const BaseDay = styled(PickersDay)({
   fontSize: '1.4rem',
   fontWeight: 700,

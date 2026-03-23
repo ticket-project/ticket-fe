@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography, styled } from '@mui/material';
+import { Box, Button, Paper, Stack, Typography, styled } from '@mui/material';
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -39,8 +39,50 @@ export const NoticeBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-start',
   gap: theme.spacing(1.4),
-  marginTop: theme.spacing(2.8),
   padding: theme.spacing(2.2, 2.4),
   backgroundColor: theme.palette.grey[100],
   borderRadius: 14,
+}));
+
+export const UpcomingPanelMobileWrapper = styled(Box)({
+  '--mobile-upcoming-panel-height': '78px',
+  display: 'block',
+});
+
+export const MobileActionBar = styled(Box)(({ theme }) => ({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  zIndex: theme.zIndex.appBar + 2,
+  display: 'block',
+  height: 'var(--mobile-upcoming-panel-height)',
+  padding: theme.spacing(1.6, 2),
+  backgroundColor: 'rgba(255, 255, 255, 0.96)',
+  borderTop: `1px solid ${theme.palette.grey[200]}`,
+  backdropFilter: 'blur(14px)',
+  [theme.breakpoints.up('lg')]: {
+    display: 'none',
+  },
+}));
+
+export const MobileActionInner = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  alignItems: 'center',
+  gap: theme.spacing(1.2),
+  gridTemplateColumns: 'minmax(0, 1fr) auto',
+  width: '100%',
+}));
+
+export const MobileActionSummary = styled(Stack)(({ theme }) => ({
+  gap: theme.spacing(0.3),
+  minWidth: 0,
+}));
+
+export const BottomSheetHandle = styled(Box)(({ theme }) => ({
+  height: '0.5rem',
+  width: '4.8rem',
+  margin: '0 auto',
+  backgroundColor: theme.palette.grey[300],
+  borderRadius: 999,
 }));

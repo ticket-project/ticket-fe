@@ -5,8 +5,9 @@ export const Root = styled(Box, {
 })<{ isUpcoming: boolean }>(({ isUpcoming, theme }) => ({
   display: 'grid',
   alignItems: 'start',
-  gap: isUpcoming ? theme.spacing(6) : theme.spacing(10),
-  [theme.breakpoints.up('md')]: {
+  gridTemplateColumns: 'minmax(0, 1fr)',
+  [theme.breakpoints.up('lg')]: {
+    gap: isUpcoming ? theme.spacing(6) : theme.spacing(10),
     gridTemplateColumns: isUpcoming
       ? '2.2fr minmax(320px, 1fr)'
       : '3fr minmax(350px, 1fr)',
@@ -18,9 +19,10 @@ export const SummaryBody = styled(Box, {
 })<{ isUpcoming: boolean }>(({ isUpcoming, theme }) => ({
   display: isUpcoming ? 'block' : 'grid',
   gap: theme.spacing(6),
-  gridTemplateColumns: '300px minmax(0,1fr)',
-  // [theme.breakpoints.up('sm')]: {},
-  // [theme.breakpoints.up('md')]: {},
+  gridTemplateColumns: 'minmax(0, 1fr)',
+  [theme.breakpoints.up('lg')]: {
+    gridTemplateColumns: '300px minmax(0,1fr)',
+  },
 }));
 
 export const BenefitBadge = styled(Box)({

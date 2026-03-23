@@ -39,6 +39,11 @@ const MobileNav = () => {
   );
   const loginHref = buildLoginPath(getPathWithSearch(pathname, searchParams));
   const isAuthenticated = Boolean(accessToken);
+  const pathnameSegments = pathname.split('/').filter(Boolean);
+  const isShowDetailPage =
+    pathnameSegments.length === 2 &&
+    Object.keys(CATEGORIES).includes(pathnameSegments[0] ?? '') &&
+    /^\d+$/.test(pathnameSegments[1] ?? '');
 
   const handleSearchClick = () => {
     window.alert('검색 페이지는 준비 중입니다.');
@@ -107,6 +112,10 @@ const MobileNav = () => {
       ),
     },
   ] as const;
+
+  if (isShowDetailPage) {
+    return null;
+  }
 
   return (
     <Root>

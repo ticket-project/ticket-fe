@@ -47,9 +47,16 @@ export const InfoTable = styled(Table, {
     padding: theme.spacing(compact ? 1 : 1.5),
     fontSize: '1.4rem',
     textAlign: 'left',
+    wordBreak: 'keep-all',
     border: '1px solid #e0e0e0',
+    overflowWrap: 'anywhere',
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(compact ? 0.875 : 1.25),
+      fontSize: compact ? '1.3rem' : '1.35rem',
+    },
     verticalAlign: 'top',
   },
+  tableLayout: 'fixed',
 }));
 
 export const InfoTableCell = styled(TableCell)(({ theme }) => ({
@@ -58,6 +65,10 @@ export const InfoTableCell = styled(TableCell)(({ theme }) => ({
   whiteSpace: 'nowrap',
   color: theme.palette.text.secondary,
   backgroundColor: '#f9f9f9',
+  [theme.breakpoints.down('sm')]: {
+    width: '96px',
+    whiteSpace: 'normal',
+  },
 }));
 
 export const StyledList = styled(Stack)(({ theme }) => ({

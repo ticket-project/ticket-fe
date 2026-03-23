@@ -26,7 +26,7 @@ const ShowDetailView = ({ item }: ShowDetailViewProps) => {
         <SummaryTop item={item} />
         <SummaryBody isUpcoming={isUpcoming}>
           {isUpcoming ? (
-            <UpcomingPoster item={item} />
+            <UpcomingPoster title={item.title} posterUrl={item.image} />
           ) : (
             <>
               <ShowPoster item={item} />

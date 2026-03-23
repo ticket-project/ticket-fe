@@ -2,7 +2,7 @@ import { PickersDayProps } from '@mui/x-date-pickers';
 
 import { BaseDay, SundayDay } from './BookingPanel.styles';
 
-interface CalendarDayProps extends PickersDayProps {
+export interface CalendarDayProps extends PickersDayProps {
   availableDateSet?: Set<string>;
 }
 

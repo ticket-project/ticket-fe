@@ -9,7 +9,10 @@ interface PageContainerProps extends Omit<BoxProps, 'sx'> {
 
 const PageContainer = ({ children, ...props }: PageContainerProps) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', pt: 6 }} {...props}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', pt: { xs: 3, md: 6 } }}
+      {...props}
+    >
       {children}
     </Box>
   );

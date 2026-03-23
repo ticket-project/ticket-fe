@@ -21,7 +21,8 @@ import {
   getSessionsByDateKey,
   toDateKey,
 } from '../../utils';
-import CalendarDay from './CalendarDay';
+import BookingPanelMobile from './BookingPanelMobile';
+import CalendarDay, { type CalendarDayProps } from './CalendarDay';
 import CollapsibleSection from './CollapsibleSection';
 
 import {
@@ -58,6 +59,7 @@ const BookingPanel = ({
   );
   const [isDateExpanded, setIsDateExpanded] = useState(true);
   const [isSessionExpanded, setIsSessionExpanded] = useState(true);
+  const [isMobilePanelOpen, setIsMobilePanelOpen] = useState(false);
 
   const selectedDateKey = selectedDate ? toDateKey(selectedDate) : '';
   const sessions = getSessionsByDateKey(performances, selectedDateKey);
@@ -74,6 +76,14 @@ const BookingPanel = ({
   const selectedSessionLabel = selectedSessionItem
     ? getSessionLabel(selectedSessionIndex, selectedSessionItem.startTime)
     : '회차를 선택하세요.';
+  const mobileSummaryLabel = isSaleEnded
+    ? '본 상품은 판매 종료되었습니다.'
+    : selectedSession
+      ? `${selectedDateLabel} · ${selectedSessionLabel}`
+      : selectedDate
+        ? `${selectedDateLabel} · 회차 선택`
+        : '예매 가능한 날짜를 확인해 주세요.';
+  const calendarDayProps: Partial<CalendarDayProps> = { availableDateSet };
 
   const seatGradesQuery = useSeatGrades(selectedSession);
 
@@ -94,6 +104,8 @@ const BookingPanel = ({
   const handleBookClick = () => {
     if (!selectedSession) return;
 
+    setIsMobilePanelOpen(false);
+
     if (!accessToken) {
       router.push(buildLoginPath(getPathWithSearch(pathname, searchParams)));
       return;
@@ -104,141 +116,145 @@ const BookingPanel = ({
     );
   };
 
-  return (
-    <Box
-      component="aside"
-      aria-label="예매 패널"
-      sx={{ position: 'sticky', top: '42px', pt: '30px' }}
+  const panelContent = isSaleEnded ? (
+    <Stack
+      spacing={2.5}
+      alignItems="center"
+      justifyContent="center"
+      sx={{ minHeight: '15rem' }}
     >
-      <StyledPaper elevation={0}>
-        {isSaleEnded ? (
-          <Stack
-            spacing={2.5}
-            alignItems="center"
-            justifyContent="center"
-            sx={{ minHeight: '15rem' }}
-          >
-            <Typography sx={{ fontSize: '1.8rem', fontWeight: 800 }}>
-              판매종료
-            </Typography>
-            <Typography sx={{ fontSize: '1.5rem', fontWeight: 800 }}>
-              본 상품은 판매 종료되었습니다.
-            </Typography>
-          </Stack>
-        ) : (
-          <Stack spacing={3}>
-            <CollapsibleSection
-              title="관람일"
-              expanded={isDateExpanded}
-              onToggle={() => setIsDateExpanded((prev) => !prev)}
-              summary={
-                <Typography sx={{ fontSize: '1.6rem', fontWeight: 700 }}>
-                  {selectedDateLabel}
-                </Typography>
-              }
-            >
-              <CalendarBox>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  adapterLocale="ko"
-                >
-                  <Calendar
-                    value={selectedDate}
-                    disableHighlightToday
-                    slots={{ day: CalendarDay }}
-                    slotProps={{
-                      day: {
-                        availableDateSet,
-                      } as any,
-                    }}
-                    onChange={handleDateChange}
-                  />
-                </LocalizationProvider>
-              </CalendarBox>
-            </CollapsibleSection>
-            <Divider sx={{ borderColor: 'grey.200' }} />
-            <CollapsibleSection
-              title="회차"
-              expanded={isSessionExpanded}
-              onToggle={() => setIsSessionExpanded((prev) => !prev)}
-              summary={
-                <Typography sx={{ fontSize: '1.6rem', fontWeight: 700 }}>
-                  {selectedSessionLabel}
-                </Typography>
-              }
-            >
-              <SessionGrid>
-                {sessions.map((session, index) => {
-                  const isSelected = selectedSession === session.id;
+      <Typography sx={{ fontSize: '1.8rem', fontWeight: 800 }}>
+        판매종료
+      </Typography>
+      <Typography sx={{ fontSize: '1.5rem', fontWeight: 800 }}>
+        본 상품은 판매 종료되었습니다.
+      </Typography>
+    </Stack>
+  ) : (
+    <Stack spacing={3}>
+      <CollapsibleSection
+        title="관람일"
+        expanded={isDateExpanded}
+        onToggle={() => setIsDateExpanded((prev) => !prev)}
+        summary={
+          <Typography sx={{ fontSize: '1.6rem', fontWeight: 700 }}>
+            {selectedDateLabel}
+          </Typography>
+        }
+      >
+        <CalendarBox>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
+            <Calendar
+              value={selectedDate}
+              disableHighlightToday
+              slots={{ day: CalendarDay }}
+              slotProps={{
+                day: calendarDayProps,
+              }}
+              onChange={handleDateChange}
+            />
+          </LocalizationProvider>
+        </CalendarBox>
+      </CollapsibleSection>
+      <Divider sx={{ borderColor: 'grey.200' }} />
+      <CollapsibleSection
+        title="회차"
+        expanded={isSessionExpanded}
+        onToggle={() => setIsSessionExpanded((prev) => !prev)}
+        summary={
+          <Typography sx={{ fontSize: '1.6rem', fontWeight: 700 }}>
+            {selectedSessionLabel}
+          </Typography>
+        }
+      >
+        <SessionGrid>
+          {sessions.map((session, index) => {
+            const isSelected = selectedSession === session.id;
 
-                  return (
-                    <SessionButton
-                      key={session.id}
-                      variant="outlined"
-                      onClick={() => setSelectedSession(session.id)}
-                      $selected={isSelected}
-                    >
-                      {getSessionLabel(index, session.startTime)}
-                    </SessionButton>
-                  );
-                })}
-              </SessionGrid>
-              {selectedSession && (
-                <Stack sx={{ mt: 1.8, minHeight: 24 }}>
-                  <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
-                    {seatGradesQuery.data?.length &&
-                      seatGradesQuery.data.map((grade, index) => (
-                        <Stack
-                          direction="row"
-                          spacing={0.5}
-                          alignItems="center"
-                          key={`${grade.gradeName}-${grade.sortOrder}`}
-                        >
-                          <Typography
-                            sx={{ fontSize: '1.2rem', fontWeight: 500 }}
-                          >
-                            {grade.gradeName}
-                          </Typography>
-                          <Typography
-                            sx={{ fontSize: '1.2rem', fontWeight: 700 }}
-                          >
-                            {grade.availableSeats}
-                          </Typography>
-                          {index < seatGradesQuery.data.length - 1 && (
-                            <Typography
-                              component="span"
-                              sx={{ fontSize: '1rem' }}
-                            >
-                              /
-                            </Typography>
-                          )}
-                        </Stack>
-                      ))}
-                  </Stack>
-                </Stack>
-              )}
-            </CollapsibleSection>
-            <Stack spacing={1} sx={{ mt: 1 }}>
-              <BookButton
-                fullWidth
-                variant="contained"
-                disabled={!selectedSession}
-                onClick={handleBookClick}
-              >
-                예매하기
-              </BookButton>
-              <ForeignBookButton
-                fullWidth
+            return (
+              <SessionButton
+                key={session.id}
                 variant="outlined"
-                onClick={handleForeignBookClick}
+                onClick={() => setSelectedSession(session.id)}
+                $selected={isSelected}
               >
-                BOOKING / 外國語
-              </ForeignBookButton>
+                {getSessionLabel(index, session.startTime)}
+              </SessionButton>
+            );
+          })}
+        </SessionGrid>
+        {selectedSession && (
+          <Stack sx={{ mt: 1.8, minHeight: 24 }}>
+            <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
+              {seatGradesQuery.data?.length &&
+                seatGradesQuery.data.map((grade, index) => (
+                  <Stack
+                    direction="row"
+                    spacing={0.5}
+                    alignItems="center"
+                    key={`${grade.gradeName}-${grade.sortOrder}`}
+                  >
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500 }}>
+                      {grade.gradeName}
+                    </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 700 }}>
+                      {grade.availableSeats}
+                    </Typography>
+                    {index < seatGradesQuery.data.length - 1 && (
+                      <Typography component="span" sx={{ fontSize: '1rem' }}>
+                        /
+                      </Typography>
+                    )}
+                  </Stack>
+                ))}
             </Stack>
           </Stack>
         )}
-      </StyledPaper>
-    </Box>
+      </CollapsibleSection>
+      <Stack spacing={1} sx={{ mt: 1 }}>
+        <BookButton
+          fullWidth
+          variant="contained"
+          disabled={!selectedSession}
+          onClick={handleBookClick}
+        >
+          예매하기
+        </BookButton>
+        <ForeignBookButton
+          fullWidth
+          variant="outlined"
+          onClick={handleForeignBookClick}
+        >
+          BOOKING / 外國語
+        </ForeignBookButton>
+      </Stack>
+    </Stack>
+  );
+
+  return (
+    <>
+      <Box
+        component="aside"
+        aria-label="예매 패널"
+        sx={{
+          position: 'sticky',
+          top: '42px',
+          display: { xs: 'none', lg: 'block' },
+          pt: '30px',
+        }}
+      >
+        <StyledPaper elevation={0}>{panelContent}</StyledPaper>
+      </Box>
+      <BookingPanelMobile
+        isOpen={isMobilePanelOpen}
+        isSaleEnded={isSaleEnded}
+        mobileSummaryLabel={mobileSummaryLabel}
+        onClose={() => setIsMobilePanelOpen(false)}
+        onOpen={() => setIsMobilePanelOpen(true)}
+      >
+        {panelContent}
+      </BookingPanelMobile>
+    </>
   );
 };
 
