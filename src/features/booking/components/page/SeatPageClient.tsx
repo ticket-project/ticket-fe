@@ -65,6 +65,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     onSuccess: (holdExpiresAt) => {
       allowSeatPageExit();
       const params = new URLSearchParams({
+        showId: String(showId),
         performanceId: String(performanceId),
         holdExpiresAt,
       });
