@@ -27,7 +27,7 @@ ONE TICKET은 사용자가 공연 정보를 탐색하고 상세 정보를 확인
 
 ## 🌐 배포 링크 / 데모
 
-- **Demo**: 배포 URL 업데이트 필요
+- **Demo**: [https://oneticket.site/concert](https://oneticket.site/concert)
 
 ## ✨ 주요 기능
 
