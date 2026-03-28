@@ -15,7 +15,7 @@ import SeatMap from '@/features/booking/components/seat/SeatMap';
 import { useAuthStore } from '@/store/authStore';
 import { useBookingStore } from '@/store/bookingStore';
 
-import { holdSeats } from '../../api';
+import { ordersSeats } from '../../api';
 import useSeatActions from '../../hooks/useSeatActions';
 import useSeatLeaveGuard from '../../hooks/useSeatLeaveGuard';
 import { usePerformanceSummary } from '../../hooks/useSeatQueries';
@@ -60,8 +60,8 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
     [seatViewQuery.data?.seats, selectedSeatIds]
   );
 
-  const holdSeatsMutation = useMutation({
-    mutationFn: () => holdSeats(performanceId, selectedSeatIds, accessToken),
+  const orderSeatsMutation = useMutation({
+    mutationFn: () => ordersSeats(performanceId, selectedSeatIds, accessToken),
     onSuccess: (holdExpiresAt) => {
       allowSeatPageExit();
       const params = new URLSearchParams({
@@ -95,7 +95,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
       return;
     }
 
-    await holdSeatsMutation.mutateAsync();
+    await orderSeatsMutation.mutateAsync();
   };
 
   useEffect(() => {
@@ -152,7 +152,7 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
         <BookingSidebar
           selectedSeats={selectedSeats}
           pendingSeatIds={pendingSeatIdSet}
-          isHolding={holdSeatsMutation.isPending}
+          isHolding={orderSeatsMutation.isPending}
           onClearSeats={handleClearSeats}
           onDeselectSeat={handleDeselectSeat}
           onHoldSeats={handleHoldSeats}

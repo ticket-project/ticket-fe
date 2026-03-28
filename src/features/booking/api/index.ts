@@ -3,7 +3,7 @@ import { API_BASE_URL } from '@/lib/env';
 import { ApiResponse } from '@/types/api';
 
 import {
-  HoldSeatsResponse,
+  OrderSeatsResponse,
   PerformanceSummary,
   SeatMapItem,
   SeatMapResponse,
@@ -159,16 +159,17 @@ export const deselectAllSeatsInBackground = async (
   }
 };
 
-export const holdSeats = async (
+export const ordersSeats = async (
   performanceId: number,
   seatIds: number[],
   token?: string | null
 ) => {
-  const res = await fetchApi<ApiResponse<HoldSeatsResponse | null>>(
-    `/api/v1/performances/${performanceId}/holds`,
+  const res = await fetchApi<ApiResponse<OrderSeatsResponse | null>>(
+    `/api/v1/orders`,
     {
       method: 'POST',
       body: {
+        performanceId,
         seatIds,
       },
       token,
