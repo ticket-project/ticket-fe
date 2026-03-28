@@ -2,16 +2,22 @@ import { notFound } from 'next/navigation';
 
 import PaymentPageClient from '@/features/booking/components/page/PaymentPageClient';
 
-interface SeatPageProps {
+interface PaymentPageProps {
   searchParams: Promise<{
     holdExpiresAt?: string;
     performanceId?: string;
+    showId?: string;
   }>;
 }
 
-const PaymentPage = async ({ searchParams }: SeatPageProps) => {
-  const { performanceId: rawPerformanceId, holdExpiresAt } = await searchParams;
+const PaymentPage = async ({ searchParams }: PaymentPageProps) => {
+  const {
+    performanceId: rawPerformanceId,
+    holdExpiresAt,
+    showId: rawShowId,
+  } = await searchParams;
   const performanceId = rawPerformanceId ? Number(rawPerformanceId) : undefined;
+  const showId = rawShowId ? Number(rawShowId) : undefined;
 
   if (!performanceId) {
     return notFound();
@@ -19,6 +25,7 @@ const PaymentPage = async ({ searchParams }: SeatPageProps) => {
 
   return (
     <PaymentPageClient
+      showId={showId}
       performanceId={performanceId}
       holdExpiresAt={holdExpiresAt}
     />
