@@ -14,7 +14,7 @@ export interface PerformanceSummary {
   startTime: string;
 }
 
-export interface HoldSeatsResponse {
+export interface OrderSeatsResponse {
   expiresAt?: string;
   expiredAt?: string;
   holdExpiresAt?: string;

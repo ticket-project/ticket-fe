@@ -26,13 +26,10 @@ import { SeatMapItem } from '../../types';
 
 import QueryBoundary from '@/components/common/QueryBoundary';
 import TopInfoBar from '@/features/booking/components/common/TopInfoBar';
-import useSeatActions from '@/features/booking/hooks/useSeatActions';
-import useSeatLeaveGuard from '@/features/booking/hooks/useSeatLeaveGuard';
 import {
   usePerformanceSummary,
   useSeatMap,
 } from '@/features/booking/hooks/useSeatQueries';
-import { useAuthStore } from '@/store/authStore';
 import { useBookingStore } from '@/store/bookingStore';
 
 import { formatKRW } from '../../utils';
@@ -149,11 +146,11 @@ const PaymentPageClient = ({
   performanceId,
   holdExpiresAt,
 }: PaymentPageClientProps) => {
-  const accessToken = useAuthStore((state) => state.accessToken);
+  // const accessToken = useAuthStore((state) => state.accessToken);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
   const summaryQuery = usePerformanceSummary(performanceId);
   const seatMapQuery = useSeatMap(showId ?? 0);
-  const { handleClearSeats } = useSeatActions({ performanceId });
+  // const { handleClearSeats } = useSeatActions({ performanceId });
   const [deliveryMethod, setDeliveryMethod] =
     useState<(typeof deliveryOptions)[number]['value']>('mobile');
   const [paymentMethod, setPaymentMethod] =
@@ -167,12 +164,12 @@ const PaymentPageClient = ({
     thirdParty: false,
   });
 
-  useSeatLeaveGuard({
-    accessToken,
-    hasSelectedSeats: selectedSeatIds.length > 0,
-    onConfirmLeave: handleClearSeats,
-    performanceId,
-  });
+  // useSeatLeaveGuard({
+  //   accessToken,
+  //   hasSelectedSeats: selectedSeatIds.length > 0,
+  //   onConfirmLeave: handleClearSeats,
+  //   performanceId,
+  // });
 
   const seatById = new Map(
     seatMapQuery.data?.map((seat) => [seat.id, seat]) ?? []
