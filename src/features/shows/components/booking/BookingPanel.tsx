@@ -220,13 +220,13 @@ const BookingPanel = ({
         >
           예매하기
         </BookButton>
-        <ForeignBookButton
+        {/* <ForeignBookButton
           fullWidth
           variant="outlined"
           onClick={handleForeignBookClick}
         >
           BOOKING / 外國語
-        </ForeignBookButton>
+        </ForeignBookButton> */}
       </Stack>
     </Stack>
   );
