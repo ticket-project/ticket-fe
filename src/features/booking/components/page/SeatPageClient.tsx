@@ -62,12 +62,13 @@ const SeatPageClient = ({ showId, performanceId }: SeatPageClientProps) => {
 
   const orderSeatsMutation = useMutation({
     mutationFn: () => ordersSeats(performanceId, selectedSeatIds, accessToken),
-    onSuccess: (holdExpiresAt) => {
+    onSuccess: ({ holdExpiresAt, orderKey }) => {
       allowSeatPageExit();
       const params = new URLSearchParams({
         showId: String(showId),
         performanceId: String(performanceId),
         holdExpiresAt,
+        orderKey,
       });
 
       router.push(`/booking/payment?${params.toString()}`);
