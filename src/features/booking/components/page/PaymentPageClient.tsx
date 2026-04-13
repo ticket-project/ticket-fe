@@ -30,12 +30,16 @@ import {
   usePerformanceSummary,
   useSeatMap,
 } from '@/features/booking/hooks/useSeatQueries';
+import { useAuthStore } from '@/store/authStore';
 import { useBookingStore } from '@/store/bookingStore';
 
+import { cancelOrder } from '../../api';
+import useOrderLeaveGuard from '../../hooks/useOrderLeaveGuard';
 import { formatKRW } from '../../utils';
 
 interface PaymentPageClientProps {
   holdExpiresAt?: string;
+  orderKey: string;
   performanceId: number;
   showId?: number;
 }
@@ -145,12 +149,13 @@ const PaymentPageClient = ({
   showId,
   performanceId,
   holdExpiresAt,
+  orderKey,
 }: PaymentPageClientProps) => {
-  // const accessToken = useAuthStore((state) => state.accessToken);
+  const accessToken = useAuthStore((state) => state.accessToken);
   const selectedSeatIds = useBookingStore((state) => state.selectedSeatIds);
+  const resetBookingState = useBookingStore((state) => state.resetBookingState);
   const summaryQuery = usePerformanceSummary(performanceId);
   const seatMapQuery = useSeatMap(showId ?? 0);
-  // const { handleClearSeats } = useSeatActions({ performanceId });
   const [deliveryMethod, setDeliveryMethod] =
     useState<(typeof deliveryOptions)[number]['value']>('mobile');
   const [paymentMethod, setPaymentMethod] =
@@ -164,12 +169,25 @@ const PaymentPageClient = ({
     thirdParty: false,
   });
 
-  // useSeatLeaveGuard({
-  //   accessToken,
-  //   hasSelectedSeats: selectedSeatIds.length > 0,
-  //   onConfirmLeave: handleClearSeats,
-  //   performanceId,
-  // });
+  const handleCancelPendingOrder = async () => {
+    try {
+      await cancelOrder(orderKey, accessToken);
+      resetBookingState();
+    } catch (error) {
+      console.error('주문 취소 API 호출에 실패했습니다.', error);
+      enqueueSnackbar('좌석 선점 해제에 실패했습니다.', {
+        variant: 'error',
+      });
+      throw error;
+    }
+  };
+
+  useOrderLeaveGuard({
+    accessToken,
+    hasPendingOrder: Boolean(orderKey),
+    onConfirmLeave: handleCancelPendingOrder,
+    orderKey,
+  });
 
   const seatById = new Map(
     seatMapQuery.data?.map((seat) => [seat.id, seat]) ?? []

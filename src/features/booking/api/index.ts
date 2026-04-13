@@ -3,6 +3,7 @@ import { API_BASE_URL } from '@/lib/env';
 import { ApiResponse } from '@/types/api';
 
 import {
+  OrderSession,
   OrderSeatsResponse,
   PerformanceSummary,
   SeatMapItem,
@@ -163,7 +164,7 @@ export const ordersSeats = async (
   performanceId: number,
   seatIds: number[],
   token?: string | null
-) => {
+): Promise<OrderSession> => {
   const res = await fetchApi<ApiResponse<OrderSeatsResponse | null>>(
     `/api/v1/orders`,
     {
@@ -182,9 +183,17 @@ export const ordersSeats = async (
     holdData?.holdExpiresAt ??
     holdData?.expiredAt ??
     null;
+  const orderKey = holdData?.orderKey ?? holdData?.pendingOrderKey;
+
+  if (!orderKey) {
+    throw new Error('주문 정보를 확인하지 못했습니다.');
+  }
 
   if (expiresAt) {
-    return expiresAt;
+    return {
+      holdExpiresAt: expiresAt,
+      orderKey,
+    };
   }
 
   const remainingSeconds =
@@ -193,5 +202,43 @@ export const ordersSeats = async (
     ? new Date(holdData.serverTime).getTime()
     : Date.now();
 
-  return new Date(baseTime + remainingSeconds * 1000).toISOString();
+  return {
+    holdExpiresAt: new Date(baseTime + remainingSeconds * 1000).toISOString(),
+    orderKey,
+  };
+};
+
+export const cancelOrder = async (orderKey: string, token?: string | null) => {
+  await fetchApi<ApiResponse<null>>(`/api/v1/orders/${orderKey}`, {
+    method: 'DELETE',
+    token,
+  });
+};
+
+export const cancelOrderInBackground = async (
+  orderKey: string,
+  token?: string | null
+) => {
+  const requestUrl = API_BASE_URL
+    ? `${API_BASE_URL.replace(/\/$/, '')}/api/v1/orders/${orderKey}`
+    : `/api/v1/orders/${orderKey}`;
+
+  const headers = new Headers({
+    Accept: 'application/json',
+  });
+
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  const response = await fetch(requestUrl, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers,
+    keepalive: true,
+  });
+
+  if (!response.ok) {
+    throw new Error('주문 취소 API 호출에 실패했습니다.');
+  }
 };

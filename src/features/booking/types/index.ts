@@ -15,12 +15,19 @@ export interface PerformanceSummary {
 }
 
 export interface OrderSeatsResponse {
+  orderKey?: string;
+  pendingOrderKey?: string;
   expiresAt?: string;
   expiredAt?: string;
   holdExpiresAt?: string;
   serverTime?: string;
   remainingSeconds?: number;
   remainingTimeSeconds?: number;
+}
+
+export interface OrderSession {
+  holdExpiresAt: string;
+  orderKey: string;
 }
 
 export interface VenueLayout {
