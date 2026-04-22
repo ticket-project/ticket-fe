@@ -63,12 +63,12 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST_IP }}
-          username: ubuntu
+          username: root
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
             IMAGE="${{ secrets.DOCKER_USERNAME }}/ticket-fe:latest"
-            DEPLOY_DIR="/home/ubuntu"
+            DEPLOY_DIR="/root"
             CURRENT_BE_IMAGE="$(sudo docker inspect ticket-be --format '{{.Config.Image}}')"
 
             echo "${{ secrets.DOCKER_PASSWORD }}" | sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
