@@ -33,6 +33,7 @@ export const Root = styled(Card)(({ theme }) => ({
 export const StyledCardActionArea = styled(CardActionArea)(({ theme }) => ({
   height: '100%',
   overflow: 'hidden',
+  backgroundColor: theme.palette.grey[100],
   border: `1px solid ${theme.palette.grey[100]}`,
   borderRadius: '1.4rem',
   aspectRatio: '700/985',
