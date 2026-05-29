@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+import { withSentryConfig } from '@sentry/nextjs';
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const nextConfig: NextConfig = {
@@ -30,4 +32,16 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: 'none-79a',
+  project: 'ticket',
+  silent: !process.env.CI,
+  widenClientFileUpload: true,
+
+  webpack: {
+    automaticVercelMonitors: true,
+    treeshake: {
+      removeDebugLogging: true,
+    },
+  },
+});
